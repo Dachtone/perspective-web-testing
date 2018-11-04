@@ -45,7 +45,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
     store: new LokiStore, // ToDo: Find an appropriate store
-    secret: config.session.secret, // ToDo: Change it, obviously
+    secret: config.session.secret,
     name: 'sessionID',
     resave: false,
     saveUninitialized: false,
