@@ -1,0 +1,9 @@
+<h1>Страница входа</h1>
+<% if (typeof message !== 'undefined') { %>
+    <b><%= message %></b>
+<% } %>
+<form action="/login" method="POST">
+    <input name="inputLogin" placeholder="Логин" required>
+    <input type="password" name="inputPassword" placeholder="Пароль" required>
+    <button type="submit">Вход</button>
+</form>
