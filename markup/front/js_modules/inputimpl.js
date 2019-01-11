@@ -1,12 +1,12 @@
-
 export class JSinputImplementation{
     constructor(wrap, obj){
         this.placeholder = obj.placeholder
-
         this.wrap = document.querySelectorAll(wrap)
-        this.loop()
+        this.addStrict()
+        
+        
     }
-    loop(){
+    addStrict(){
         Array.prototype.forEach.call(this.wrap, element => {
             this.listeners(element)
         })
@@ -30,7 +30,6 @@ export class JSinputImplementation{
         }else{
             placeholder.classList.remove('h5DzSLL')
         }
-
     }
     onCheked(element){
         window.setTimeout(() =>{
@@ -41,7 +40,7 @@ export class JSinputImplementation{
         const input = element.querySelector('input')
             this.check(element, input)
 
-        input.addEventListener('mousedown', ({target}) =>{
+        input.addEventListener('focus', ({target}) =>{
             this.animating(element)
         })
         input.addEventListener('blur', () => {
