@@ -1,0 +1,18 @@
+
+.rippleon {
+	z-index: 1;
+	display: block;
+	position: absolute;
+	background: rgba(255, 255, 255, 0.384);
+	border-radius: 50%;
+	transition:transform 1.2s cubic-bezier(.15,.85,.57,.57);
+	transform: scale(0);
+}
+.clean{
+    transition: all .3s ease-in-out;
+    opacity: 0;
+}
+.on{
+    transform: scale(2);
+}
+
