@@ -26,7 +26,7 @@ module.exports = function(app) {
         var password = req.body.inputPassword;
 
         if (!login || !password)
-            return res.render('login', { message: "Введите логин и пароль." });
+            return res.render('login', { messages: ["Введите логин и пароль."] });
 
         connection.query('SELECT id, hash, name, type, position FROM users WHERE login = ?', [login], (err, results, fields) => {
             if (err) {
@@ -35,7 +35,7 @@ module.exports = function(app) {
             }
 
             if (results.length === 0)
-                return res.render('login', { message: "Данного логина не существует." });
+                return res.render('login', { messages: ["Данного логина не существует."] });
 
             var user = { 
                 id: results[0].id,
@@ -47,7 +47,7 @@ module.exports = function(app) {
             };
 
             if (!bcrypt.compareSync(password, user.hash))
-                return res.render('login', { message: "Неверный пароль." });
+                return res.render('login', { messages: ["Неверный пароль."] });
 
             req.session.user = user;
             return res.redirect('/');
@@ -84,28 +84,28 @@ module.exports = function(app) {
         var position = req.body.inputPosition;
 
         if (!login || !password)
-            return res.render('register', { message: "Введите логин и пароль." });
+            return res.render('register', { messages: ["Введите логин и пароль."] });
         if (password.length < 4)
-            return res.render('register', { message: "Пароль не может быть короче 4 символов." });
+            return res.render('register', { messages: ["Пароль не может быть короче 4 символов."] });
         
         if (!name)
-            return res.render('register', { message: "Введите ФИО." });
+            return res.render('register', { messages: ["Введите ФИО."] });
         var parts = name.split(" ");
         if (parts.length !== 3)
-            return res.render('register', { message: "Введите ФИО в формате \"Фамилия Имя Отчество\"." });
+            return res.render('register', { messages: ["Введите ФИО в формате \"Фамилия Имя Отчество\"."] });
         for (part of parts) {
             if (!(/^[а-яА-Я]+$/.test(part)) || part.charAt(0) == part.charAt(0).toLowerCase())
-                return res.render('register', { message: "Введите ФИО в формате \"Фамилия Имя Отчество\"." });
+                return res.render('register', { messages: ["Введите ФИО в формате \"Фамилия Имя Отчество\"."] });
         }
 
         if (!type)
-            return res.render('register', { message: "Введите тип аккаунта." });
+            return res.render('register', { messages: ["Введите тип аккаунта."] });
         type = parseInt(type, 10);
         if (type < 0 || type > 3)
-            return res.render('register', { message: "Неверный тип аккаунта." });
+            return res.render('register', { messages: ["Неверный тип аккаунта."] });
         
         if (!position)
-            return res.render('register', { message: "Введите ваш класс/должность." });
+            return res.render('register', { messages: ["Введите ваш класс/должность."] });
 
         var hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -139,7 +139,7 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/error', (req, res) => {
+    app.get('*', (req, res) => {
         return res.render('error');
     });
 };

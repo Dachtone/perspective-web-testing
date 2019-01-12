@@ -1,12 +1,84 @@
-<h1>Страница регистрации</h1>
-<% if (typeof message !== 'undefined') { %>
-    <b><%= message %></b>
-<% } %>
-<form action="/register" method="POST">
-    <input name="inputLogin" placeholder="Логин" required>
-    <input type="password" name="inputPassword" placeholder="Пароль" required>
-    <input name="inputName" placeholder="ФИО" required>
-    <input name="inputType" placeholder="Тип аккаунта" required>
-    <input name="inputPosition" placeholder="Класс/должность" required>
-    <button type="submit">Регистрация</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Testing | Регистрация</title>
+    <link rel="stylesheet" href="static/css/IDcolor.css">
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/css/input.css">
+    <link rel="stylesheet" href="static/css/font/font.css">
+</head>
+<body>
+    
+    <div class="login__wrapper">
+        <div class="wp_main">
+            <div class="wellcome_tittle">
+                <span class="ttle_fr">Добро пожаловать</span>
+                <span class="ttle_lst">Создайте аккаунт для пользования сайтом</span>
+            </div>
+            <% if (typeof messages !== 'undefined') { %>
+                <div>
+                    <% messages.forEach(function(message){ %>
+                        <b><%= message %></b>
+                    <% }); %>
+                </div>
+            <% } %>
+            <div class="log_ttle">
+                <div class="span_logttle">Регистрация</div>
+            </div>
+            <div class="log_wrp">
+            <form action="/register" id="registerForm" method="POST">
+                <div class="athrz-main">
+                    <div class="d2DHdaj">
+                        <div class="bj">
+                            <div class="Rjx2D">Логин</div>
+                             <input type="text" name="inputLogin" class="DJad2DAj" required>
+                         </div>
+                     </div>
+                     <div class="d2DHdaj">
+                        <div class="bj">
+                            <div class="Rjx2D">Пароль</div>
+                             <input type="password" name="inputPassword" class="DJad2DAj" required>
+                         </div>
+                     </div>
+                    <div class="d2DHdaj">
+                        <div class="bj">
+                            <div class="Rjx2D">ФИО</div>
+                            <input type="text" name="inputName" class="DJad2DAj" required>
+                        </div>
+                    </div>
+                    <div class="d2DHdaj">
+                        <div class="bj">
+                            <div class="Rjx2D">Тип аккаунта</div>
+                            <input type="text" name="inputType" class="DJad2DAj" required>
+                        </div>
+                    </div>
+                    <div class="d2DHdaj">
+                        <div class="bj">
+                            <div class="Rjx2D">Класс/должность</div>
+                            <input type="text" name="inputPosition" class="DJad2DAj" required>
+                        </div>
+                    </div>
+                </div>  
+               <div class="loginbtn" onclick="sendRegisterForm()">
+                   <div class="ttlebtnspan">Зарегистрироваться</div>
+               </div>
+            </form>    
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+    function sendRegisterForm() {
+        document.getElementById("registerForm").submit();
+    };
+    </script>
+
+    <script type='module' src="static/js/app.js"></script>
+</body>
+</html>
