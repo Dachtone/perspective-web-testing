@@ -1,6 +1,6 @@
 
 .rippleon {
-	z-index: 1;
+	z-index: -1;
 	display: block;
 	position: absolute;
 	background: rgba(255, 255, 255, 0.384);
