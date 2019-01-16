@@ -1,13 +1,27 @@
+body, html{
+    width: 100%;
+    height: 100%;
+}
+
 .login__wrapper{
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    
-    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
-    border-radius: 6px
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 400px;
+    height: 100vh;
+    margin: 0 auto;
+}
+.login__wrapper::after{
+    content: '';
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+.login__wrapper::before{
+    content: '';
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
 }
 .loginbtn{
     position: relative;
@@ -63,8 +77,9 @@ input:focus{
 }
 
 .wp_main{
-    position: relative;
-    padding: 50px 40px 30px 40px;
+    border: 1px solid #D9DBDF;
+    border-radius: 6px;
+    padding: 50px 40px 10px 40px;
 }
 
 .athrz-main{
@@ -93,7 +108,7 @@ input:focus{
     color: #fff;
     background: #3067CE;
     width: 200px;
-    margin-top: 52px;
+    margin-top: 80px;
 }
 
 .ta{
