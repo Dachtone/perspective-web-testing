@@ -3,9 +3,10 @@
 	z-index: -1;
 	display: block;
 	position: absolute;
-	background: rgba(255, 255, 255, 0.384);
+	background: #fff;
+	opacity: .3;
 	border-radius: 50%;
-	transition:transform 1.2s cubic-bezier(.15,.85,.57,.57);
+	transition:transform 1.2s cubic-bezier(.12,.42,.19,.9);
 	transform: scale(0);
 }
 .clean{
@@ -16,3 +17,23 @@
     transform: scale(2);
 }
 
+.aria-ripple{
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    z-index: -1;
+    border-radius: 50%;
+    transition: transform 230ms cubic-bezier(.25,.8,.25,1), opacity 300ms ease-in-out;
+    opacity: .3;
+    background: rgba(0, 0, 0, 0.445);
+}
+.animate{
+    transform: scale(1) !important
+}
+.rejected{
+    opacity: 0;
+}
