@@ -1,5 +1,6 @@
 ui-overlay, ui-menu-layout{
     position: fixed;
+    transition: .2s all cubic-bezier(.04,.16,.11,.93);
     display: block;
 }
 ui-overlay{
@@ -24,7 +25,7 @@ iron-icon{
     height: inherit;
     background: #fff;
 }
-.rootUp-ui{
+.rootUp-ui{ 
     padding-inline-start: 23px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -41,6 +42,7 @@ iron-icon{
     margin-top: 10px;;
 }
 .replod-ui{
+
     display: flex;
     padding-left: 20px;
     font-size: 111%;
@@ -48,6 +50,11 @@ iron-icon{
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.068);
 }
-[hidden]{
-    display: none;
+
+ui-menu-layout[hidden]{
+    transform: translateX(-100%)
+}
+ui-overlay[hidden]{
+    visibility: hidden;
+    opacity: 0;
 }

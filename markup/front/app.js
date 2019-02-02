@@ -8,19 +8,20 @@ const ripple = new rippleEffect('.loginbtn')
 function errorAlert(wrap, alertblock){
     const alert = document.querySelector(alertblock)
     const parent = document.querySelectorAll(wrap)
-
+    let error = 0;
     Array.prototype.forEach.call(parent, element =>{
         const value = element.querySelector('input').value
-        
             if(value.trim() == ''){
                 element.classList.add('_empty')
-                alert.classList.add('AjmAWC')
+                error++
             }
             else{
                 element.classList.remove('_empty')
-                alert.classList.remove('AjmAWC')
             }
     })
+    if(error > 0){
+        alert.classList.add('AjmAWC')
+    }else{alert.classList.remove('AjmAWC')}
 }
 
 
@@ -28,3 +29,4 @@ function errorAlert(wrap, alertblock){
 document.querySelector('.loginbtn').addEventListener('click', function(){
     errorAlert('.bj', '.RWacdkJs')
 })
+
