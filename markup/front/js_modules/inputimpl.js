@@ -18,16 +18,21 @@ export class JSinputImplementation{
 
         placeholder.classList.add('uWuQQ9p')
         placeholder.classList.add('h5DzSLL')
+        element.classList.add('dwajisY')
         this.onCheked(form)
     }
     disableAnimating(element){
         const value = element.querySelector('input').value
         const placeholder = element.querySelector(this.placeholder)
-
+        element.classList.remove('dwajisY')
+        
+        let error = 0 
         if(value.trim() == ''){
+            
             placeholder.classList.remove('uWuQQ9p')
             placeholder.classList.remove('h5DzSLL')
         }else{
+            
             placeholder.classList.remove('h5DzSLL')
         }
     }

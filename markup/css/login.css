@@ -110,6 +110,13 @@ input:focus{
     width: 200px;
     margin-top: 80px;
 }
+.loginbtn .rippleon{
+    background: rgba(255, 255, 255, 0.322) !important
+}
+
+span{
+    display: block;
+}
 
 .ta{
     font-size: 18px;

@@ -1,0 +1,63 @@
+.afobqbROic{font-family: "Roboto";
+    color: #5f6368;
+    border-bottom: 1px solid #00000059;
+    display: flex;
+    font-size: 15px;
+    align-items: flex-end;
+    padding-bottom: 8px;
+    margin-bottom: 10px;;
+}
+.afobqbROic iron-icon{
+    margin-inline-end: 10px;
+    width: 24px;
+    height: 24px;
+}
+.aSEQzkJ{
+    width: 560px !important;
+}
+.iiHdNvsXDu{
+    position: relative;
+    margin-top:24px;;
+}
+.ROFWuPbXOCC{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+}
+.ROFWuPbXOCC iron-icon{
+    margin: 0;
+    width: 24px;
+    height: 24px;
+}
+.XmpFH7yAUc{
+    font-weight: 500;
+    color: #000000a6;
+    font-family: 'Roboto';
+    font-size: 88.25%;
+    margin-top: 20px;
+    margin-bottom: 10px;;
+}
+.sj{
+    margin-top: 5px;;
+}
+.MHOai4cPWJs .rippleon{
+    background: #E9F2FC !important;
+}
+.MHOai4cPWJs{
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    font-family: 'Roboto';
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: #3367d6;
+    margin-left: auto;
+    border-radius: 4px;
+    padding: 5px 0px;
+    width: 120px;
+    text-align: center;
+    border: 1px solid #c2c4c9;
+}

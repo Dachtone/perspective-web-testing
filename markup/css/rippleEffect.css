@@ -4,10 +4,9 @@
 	display: block;
 	position: absolute;
 	background: #fff;
-	opacity: .3;
 	border-radius: 50%;
 	transition:transform 1.2s cubic-bezier(.12,.42,.19,.9);
-	transform: scale(0);
+    transform: scale(0);
 }
 .clean{
     transition: all .3s ease-in-out;
