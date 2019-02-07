@@ -1,0 +1,44 @@
+<% if (typeof messages !== 'undefined') { %>
+    <div>
+        <% messages.forEach(function(message){ %>
+            <b><%= message %></b><br>
+        <% }); %>
+    </div>
+<% } %>
+<% if (elements.length === 0) { %>
+    <b>Нет элементов.</b>
+    <hr>
+<% } else { %>
+    <b>Список пользователей:</b><br>
+    <hr>
+    <% elements.forEach(function(element){ %>
+        <div>
+            Логин: <%= element.login %><br>
+            ФИО: <%= element.name %><br>
+            Тип аккаунта: <% if (element.type === 0) { %>Гость<% } else if (element.type === 1) { %>Ученик<% } else if (element.type === 2) { %>Учитель/сотрудник<% } else if (element.type === 3) { %>Администратор<% } %><br>
+            Статус аккаунта: <% if (element.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %><br>
+            Класс/должность: <%= element.position %><br>
+            <% if (admin) { %>
+                <% if (!element.verified) { %>
+                    <form action="/admin/verify_account/<%= element.id %>" method="POST">
+                        <input type="submit" value="Подтвердить личность"/>
+                    </form>
+                <% } %>
+                <% if (user.id !== element.id && (element.type !== 3 || !element.verified)) { %>
+                    <form action="/admin/delete_account/<%= element.id %>" method="POST">
+                        <input type="submit" value="Удалить аккаунт пользователя"/>
+                    </form>
+                <% } %>
+            <% } %>
+        </div>
+        <hr>
+    <% }); %>
+<% } %>
+<i>Страница <%= page %> из <%= pages_num %></i><br>
+<% for (var i = 1; i <= pages_num; i++) { %>
+    <a href="users?page=<%= i %>"><% if (i === page) { %><b><%= i %></b><% } else { %><%= i %><% } %></a>   
+<% } %>
+<br><br>
+<form action="/" method="GET">
+    <input type="submit" value="На Главную"/>
+</form>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Web Testing | Регистрация</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/IDcolor.css">
     <link rel="stylesheet" href="static/css/login.css">
     <link rel="stylesheet" href="static/css/rippleEffect.css">
@@ -50,11 +51,15 @@
                             <input type="text" name="inputName" class="DJad2DAj" required>
                         </div>
                     </div>
-                    <div class="d2DHdaj">
-                        <div class="bj">
-                            <div class="Rjx2D">Тип аккаунта</div>
-                            <input type="text" name="inputType" class="DJad2DAj" required>
-                        </div>
+                    <div class="d2DHdaj" style="margin-top: 23px">
+                        <label class="mr-sm-2 Rjx2D" for="inlineFormCustomSelect">Тип аккаунта</label>
+                        <select class="custom-select mr-sm-2" name="inputType" id="inlineFormCustomSelect" style="margin-top: 1.9rem!important">
+                            <option value="-1" selected>Выбрать...</option>
+                            <option value="0">Гость</option>
+                            <option value="1">Ученик</option>
+                            <option value="2">Учитель/сотрудник</option>
+                            <option value="3">Администратор</option>
+                        </select>
                     </div>
                     <div class="d2DHdaj">
                         <div class="bj">
@@ -77,8 +82,23 @@
     function sendRegisterForm() {
         document.getElementById("registerForm").submit();
     };
+
+    var input = document.getElementsByClassName("bj");
+    for (var i = 0; i < input.length; i++) {
+        input.item(i).addEventListener("keyup", (event) => {
+            event.preventDefault();
+
+            // Enter
+            if (event.keyCode === 13) {
+                sendRegisterForm();
+            }
+        });
+    }
     </script>
 
     <script type='module' src="static/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

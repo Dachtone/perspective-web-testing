@@ -1,0 +1,22 @@
+<b>Профиль: <%= profile.name %>.</b>
+
+<hr>
+Логин: <%= profile.login %><br>
+Тип аккаунта: <% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %><br>
+Статус аккаунта: <% if (profile.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %><br>
+Класс/должность: <%= profile.position %><br>
+<hr>
+
+<% if (user.id === profile.id) { %>
+    <form action="/delete_account" method="POST">
+        <input type="submit" value="Удалить аккаунт"/>
+    </form>
+<% } %>
+
+<form action="/logout" method="POST">
+    <input type="submit" value="Выйти"/>
+</form>
+
+<form action="/" method="GET">
+    <input type="submit" value="На Главную"/>
+</form>

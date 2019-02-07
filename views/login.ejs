@@ -59,6 +59,18 @@
     function sendLoginForm() {
         document.getElementById("loginForm").submit();
     };
+
+    var input = document.getElementsByClassName("bj");
+    for (var i = 0; i < input.length; i++) {
+        input.item(i).addEventListener("keyup", (event) => {
+            event.preventDefault();
+
+            // Enter
+            if (event.keyCode === 13) {
+                sendLoginForm();
+            }
+        });
+    }
     </script>
 
     <script type='module' src="static/js/app.js"></script>
