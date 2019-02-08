@@ -34,9 +34,11 @@
         <hr>
     <% }); %>
 <% } %>
-<i>Страница <%= page %> из <%= pages_num %></i><br>
-<% for (var i = 1; i <= pages_num; i++) { %>
-    <a href="users?page=<%= i %>"><% if (i === page) { %><b><%= i %></b><% } else { %><%= i %><% } %></a>   
+<% if (pages_num > 0) { %>
+    <i>Страница <%= page %> из <%= pages_num %></i><br>
+    <% for (var i = 1; i <= pages_num; i++) { %>
+        <a href="users?page=<%= i %>"><% if (i === page) { %><b><%= i %></b><% } else { %><%= i %><% } %></a>   
+    <% } %>
 <% } %>
 <br><br>
 <form action="/" method="GET">

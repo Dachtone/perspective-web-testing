@@ -1,0 +1,43 @@
+<% if (typeof messages !== 'undefined') { %>
+    <div>
+        <% messages.forEach(function(message){ %>
+            <b><%= message %></b><br>
+        <% }); %>
+    </div>
+<% } %>
+<% if (teacher) { %>
+<form action="/create_topic" method="GET">
+    <input type="submit" value="Добавить новую тему"/>
+</form><br>
+<% } %>
+<% if (elements.length === 0) { %>
+    <b>Нет элементов.</b>
+    <hr>
+<% } else { %>
+    <b>Список тем:</b><br>
+    <hr>
+    <% elements.forEach(function(element){ %>
+        <div>
+            Название: <%= element.title %><br>
+            Предмет: <%= element.subject %><br>
+            Уровень: <% if (element.semester <= 22) { %><%= Math.ceil(element.semester / 2) %> класс, <%= 2 - (element.semester % 2) %> cеместр<% } else { %>Высшее образвание<% } %><br>
+            <% if (teacher) { %>
+                <form action="/delete_topic/<%= element.id %>" method="POST">
+                    <input type="submit" value="Удалить тему"/>
+                </form>
+            <% } %>
+        </div>
+        <hr>
+    <% }); %>
+<% } %>
+<% if (pages_num > 0) { %>
+    <i>Страница <%= page %> из <%= pages_num %></i><br>
+    <% for (var i = 1; i <= pages_num; i++) { %>
+        <a href="topics?page=<%= i %>"><% if (i === page) { %><b><%= i %></b><% } else { %><%= i %><% } %></a>   
+    <% } %>
+    <br>
+<% } %>
+<br>
+<form action="/" method="GET">
+    <input type="submit" value="На Главную"/>
+</form>

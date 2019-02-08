@@ -1,0 +1,33 @@
+<% if (typeof messages !== 'undefined') { %>
+    <div>
+        <% messages.forEach(function(message){ %>
+            <b><%= message %></b><br>
+        <% }); %>
+    </div>
+<% } %>
+<b>Создание новой темы:</b>
+
+<form action="/create_topic" method="POST">
+    <input name="inputTitle" placeholder="Название темы"><br>
+    <input name="inputSubject" placeholder="Предмет"><br>
+    <select name="inputSemester">
+        <option value="-1" selected>Выбрать...</option>
+        <option disabled="disabled">──────────</option>
+        <% for (var i = 1; i <= 22; i++) { %>
+            <option value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</option>
+            <% if (i % 2 === 0) { %>
+                <option disabled="disabled">──────────</option>
+            <% } %>
+        <% } %>
+        <option value="23">Высшее образование</option>
+    </select><br>
+    <button type="submit">Создать</button><br>
+</form>
+
+<br>
+<form action="/topics" method="GET">
+    <input type="submit" value="Назад"/>
+</form>
+<form action="/" method="GET">
+    <input type="submit" value="На Главную"/>
+</form>

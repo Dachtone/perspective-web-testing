@@ -1,27 +1,33 @@
 <h1>Hello World!</h1>
 
 <% if (typeof user === 'undefined') { %>
-<form action="/login" method="GET">
-    <input type="submit" value="Войти"/>
-</form>
-<form action="/register" method="GET">
-    <input type="submit" value="Зарегистироваться"/>
-</form>
+    <form action="/login" method="GET">
+        <input type="submit" value="Войти"/>
+    </form>
+    <form action="/register" method="GET">
+        <input type="submit" value="Зарегистироваться"/>
+    </form>
 <% } else { %>
-<form action="/profile" method="GET">
-    <input type="submit" value="Профиль"/>
-</form>
-<form action="/users" method="GET">
-    <input type="submit" value="Список пользователей"/>
-</form>
-<% if (user.type == 3) { %>
-<form action="/admin" method="GET">
-    <input type="submit" value="Административная панель"/>
-</form>
-<% } %>
-<form action="/logout" method="POST">
-    <input type="submit" value="Выйти"/>
-</form>
+    <form action="/profile" method="GET">
+        <input type="submit" value="Профиль"/>
+    </form>
+    <form action="/tests" method="GET">
+        <input type="submit" value="Список тестов"/>
+    </form>
+    <form action="/topics" method="GET">
+        <input type="submit" value="Список тем"/>
+    </form>
+    <form action="/users" method="GET">
+        <input type="submit" value="Список пользователей"/>
+    </form>
+    <% if (user.type == 3 && user.verified) { %>
+        <form action="/admin" method="GET">
+            <input type="submit" value="Административная панель"/>
+        </form>
+    <% } %>
+    <form action="/logout" method="POST">
+        <input type="submit" value="Выйти"/>
+    </form>
 <% } %>
 
 <% if (typeof messages !== 'undefined') { %>
