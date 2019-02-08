@@ -18,4 +18,9 @@ export class model extends eventEmmiter {
             this.init('event:record', this.state)
         }
     }
+    removeAllItem(){
+        this.state.length = 0
+        this.init('event:record', this.state)
+    }
+
 }

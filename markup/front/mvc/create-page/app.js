@@ -3,6 +3,7 @@ import {controller} from './controller.js'
 import {model} from './model.js'
 
 function saveData(data){
+    console.log(data)
     const record = JSON.stringify(data)
     
     window.localStorage.setItem('record_dataCreate', record)
