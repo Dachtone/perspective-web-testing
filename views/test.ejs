@@ -1,0 +1,60 @@
+<body>
+    <div id="notifications">
+    <% if (typeof messages !== 'undefined' && messages.length !== 0) { %> 
+        <% messages.forEach((message) => { %>
+            <b><%= message %></b><br>
+        <% }); %>
+    <% } %>
+    </div>
+    <hr><br>
+    
+    <b>Тестирование:</b><br>
+    Заголовок: <%= info.headline %><br>
+    Тема: <%= info.topic.title %><br>
+    Предмет: <%= info.topic.subject %><br>
+    Уровень подготовки: <% if (info.semester <= 22) { %><%= Math.ceil(info.semester / 2) %> класс, <%= 2 - (info.semester % 2) %> cеместр<% } else { %>Высшее образвание<% } %><br>
+    Автор теста: <a href="/profile/<%= info.author.id %>"><%= info.author.name %></a><br>
+    Дата создания: <%= ("0" + info.created.getDate()).slice(-2) %>.<%= ("0" + (info.created.getMonth() + 1)).slice(-2) %>.<%= info.created.getFullYear() %> <%= ("0" + info.created.getHours()).slice(-2) %>:<%= ("0" + info.created.getMinutes()).slice(-2) %><br>
+    Статус: <% if (completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
+    <% if (teacher) { %>
+        <form action="/delete_test/<%= info.id %>" method="POST">
+            <input type="submit" value="Удалить тест"/>
+        </form>
+    <% } %>
+    
+    <i>Вопросы:</i>
+    <hr>
+    
+    <% questions.forEach((question, index) => { %>
+        <div class="question" id="question<%= index + 1 %>">
+        <label>Вопрос №<%= index + 1 %></label>
+        <div class="mathEnabled">
+            <%= question.body %>
+        </div>
+        <% if (!completed) { %>
+            <input name="answer" placeholder="Ваш ответ"><br>
+        <% } else { %>
+            <label>Правильный ответ: <%= question.correct_answer %></label><br>
+            <% if (question.filled) { %>
+                <label>Ваш ответ: <%= question.answer %></label>  
+            <% } %>
+        <% } %>
+        <hr>
+        </div>
+    <% }); %>
+    
+    <% if (!completed) { %>
+    <button type="button" id="sendTest">Закончить тест</button><br>
+    <hr>
+    <% } %>
+    
+    <br><br>
+    <form action="/tests" method="GET">
+        <input type="submit" value="Список тестов"/>
+    </form>
+    <form action="/" method="GET">
+        <input type="submit" value="На Главную"/>
+    </form>
+    
+    <script src="/static/js/testCompletion.js"></script>
+</body>

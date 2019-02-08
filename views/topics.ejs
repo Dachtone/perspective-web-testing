@@ -20,7 +20,7 @@
         <div>
             Название: <%= element.title %><br>
             Предмет: <%= element.subject %><br>
-            Уровень: <% if (element.semester <= 22) { %><%= Math.ceil(element.semester / 2) %> класс, <%= 2 - (element.semester % 2) %> cеместр<% } else { %>Высшее образвание<% } %><br>
+            Уровень подготовки: <% if (element.semester <= 22) { %><%= Math.ceil(element.semester / 2) %> класс, <%= 2 - (element.semester % 2) %> cеместр<% } else { %>Высшее образвание<% } %><br>
             <% if (teacher) { %>
                 <form action="/delete_topic/<%= element.id %>" method="POST">
                     <input type="submit" value="Удалить тему"/>
