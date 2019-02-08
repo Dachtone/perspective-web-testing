@@ -5,10 +5,17 @@ import {rippleCircle} from './additions/ariaRipple.js'
 export class view extends eventEmmiter{
     constructor(){
         super()
-
+        
+        this.delete_btn = document.querySelector('.AIt6QirCx ')
         this.create_button = document.querySelector('.sdAWjd2dl')
         this.container = document.querySelector('.EBQbR3g07L')
+        this.success = document.querySelector('.phw1tr2Ml') 
 
+        this.success.addEventListener('click', this.validate.bind(this))
+
+        this.delete_btn.addEventListener('click', ()=> {
+            this.init('event:remove-all', {})
+        }) 
         this.create_button.addEventListener('click', ()=> {
             this.init('event:create', {})
         })
@@ -79,5 +86,56 @@ export class view extends eventEmmiter{
     removeItem(id){
         const element = this.findElement(id)    
         this.hideElement(element)
+    }
+    removeAllItem(){
+        const element = document.querySelectorAll('.item')
+        Array.prototype.forEach.call(element, item => this.hideElement(item))
+    }
+    errorComplit(element, prop){
+        const error = document.querySelector('.error')
+        const ttle = error.querySelector('.error-ttle')
+
+        error.setAttribute('error-reject', '')
+        ttle.textContent = prop
+    }
+    errorReject(){
+        const error =  document.querySelector('.error')
+        error.removeAttribute('error-reject')
+    }
+    validate(){
+
+        const item = document.querySelectorAll('.item');
+        const theme = document.querySelector('.DJad2DAj');
+
+            let error = false
+            let _data = {}
+            _data.data = []
+
+        if(item){
+            
+            Array.prototype.forEach.call(item, element =>{
+                const statement = element.querySelector('.id')
+                const point = element.querySelector('input[type=number]')
+                const answer = element.querySelector('input[type=text]')
+
+                if(theme.value.trim() !== ''){
+                    if(statement.textContent.trim() !== '' && point.value.trim() !== '' && answer.value.trim() !== ''){
+                        error = true
+
+                        _data.theme = theme.value
+                        _data.data.push({'state': statement.textContent, 'point': point.value, 'answer': answer.value})
+                        
+                        this.init('event:send-data', _data)
+                        this.errorReject()
+                    }else{
+                        this.errorComplit('','Заполните все условия задач')
+                    }
+                }
+                else{
+                    this.errorComplit('','Введите тему')
+                }
+            })
+        }
+
     }
 }
