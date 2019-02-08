@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 
 module.exports = function(app) {
-    /* ------- Middleware ------- */
+
+    /* -------- Middleware -------- */
 
     app.use((req, res, next) => {
         if (req.session && req.session.user) {
@@ -32,6 +33,8 @@ module.exports = function(app) {
 
     /* -------- Routing -------- */
 
+    /* +------+ Home +------+ */
+
     app.get('/', (req, res) => {
         var messages = [];
 
@@ -50,6 +53,8 @@ module.exports = function(app) {
 
         return res.render('home', { messages: messages });
     });
+
+    /* +------+ Profile +------+ */
 
     app.get('/profile', (req, res) => {
         if (!req.session.user)
@@ -86,277 +91,6 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/admin', (req, res) => {
-        if (!req.session.user || req.session.user.type != 3 || !req.session.user.verified)
-            return res.redirect('/error');
-
-        return res.render('admin', { user: req.session.user });
-    });
-
-    app.get('/admin/users', (req, res) => {
-        if (!req.session.user || req.session.user.type != 3 || !req.session.user.verified)
-            return res.redirect('/error');
-
-        return res.redirect('/users');
-    });
-
-    app.get('/users', (req, res) => {
-        if (!req.session.user)
-            return res.redirect('/error');
-
-        const admin = (req.session.user.type === 3 && req.session.user.verified) ? true : false;
-
-        var messages = [];
-
-        if (req.query.error) {
-            if (req.query.error === 'no_user')
-                messages.push('Ошибка: Пользователь не найден.');
-            else if (req.query.error === 'admin')
-                messages.push('Ошибка: Нельзя удалить Администратора.');
-            else if (req.query.error === 'already_verified')
-                messages.push('Ошибка: Пользователь уже подтверждён.');
-        }
-        else if (req.query.deleted)
-            messages.push('Пользователь ' + req.query.deleted + ' успешно удалён.');
-        else if (req.query.verified)
-            messages.push('Пользователь ' + req.query.verified + ' успешно подтверждён.');
-
-        const elements_per_page = 10;
-        
-        var page = 1;
-        if (req.query.page) {
-            page = parseInt(req.query.page, 10);
-
-            if (page < 1) {
-                messages.push("Страница с введённым номером не существует.");
-                page = 1;
-            }
-        }
-        
-        var pages_num = 1;
-        connection.query('SELECT COUNT(*) FROM users', (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /users. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
-        });
-
-        var offset = (page - 1) * elements_per_page;
-        connection.query('SELECT id, login, name, type, verified, position FROM users LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /users. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            return res.render('users', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, admin: admin });
-        });
-    });
-
-    app.get('/tests', (req, res) => {
-        if (!req.session.user)
-            return res.redirect('/error');
-
-        const teacher = (req.session.user.type >= 2 && req.session.user.verified) ? true : false;
-
-        var messages = [];
-
-        if (req.query.error) {
-            if (req.query.error === 'no_test')
-                messages.push('Ошибка: Тема не найдена.');
-        }
-        else if (req.query.deleted)
-            messages.push('Тест "' + decodeURIComponent(req.query.deleted) + '" успешно удалён.');
-        else if (req.query.success)
-            messages.push('Тест успешно создан.');
-
-        const elements_per_page = 10;
-        
-        var page = 1;
-        if (req.query.page) {
-            page = parseInt(req.query.page, 10);
-
-            if (page < 1) {
-                messages.push("Страница с введённым номером не существует.");
-                page = 1;
-            }
-        }
-        
-        var pages_num = 1;
-        connection.query('SELECT COUNT(*) FROM tests', (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
-        });
-
-        var offset = (page - 1) * elements_per_page;
-        connection.query('SELECT tests.id, tests.headline, topics.title, topics.subject, users.id AS author_id, users.name, tests.created + INTERVAL 3 HOUR AS created FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id ORDER BY tests.id DESC LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, teacher: teacher });
-        });
-    });
-
-    app.get('/test', (req, res) => {
-        res.redirect('/tests');
-    });
-
-    app.post('/delete_test/:id', (req, res) => {
-        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
-            return res.redirect('/error');
-
-        connection.query('SELECT headline FROM tests WHERE id = ?', [req.params.id], (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            if (results.length === 0)
-                return res.redirect('/tests?error=no_test');
-
-            var headline = results[0].headline;
-
-            connection.query('DELETE FROM tests WHERE id = ?', [req.params.id], (err, results, fields) => {
-                if (err) {
-                    console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
-                    return res.redirect('/error');
-                }
-    
-                return res.redirect('/tests?deleted=' + encodeURIComponent(headline));
-            });
-        });
-    });
-
-    app.get('/topics', (req, res) => {
-        if (!req.session.user)
-            return res.redirect('/error');
-
-        const teacher = (req.session.user.type >= 2 && req.session.user.verified) ? true : false;
-
-        var messages = [];
-
-        if (req.query.error) {
-            if (req.query.error === 'no_topic')
-                messages.push('Ошибка: Тема не найдена.');
-        }
-        else if (req.query.deleted)
-            messages.push('Тема "' + decodeURIComponent(req.query.deleted) + '" успешно удалена.');
-        else if (req.query.success)
-            messages.push('Тема успешно создана.');
-
-        const elements_per_page = 10;
-        
-        var page = 1;
-        if (req.query.page) {
-            page = parseInt(req.query.page, 10);
-
-            if (page < 1) {
-                messages.push("Страница с введённым номером не существует.");
-                page = 1;
-            }
-        }
-        
-        var pages_num = 1;
-        connection.query('SELECT COUNT(*) FROM topics', (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
-        });
-
-        var offset = (page - 1) * elements_per_page;
-        connection.query('SELECT id, title, subject, semester FROM topics LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            return res.render('topics', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, teacher: teacher });
-        });
-    });
-
-    app.post('/delete_topic/:id', (req, res) => {
-        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
-            return res.redirect('/error');
-
-        connection.query('SELECT title FROM topics WHERE id = ?', [req.params.id], (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /delete_topic. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            if (results.length === 0)
-                return res.redirect('/topics?error=no_topic');
-
-            var title = results[0].title;
-
-            connection.query('DELETE FROM topics WHERE id = ?; DELETE FROM tests WHERE topic = ?', [req.params.id, req.params.id], (err, results, fields) => {
-                if (err) {
-                    console.log('An error has occured on /delete_topic. ' + err.code + ': ' + err.sqlMessage);
-                    return res.redirect('/error');
-                }
-    
-                return res.redirect('/topics?deleted=' + encodeURIComponent(title));
-            });
-        });
-    });
-
-    app.get('/create_topic', (req, res) => {
-        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
-            return res.redirect('/error');
-
-        return res.render('create_topic', { user: req.session.user });
-    });
-
-    app.post('/create_topic', (req, res) => {
-        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
-            return res.redirect('/error');
-
-        var title = req.body.inputTitle;
-        var subject = req.body.inputSubject;
-        var semester = req.body.inputSemester;
-
-        if (!title)
-            return res.render('create_topic', { messages: ["Введите название темы."], user: req.session.user });
-        title = escapeHTML(title);
-        if (title.length < 3)
-            return res.render('create_topic', { messages: ["Название темы не может быть короче 3 символов."], user: req.session.user });
-        
-        if (!subject)
-            return res.render('create_topic', { messages: ["Введите название предмета."], user: req.session.user });
-        if (!(/^[а-яА-Я\s]*$/.test(subject)))
-            return res.render('create_topic', { messages: ["В названии предмета допустима только кириллица."], user: req.session.user });
-        if (subject.length < 2)
-            return res.render('create_topic', { messages: ["Название предмета не может быть короче 2 символов."], user: req.session.user });
-        
-        if (!semester)
-            return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
-        semester = parseInt(semester, 10);
-        if (semester === -1)
-            return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
-        if (semester < 0)
-            return res.render('create_topic', { messages: ["Неверный уровень подготовки."], user: req.session.user });
-
-        connection.query('INSERT INTO topics (title, subject, semester) VALUES (?, ?, ?)', 
-                        [title, subject, semester], (err, results, fields) => {
-            if (err) {
-                console.log('An error has occured on /create_topic. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
-            }
-
-            return res.redirect('/topics?success=true');
-        });
-    });
-
     app.post('/delete_account', (req, res) => {
         if (!req.session.user)
             return res.redirect('/error');
@@ -372,6 +106,22 @@ module.exports = function(app) {
                 return res.redirect("/?action=deleted_account");
             });
         });
+    });
+
+    /* +------+ Admin +------+ */
+
+    app.get('/admin', (req, res) => {
+        if (!req.session.user || req.session.user.type != 3 || !req.session.user.verified)
+            return res.redirect('/error');
+
+        return res.render('admin', { user: req.session.user });
+    });
+
+    app.get('/admin/users', (req, res) => {
+        if (!req.session.user || req.session.user.type != 3 || !req.session.user.verified)
+            return res.redirect('/error');
+
+        return res.redirect('/users');
     });
 
     app.post('/admin/delete_account/:id', (req, res) => {
@@ -429,6 +179,445 @@ module.exports = function(app) {
             });
         });
     });
+
+    /* +------+ Users +------+ */
+
+    app.get('/users', (req, res) => {
+        if (!req.session.user)
+            return res.redirect('/error');
+
+        const admin = (req.session.user.type === 3 && req.session.user.verified) ? true : false;
+
+        var messages = [];
+
+        if (req.query.error) {
+            if (req.query.error === 'no_user')
+                messages.push('Ошибка: Пользователь не найден.');
+            else if (req.query.error === 'admin')
+                messages.push('Ошибка: Нельзя удалить Администратора.');
+            else if (req.query.error === 'already_verified')
+                messages.push('Ошибка: Пользователь уже подтверждён.');
+        }
+        else if (req.query.deleted)
+            messages.push('Пользователь ' + req.query.deleted + ' успешно удалён.');
+        else if (req.query.verified)
+            messages.push('Пользователь ' + req.query.verified + ' успешно подтверждён.');
+
+        const elements_per_page = 10;
+        
+        var page = 1;
+        if (req.query.page) {
+            page = parseInt(req.query.page, 10);
+
+            if (page < 1) {
+                messages.push("Страница с введённым номером не существует.");
+                page = 1;
+            }
+        }
+        
+        var pages_num = 1;
+        connection.query('SELECT COUNT(*) FROM users', (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /users. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
+        });
+
+        var offset = (page - 1) * elements_per_page;
+        connection.query('SELECT id, login, name, type, verified, position FROM users LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /users. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            return res.render('users', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, admin: admin });
+        });
+    });
+
+    /* +------+ Tests +------+ */
+
+    app.get('/test', (req, res) => {
+        res.redirect('/tests');
+    });
+
+    app.get('/tests', (req, res) => {
+        if (!req.session.user)
+            return res.redirect('/error');
+
+        const teacher = (req.session.user.type >= 2 && req.session.user.verified) ? true : false;
+
+        var messages = [];
+
+        if (req.query.error) {
+            if (req.query.error === 'no_test')
+                messages.push('Ошибка: Тема не найдена.');
+        }
+        else if (req.query.deleted)
+            messages.push('Тест "' + decodeURIComponent(req.query.deleted) + '" успешно удалён.');
+        else if (req.query.success)
+            messages.push('Тест успешно создан.');
+
+        const elements_per_page = 10;
+        
+        var page = 1;
+        if (req.query.page) {
+            page = parseInt(req.query.page, 10);
+
+            if (page < 1) {
+                messages.push("Страница с введённым номером не существует.");
+                page = 1;
+            }
+        }
+        
+        var pages_num = 1;
+        connection.query('SELECT COUNT(*) FROM tests', (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
+        });
+
+        var offset = (page - 1) * elements_per_page;
+        connection.query('SELECT tests.id, tests.headline, topics.title, topics.subject, users.id AS author_id, users.name, tests.created + INTERVAL 3 HOUR AS created FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id ORDER BY tests.id DESC LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, teacher: teacher });
+        });
+    });
+
+    app.get('/create_test', (req, res) => {
+    if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+        return res.redirect('/error');
+        
+        connection.query('SELECT id, title FROM topics', (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /create_test. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            return res.render('create_test', { user: req.session.user, topics: results });
+        });
+    });
+
+    app.post('/create_test', (req, res) => {
+        res.setHeader('Content-Type', 'application/json');
+
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.json({ success: false, error: 'Нет доступа' });
+        
+        var data = req.body;
+        
+        var headline = data.head.headline;
+        if (!headline)
+            return res.json({ success: false, error: 'Заголовок должен быть заполнен' });
+        if (headline.length < 4)
+            return res.json({ success: false, error: 'Заголовок не может быть короче 4 символов' });
+        
+        var topic = data.head.topic;
+        topic = parseInt(topic, 10);
+        if (!topic || topic === -1)
+            return res.json({ success: false, error: 'Выберите тему' });
+        
+        connection.query('SELECT id FROM topics WHERE id = ?', [topic], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                return res.json({ success: false, error: 'Ошибка Базы Данных при проверке темы' });
+            }
+
+            if (results.length === 0)
+                return res.json({ success: false, error: 'Выбранная тема не существует' });
+
+            var abort = false;
+            var response = {};
+            data.questions.forEach((question) => {
+                if (abort)
+                    return;
+
+                if (!question.body) {
+                    response = { success: false, error: 'Пустые вопросы запрещены' };
+                    abort = true;
+                    return;
+                }
+                question.body = escapeHTML(question.body.trim());
+                if (question.body.length < 3) {
+                    response = { success: false, error: 'Вопрос не может быть короче 3 символов' };
+                    abort = true;
+                    return;
+                }
+                
+                if (!question.answer) {
+                    response = { success: false, error: 'У вопроса должен быть правильный ответ' };
+                    abort = true;
+                    return;
+                }
+                question.answer = escapeHTML(question.answer.trim());
+                if (question.answer.length < 1) {
+                    response = { success: false, error: 'У вопроса должен быть правильный ответ' };
+                    abort = true;
+                    return;
+                }
+            });
+
+            if (abort)
+                return res.json(response);
+
+            connection.query('INSERT INTO tests (headline, topic, author) VALUES (?, ?, ?)', [headline, topic, req.session.user.id], (err, results, fields) => {
+                if (err) {
+                    console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                    return res.json({ success: false, error: 'Ошибка Базы Данных при внесении теста' });
+                }
+
+                var test_id = results.insertId;
+
+                connection.query('CREATE TABLE test_?_questions (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `body` VARCHAR(256) NULL DEFAULT NULL, `answer` VARCHAR(128) NULL DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci',
+                                [test_id], (err, results, fields) => {
+                    if (err) {
+                        console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                        return res.json({ success: false, error: 'Ошибка Базы Данных при создании таблицы вопросов' });
+                    }
+    
+                    abort = false;
+                    response = {};
+
+                    // Workaround to add one last extra element for response logic
+                    data.questions.push({ });
+
+                    data.questions.forEach((question, index) => {
+                        // If this is the last element and we got an error, send the response
+                        if (abort && index === data.questions.length - 1)
+                            return res.json(response);
+
+                        if (abort || index === data.questions.length - 1)
+                            return;
+
+                        connection.query('INSERT INTO test_?_questions (body, answer) VALUES (?, ?)',
+                                        [test_id, question.body, question.answer], (err, results, fields) => {
+                            if (err) {
+                                console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                                response = { success: false, error: 'Ошибка Базы Данных при внесении вопроса' };
+                                abort = true;
+
+                                if (index === data.questions.length - 2)
+                                    return res.json(response);
+                            }
+            
+                            connection.query('CREATE TABLE test_?_question_?_answers (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `user` INT(11) UNSIGNED NOT NULL, `answer` VARCHAR(128) NULL DEFAULT NULL, `correct` BOOLEAN NOT NULL DEFAULT FALSE, PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci',
+                                            [test_id, results.insertId], (err, results, fields) => {
+                                if (err) {
+                                    console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                                    response = { success: false, error: 'Ошибка Базы Данных при создании таблицы ответов пользователей на вопрос' };
+                                    abort = true;
+
+                                    if (index === data.questions.length - 2)
+                                        return res.json(response);
+                                }
+                
+                                response = { success: true };
+
+                                if (index === data.questions.length - 2)
+                                    return res.json(response);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    app.post('/delete_test/:id', (req, res) => {
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.redirect('/error');
+
+        connection.query('SELECT headline FROM tests WHERE id = ?', [req.params.id], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            if (results.length === 0)
+                return res.redirect('/tests?error=no_test');
+
+            var headline = results[0].headline;
+            var test_id = req.params.id;
+            
+            connection.query('SELECT COUNT(*) FROM test_' + test_id + '_questions', (err, results, fields) => {
+                if (err) {
+                    console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
+                    return res.redirect('/error');
+                }
+
+                var count = results[0]['COUNT(*)'];
+
+                connection.query('DELETE FROM tests WHERE id = ?', [test_id], (err, results, fields) => {
+                    if (err) {
+                        console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
+                        return res.redirect('/error');
+                    }
+
+                    connection.query('DROP TABLE test_' + test_id + '_questions', (err, results, fields) => {
+                        if (err) {
+                            console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
+                            return res.redirect('/error');
+                        }
+        
+                        var abort = false;
+                        for (var i = 1; i <= count; i++) {
+                            if (abort)
+                                break;
+
+                            connection.query('DROP TABLE test_' + test_id + '_question_' + i + '_answers', (err, results, fields) => {
+                                if (err) {
+                                    console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
+                                    abort = true;
+                                    return res.redirect('/error');
+                                }
+
+                                // Workaround for multiple redirects
+                                if (i >= count && !abort) {
+                                    abort = true;
+                                    return res.redirect('/tests?deleted=' + encodeURIComponent(headline));
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    });
+
+    /* +------+ Topics +------+ */
+
+    app.get('/topics', (req, res) => {
+        if (!req.session.user)
+            return res.redirect('/error');
+
+        const teacher = (req.session.user.type >= 2 && req.session.user.verified) ? true : false;
+
+        var messages = [];
+
+        if (req.query.error) {
+            if (req.query.error === 'no_topic')
+                messages.push('Ошибка: Тема не найдена.');
+        }
+        else if (req.query.deleted)
+            messages.push('Тема "' + decodeURIComponent(req.query.deleted) + '" успешно удалена.');
+        else if (req.query.success)
+            messages.push('Тема успешно создана.');
+
+        const elements_per_page = 10;
+        
+        var page = 1;
+        if (req.query.page) {
+            page = parseInt(req.query.page, 10);
+
+            if (page < 1) {
+                messages.push("Страница с введённым номером не существует.");
+                page = 1;
+            }
+        }
+        
+        var pages_num = 1;
+        connection.query('SELECT COUNT(*) FROM topics', (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
+        });
+
+        var offset = (page - 1) * elements_per_page;
+        connection.query('SELECT id, title, subject, semester FROM topics LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            return res.render('topics', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, teacher: teacher });
+        });
+    });
+
+    app.get('/create_topic', (req, res) => {
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.redirect('/error');
+
+        return res.render('create_topic', { user: req.session.user });
+    });
+
+    app.post('/create_topic', (req, res) => {
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.redirect('/error');
+
+        var title = req.body.inputTitle;
+        var subject = req.body.inputSubject;
+        var semester = req.body.inputSemester;
+
+        if (!title)
+            return res.render('create_topic', { messages: ["Введите название темы."], user: req.session.user });
+        title = escapeHTML(title);
+        if (title.length < 3)
+            return res.render('create_topic', { messages: ["Название темы не может быть короче 3 символов."], user: req.session.user });
+        
+        if (!subject)
+            return res.render('create_topic', { messages: ["Введите название предмета."], user: req.session.user });
+        if (!(/^[а-яА-Я\s]*$/.test(subject)))
+            return res.render('create_topic', { messages: ["В названии предмета допустима только кириллица."], user: req.session.user });
+        if (subject.length < 2)
+            return res.render('create_topic', { messages: ["Название предмета не может быть короче 2 символов."], user: req.session.user });
+        
+        if (!semester)
+            return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
+        semester = parseInt(semester, 10);
+        if (semester === -1)
+            return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
+        if (semester < 0)
+            return res.render('create_topic', { messages: ["Неверный уровень подготовки."], user: req.session.user });
+
+        connection.query('INSERT INTO topics (title, subject, semester) VALUES (?, ?, ?)', 
+                        [title, subject, semester], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /create_topic. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            return res.redirect('/topics?success=true');
+        });
+    });
+
+    app.post('/delete_topic/:id', (req, res) => {
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.redirect('/error');
+
+        connection.query('SELECT title FROM topics WHERE id = ?', [req.params.id], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /delete_topic. ' + err.code + ': ' + err.sqlMessage);
+                return res.redirect('/error');
+            }
+
+            if (results.length === 0)
+                return res.redirect('/topics?error=no_topic');
+
+            var title = results[0].title;
+
+            connection.query('DELETE FROM topics WHERE id = ?; DELETE FROM tests WHERE topic = ?', [req.params.id, req.params.id], (err, results, fields) => {
+                if (err) {
+                    console.log('An error has occured on /delete_topic. ' + err.code + ': ' + err.sqlMessage);
+                    return res.redirect('/error');
+                }
+    
+                return res.redirect('/topics?deleted=' + encodeURIComponent(title));
+            });
+        });
+    });
+
+    /* +------+ Authorization +------+ */
     
     app.get('/login', (req, res) => {
         if (req.session.user)
@@ -485,6 +674,8 @@ module.exports = function(app) {
             return res.redirect('/error');
         }
     });
+
+    /* +------+ Registration +------+ */
 
     app.get('/register', (req, res) => {
         if (req.session.user)
@@ -569,10 +760,14 @@ module.exports = function(app) {
         });
     });
 
+    /* -------- 404 -------- */
+
     app.get('*', (req, res) => {
         return res.render('error');
     });
 };
+
+/* -------- Functions -------- */
 
 function escapeHTML(text) {
     var map = {

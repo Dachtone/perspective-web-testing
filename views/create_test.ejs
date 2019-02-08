@@ -1,0 +1,54 @@
+<body>
+<div id="notifications">
+<% if (typeof messages !== 'undefined' && messages.length !== 0) { %> 
+    <% messages.forEach((message) => { %>
+        <b><%= message %></b><br>
+    <% }); %>
+<% } %>
+</div>
+<hr><br>
+
+<b>Создание теста:</b>
+
+<div id="testInfo">
+<form name="testHead">
+    <input name="headline" placeholder="Заголовок теста"><br>
+    <select name="topic">
+        <option value="-1" selected>Выбрать тему...</option>
+        <% topics.forEach((topic) => { %>
+            <option value="<%= topic.id %>"><%= topic.title %></option>
+        <% }); %>
+    </select><br>
+</form>
+</div>
+<br>
+
+<i>Вопросы:</i>
+<hr>
+
+<div class="question" id="question1">
+<form name="testQuestion">
+    <textarea name="body" rows="5" cols="25" placeholder="Вопрос №1"></textarea><br>
+    <br>
+    <input name="answer" placeholder="Правильный ответ"><br>
+</form>
+<hr>
+</div>
+
+<div id="addQuestion">
+Добавить вопрос <button type="button" name="addBtn">+</button>
+</div>
+<br>
+<button type="button" id="sendTest">Отправить тест</button><br>
+
+<hr>
+<br><br>
+<form action="/topics" method="GET">
+    <input type="submit" value="Назад"/>
+</form>
+<form action="/" method="GET">
+    <input type="submit" value="На Главную"/>
+</form>
+
+<script src="static/js/testCreation.js"></script>
+</body>

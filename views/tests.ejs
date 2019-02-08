@@ -5,6 +5,11 @@
         <% }); %>
     </div>
 <% } %>
+<% if (teacher) { %>
+    <form action="/create_test" method="GET">
+        <input type="submit" value="Создать тест"/>
+    </form><br>
+<% } %>
 <% if (elements.length === 0) { %>
     <b>Нет элементов.</b>
     <hr>
