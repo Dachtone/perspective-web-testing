@@ -91,7 +91,7 @@ export class view extends eventEmmiter{
         const element = document.querySelectorAll('.item')
         Array.prototype.forEach.call(element, item => this.hideElement(item))
     }
-    errorComplit(element, prop){
+    errorComplit(prop){
         const error = document.querySelector('.error')
         const ttle = error.querySelector('.error-ttle')
 
@@ -108,34 +108,51 @@ export class view extends eventEmmiter{
         const theme = document.querySelector('.DJad2DAj');
 
             let error = false
+            let bSide = true
             let _data = {}
             _data.data = []
 
-        if(item){
-            
-            Array.prototype.forEach.call(item, element =>{
-                const statement = element.querySelector('.id')
-                const point = element.querySelector('input[type=number]')
-                const answer = element.querySelector('input[type=text]')
 
-                if(theme.value.trim() !== ''){
-                    if(statement.textContent.trim() !== '' && point.value.trim() !== '' && answer.value.trim() !== ''){
+        if(theme.value.trim() == ''){
+            error = false;
+
+            this.errorComplit("Введите название темы")
+        }else{
+            if(item.length){
+
+                Array.prototype.forEach.call(item, element => {
+                    const statement = element.querySelector('.id')
+                    const point = element.querySelector('input[type=number]')
+                    const answer = element.querySelector('input[type=text]')
+
+                    if(statement.textContent.trim() == '' || point.value.trim() == '' || answer.value.trim() == ''){
+                        error = false
+                        bSide = false
+                        
+                        this.errorComplit('Заполните все условия задач')
+                    }
+                    if(bSide){
                         error = true
 
                         _data.theme = theme.value
                         _data.data.push({'state': statement.textContent, 'point': point.value, 'answer': answer.value})
-                        
-                        this.init('event:send-data', _data)
+
                         this.errorReject()
-                    }else{
-                        this.errorComplit('','Заполните все условия задач')
                     }
-                }
-                else{
-                    this.errorComplit('','Введите тему')
-                }
-            })
+                })
+
+
+
+            }else{
+                error = false
+
+                this.errorComplit('Необходимо создать задачу')
+            }
         }
 
+        if(error){
+            console.log(_data)
+        }
+ 
     }
 }

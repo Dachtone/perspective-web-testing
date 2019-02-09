@@ -1,0 +1,99 @@
+.oCutFfe{
+    font-family: 'Roboto';
+    font-size: 17px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85)
+}
+.M5Mit7z{
+    margin-top: 20px;
+}
+.xWDJRVpY{
+    border-radius: 0 !important;
+}
+.dVxWn9ts{
+    margin-top: 40px;
+}
+.mmQJt3n{
+    font-size: 15px;
+    font-family: 'Roboto';
+    line-height: 23px;
+    color: rgba(0, 0, 0, 0.68)
+}
+.lF0pfeI{
+    color: rgba(0, 0, 0, 0.79);
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+.dBrIpzbNeXXX{
+    width: 65%;
+}
+.v3RxMHj{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.f5PCFxM{
+    font-size: 15px;
+    font-family: "Roboto";
+    color: rgba(0, 0, 0, 0.849)
+}
+input{
+    padding: 0;
+    border: none;
+    transition: .3s ease all;
+}
+input:focus{
+    border-bottom:1px solid #3367d6 !important
+}
+.v3RxMHj input{
+    margin-left: 10px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.712) !important;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #0000003f;
+    font-family: "Roboto";
+}
+.Q5MxTxuJgocmj:first-child{
+    margin: 0;
+}
+.Q5MxTxuJgocmj{
+    padding-bottom: 30px;
+    border-bottom: 1px solid #0000003f;
+    margin-top: 30px;
+}
+.Q5MxTxuJgocmj:last-child{
+    border: none;
+}
+.xBTcxLWgYo{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+.dw6q7LF{
+    width: 40%;
+    color: rgba(0, 0, 0, 0.815);
+    font-family: 'Roboto';
+    font-size: 15px;
+    line-height: 20px;
+}
+.tnDCiPms1yj{
+    border-top: 1px solid #0000003f;
+    padding-top: 20px;
+    margin-bottom: 50px;
+}
+.dw6q7LF span{
+    color: #3367d6 !important
+}
+.zGyQ0LL{
+    display: block;
+    font-family: 'Roboto';
+    font-size: 15px;
+    cursor: pointer;
+    background:#3367d6 ;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 15px;
+}
+.NeQsrgVV{
+    margin-left: auto;
+}

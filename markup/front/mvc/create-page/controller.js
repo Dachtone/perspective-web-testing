@@ -26,6 +26,6 @@ export class controller{
         this.view.removeAllItem()
     }
     showDataBase(data){
-        console.log(JSON.stringify(data))
+        console.log(data)
     }
 }

@@ -3,13 +3,12 @@ import {controller} from './controller.js'
 import {model} from './model.js'
 
 function saveData(data){
-    console.log(data)
     const record = JSON.stringify(data)
     
-    window.localStorage.setItem('record_dataCreate', record)
+    window.sessionStorage.setItem('record_dataCreate', record)
 }
 function parseRecord(data){
-    const record = window.localStorage.getItem(data)
+    const record = window.sessionStorage.getItem(data)
 
     return JSON.parse(record)
 }

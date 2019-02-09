@@ -268,8 +268,9 @@ div[contenteditable='true']:focus{
     color:#000
 }
 .uWuQQ9p{
-    font-size: 74.25% !important; 
+    will-change: font-size;
+    font-size: 81.25% !important; 
 }
 .DJad2DAj{
-    font-size: 81% !important;
+    font-size: 85% !important;
 }

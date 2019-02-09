@@ -59,9 +59,7 @@ span[blue]{
     flex-direction: column
 }
 .OePZjKkR{
-    margin-top: 35px;
     color: #2c2c2c;
-    margin-bottom: 22px;
     font-size: 16px;
     font-family: "Roboto";
 }
@@ -96,7 +94,6 @@ span[blue]{
 }
 
 .OePZjKkR{
-    display: flex;
     align-items: center;
 }
 .H1MJEu7u{
@@ -115,6 +112,7 @@ span[blue]{
 }
 .v9TErEeFF{
     font-size: 15px;
+    font-family: 'Roboto';
     color: #000000e0;
     border-bottom: 1px solid #00000091;
     padding-bottom:12px;
