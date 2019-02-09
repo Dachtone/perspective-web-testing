@@ -18,12 +18,14 @@
 }
 
 .Rjx2D{position: absolute;
+    font-family: Arial;
     color: #6e6e6e;
     background: #fff;
     display: block;
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .d2DHdaj{
+    position: relative;
     margin-top: 26px;
 }
 .d2DHdaj:last-child{margin-top: 30px;}
@@ -33,5 +35,5 @@
 }
 .uWuQQ9p{
     transform:translateY(-130%) ;
-    font-size: 65%;
+    font-size: 81.25%;
 }

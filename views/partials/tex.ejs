@@ -1,0 +1,18 @@
+<script type="text/x-mathjax-config">
+    elements = document.getElementsByClassName("mathEnabled");
+
+    MathJax.Ajax.config.path["mhchem"] = "https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2";
+    MathJax.Hub.Config({
+        elements: elements,
+        skipStartupTypeset: (elements.length === 0),
+        jax: ["input/TeX", "output/HTML-CSS", "output/PreviewHTML"],
+        extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js", "fast-preview.js", "AssistiveMML.js", "a11y/accessibility-menu.js", "Safe.js"],
+        tex2jax: {
+            processEscapes: true
+        },
+        TeX: {
+            extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js", "[mhchem]/mhchem.js"]
+        }
+    });
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?locale=ru"></script>

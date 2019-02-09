@@ -1,54 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Testing | Создание теста</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="static/css/input.css">
+    <link rel="stylesheet" href="static/css/create.css">
+    <link rel="stylesheet" href="static/css/main_styles.css">
+    <link rel="stylesheet" href="static/css/font/font.css">
+    <link rel="stylesheet" href="static/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/css/menu/menu.css">
+
+    <link rel="stylesheet" href="static/css/create_test.css">
+</head>
 <body>
-<div id="notifications">
-<% if (typeof messages !== 'undefined' && messages.length !== 0) { %> 
-    <% messages.forEach((message) => { %>
-        <b><%= message %></b><br>
-    <% }); %>
-<% } %>
-</div>
-<hr><br>
+    <div class="F21sW0EW">
+        <div class="ud0AdBs"></div> 
+        <div class="G1qVSlLk">
+            <div class="aSEQzkJ jsxW">
+                <div class="OePZjKkR"><strong>Создание теста</strong></div>
+                <div class="xWDJRVpY">
+                    <div id="notifications">
+                    </div>
 
-<b>Создание теста:</b>
+                    <div class="Su2KCPWkJ" id="testInfo" style="display: block">
+                        <div class="yDEYJ3vn col-12 mt-1" name="dh1">
+                            <div class="d2DHdaj jbefore" name="dh2" style="margin-top: 0.6em !important">
+                                <div class="bj" name="dh3">
+                                    <div class="Rjx2D">Заголовок теста</div>
+                                    <input type="text" name="headline" class="DJad2DAj">
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="col-12 topic_div" name="dt">
+                            <select class="custom-select mr-sm-2 topic_select" name="topic" id="inlineFormCustomSelect">
+                                <option value="-1" selected>Выбрать тему...</option>
+                                <% topics.forEach((topic) => { %>
+                                    <option value="<%= topic.id %>"><%= topic.title %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
 
-<div id="testInfo">
-<form name="testHead">
-    <input name="headline" placeholder="Заголовок теста"><br>
-    <select name="topic">
-        <option value="-1" selected>Выбрать тему...</option>
-        <% topics.forEach((topic) => { %>
-            <option value="<%= topic.id %>"><%= topic.title %></option>
-        <% }); %>
-    </select><br>
-</form>
-</div>
-<br>
+                    <div class="EBQbR3g07L" id="questionsContainer">
+                        <div class="uQgwAaVCKa_id item jsxJ question" id="question1">
+                            <div class="JNpaRszs" name="question_div">
+                                <div class="EoSh8tHys" name="question_label">Вопрос №1</div>
+                                <div class="B5QX5e8zoee" name="qd2">
+                                    <div class="XkgH40QICd" name="qdb">
+                                        <div class="id" contenteditable="true" aria-autocomplete="none" name="body"></div>
+                                    </div>
+                                    <div class="RVUsJwdjs" name="qda1">
+                                        <div class="QqMJzpve tlsa" name="qda2">
+                                            <span class="question_label">Правильный ответ: </span>
+                                            <div class="fVX" name="qda3">
+                                                <input type="text" name="answer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-<i>Вопросы:</i>
-<hr>
+                    <div class="apbmHPNs">
+                        <div class="DhadhaDAj2al">
+                            <div class="bottom_info">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: -1px" width="22" height="22" viewBox="0 0 24 24" fill='#1586bd'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                <div class="bottom_info_text">Текст вопроса может содержать LaTeX-код.</div>
+                            </div>
+                        </div>
+                        <div class="ZGFO3jPff">
+                            
+                            <div class="sdAWjd2dl dAWDJJKQA2dikdas" select-disable ripple id="addQuestion">+ Вопрос</div>
+                            <div class="phw1tr2Ml dAWDJJKQA2dikdas" rjx select-disable ripple id="sendTest">Готово</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/js/create.js" type="module"></script>
 
-<div class="question" id="question1">
-<form name="testQuestion">
-    <textarea name="body" rows="5" cols="25" placeholder="Вопрос №1"></textarea><br>
-    <br>
-    <input name="answer" placeholder="Правильный ответ"><br>
-</form>
-<hr>
-</div>
+    <script src="/static/js/testCreation.js"></script>
 
-<div id="addQuestion">
-Добавить вопрос <button type="button" name="addBtn">+</button>
-</div>
-<br>
-<button type="button" id="sendTest">Отправить тест</button><br>
-
-<hr>
-<br><br>
-<form action="/topics" method="GET">
-    <input type="submit" value="Назад"/>
-</form>
-<form action="/" method="GET">
-    <input type="submit" value="На Главную"/>
-</form>
-
-<script src="/static/js/testCreation.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+</html>

@@ -1,15 +1,19 @@
 var notifications = document.getElementById("notifications");
 var questions = Array.from(document.getElementsByClassName("question"));
+var container = document.getElementById("questionsContainer");
 
 var sendBtn = document.getElementById("sendTest");
 sendBtn.addEventListener("click", () => {
     var data = { head: {}, questions: [] };
 
-    data.head.headline = document.getElementById("testInfo").children.testHead.headline.value;
-    data.head.topic = document.getElementById("testInfo").children.testHead.topic.value;
+    data.head.headline = document.getElementById("testInfo").children.dh1.children.dh2.children.dh3.children.headline.value.trim();
+    data.head.topic = document.getElementById("testInfo").children.dt.children.topic.value;
 
     questions.forEach((question) => {
-        data.questions.push({ body: question.children.testQuestion["body"].value, answer: question.children.testQuestion["answer"].value });
+        data.questions.push({
+            body: question.children.question_div.children.qd2.children.qdb.children.body.innerHTML.trim(),
+            answer: question.children.question_div.children.qd2.children.qda1.children.qda2.children.qda3.children.answer.value.trim()
+        });
     });
 
     var xhr = new XMLHttpRequest();
@@ -19,7 +23,7 @@ sendBtn.addEventListener("click", () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
             if (!json.success)
-                notifications.innerHTML = "<b>" + json.error + ".</b>";
+                addNotification(json.error + '.');
             else
                 window.location.replace("/tests?success=true");
         }
@@ -28,42 +32,68 @@ sendBtn.addEventListener("click", () => {
 });
 
 var addBtn = document.getElementById("addQuestion");
-addBtn.children.addBtn.addEventListener("click", () => {
-    var lastQuestion = questions[questions.length - 1].children.testQuestion;
-    if (lastQuestion["body"].value.trim().length === 0 || lastQuestion["answer"].value.trim().length === 0) {
-        notifications.innerHTML = "<b>Введите предыдущий вопрос, прежде чем добавлять новый.</b>";
+addBtn.addEventListener("click", () => {
+    var lastQuestion = questions[questions.length - 1].children.question_div.children.qd2.children;
+    if (lastQuestion.qdb.children.body.innerHTML.trim().length === 0 ||
+        lastQuestion.qda1.children.qda2.children.qda3.children.answer.value.trim().length === 0) {
+        addNotification("Введите предыдущий вопрос, прежде чем добавлять новый.");
     }
     else {
         var newQuestion = document.createElement("div");
-        newQuestion.setAttribute("class", "question");
+        newQuestion.setAttribute("class", "uQgwAaVCKa_id item jsxJ question");
         newQuestion.setAttribute("id", "question" + (questions.length + 1));
         newQuestion.innerHTML = `
-            <form name="testQuestion">
-                <textarea name="body" rows="5" cols="25" placeholder="Вопрос №` + (questions.length + 1) + `"></textarea><br>
-                <br>
-                <input name="answer" placeholder="Правильный ответ"><br>
-                <br>
-                <button type="button" name="deleteQuestionBtn">Удалить вопрос</button>
-            </form>
-            <hr>
+            <iron-icon name="delBtn">
+                <svg id="deleteQuestionBtn" xmlns="http://www.w3.org/2000/svg" fill="#424242" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </iron-icon>
+
+            <div class="JNpaRszs" name="question_div">
+                <div class="EoSh8tHys" name="question_label">Вопрос №` + (questions.length + 1) + `</div>
+                <div class="B5QX5e8zoee" name="qd2">
+                    <div class="XkgH40QICd" name="qdb">
+                        <div class="id" contenteditable="true" aria-autocomplete="none" name="body"></div>
+                    </div>
+                    <div class="RVUsJwdjs" name="qda1">
+                        <div class="QqMJzpve tlsa" name="qda2">
+                            <span class="question_label">Правильный ответ: </span>
+                            <div class="fVX" name="qda3">
+                                <input type="text" name="answer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
-        document.body.insertBefore(newQuestion, addBtn);
+        container.appendChild(newQuestion);
         questions.push(newQuestion);
 
-        newQuestion.children.testQuestion["deleteQuestionBtn"].addEventListener("click", (event) => {
-            var questionToDelete = event.target.parentNode.parentNode;
+        var delBtn = newQuestion.children.delBtn.children.deleteQuestionBtn
+        delBtn.addEventListener("click", (event) => {
+            var questionToDelete = delBtn.parentNode.parentNode;
             var index = questions.indexOf(questionToDelete);
             if (index !== -1) {
                 questions.splice(index, 1);
                 for (var i = index; i < questions.length; i++) {
                     questions[i].setAttribute("id", "question" + (i + 1));
-                    questions[i].children.testQuestion["body"].placeholder = "Вопрос №" + (i + 1);
+                    questions[i].children.question_div.children.question_label.innerHTML = "Вопрос №" + (i + 1);
                 }
             }
 
             questionToDelete.remove();
         });
-
-        notifications.innerHTML = "";
     }
 });
+
+addNotification = (text) => {
+    var notification = document.createElement("div");
+    notification.setAttribute("class", "alert alert-danger alert-dismissible fade show mt-3 alert_animated");
+    notification.innerHTML = text + `
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    `;
+    notifications.appendChild(notification);
+};
