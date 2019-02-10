@@ -354,6 +354,76 @@ module.exports = function(app) {
             messages.push('Тест "' + decodeURIComponent(req.query.deleted) + '" успешно удалён.');
         else if (req.query.success)
             messages.push('Тест успешно создан.');
+        
+        var invalidField = false;
+        var search = { set: false, sql: ' WHERE' };
+        if (req.query.headline) {
+            var headline = req.query.headline.trim();
+            if (headline.length < 4 || headline.length > 128) {
+                messages.push('Заголовок теста должен содержать в себе не менее 4 и не более 128 символов.');
+                invalidField = true;
+            }
+            else {
+                search.sql += ' tests.headline = ' + connection.escape(headline);
+                search.set = true;
+            }
+        }
+        if (!invalidField && req.query.subject) {
+            var subject = req.query.subject.trim();
+            if (subject.length < 2 || subject.length > 128) {
+                messages.push('Название предмета должно содержать в себе не менее 2 и не более 128 символов.');
+                invalidField = true;
+            }
+            else {
+                search.sql += (search.set ? ' AND' : '') + ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.subject = ' + connection.escape(subject) + ')';
+                search.set = true;
+            }
+        }
+        if (!invalidField && req.query.topic) {
+            var topic = parseInt(req.query.topic, 10);
+            if (topic === NaN || topic < 0) {
+                messages.push('Данной темы не существует.');
+                invalidField = true;
+            }
+            else {
+                search.sql += (search.set ? ' AND' : '') + ' tests.topic = ' + topic;
+                search.set = true;
+            }
+        }
+        if (!invalidField && req.query.semester) {
+            var semester = parseInt(req.query.semester, 10);
+            if (semester === NaN || semester < 0 || semester > 23) {
+                messages.push('Данного уровня подготовки не существует.');
+                invalidField = true;
+            }
+            else {
+                search.sql += (search.set ? ' AND' : '') + ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.semester = ' + semester + ')';
+                search.set = true;
+            }
+        }
+        if (!invalidField && req.query.teacher) {
+            var author = parseInt(req.query.teacher, 10);
+            if (author === NaN || author < 0) {
+                messages.push('Данного преподавателя не существует.');
+                invalidField = true;
+            }
+            else {
+                search.sql += (search.set ? ' AND' : '') + ' tests.author = ' + author;
+                search.set = true;
+            }
+        }
+
+        if (!invalidField && req.query.completed) {
+            var completed = parseInt(req.query.completed, 10);
+            if (completed === NaN || (completed !== 0 && completed !== 1)) {
+                messages.push('Тест может быть либо пройден, либо нет.');
+                invalidField = true;
+            }
+            else {
+                search.sql += (search.set ? ' AND' : '') + ' tests.id ' + (completed === 0 ? 'NOT ' : '') + 'IN (SELECT tests_completion.test_id FROM tests_completion WHERE tests_completion.user_id = ' + req.session.user.id + ')';
+                search.set = true;
+            }
+        }
 
         const elements_per_page = 10;
         
@@ -368,22 +438,40 @@ module.exports = function(app) {
         }
         
         var pages_num = 1;
-        connection.query('SELECT COUNT(*) FROM tests', (err, results, fields) => {
+        connection.query('SELECT NULL FROM tests' + (search.set ? search.sql : ''), (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
             }
 
-            pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
+            pages_num = results.length !== 0 ? Math.ceil(results.length / elements_per_page) : 0;
 
             var offset = (page - 1) * elements_per_page;
-            connection.query('SELECT tests.id, tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, users.name, tests_completion.user_id AS completed, tests.created + INTERVAL 3 HOUR AS created FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id LEFT JOIN tests_completion ON tests_completion.test_id = tests.id AND tests_completion.user_id = ? ORDER BY tests.id DESC LIMIT ? OFFSET ?', [req.session.user.id, elements_per_page, offset], (err, results, fields) => {
+            connection.query('SELECT tests.id, tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, users.name, tests_completion.user_id AS completed, tests.created + INTERVAL 3 HOUR AS created FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id LEFT JOIN tests_completion ON tests_completion.test_id = tests.id AND tests_completion.user_id = ?' + (search.set ? search.sql : '') + ' ORDER BY tests.id DESC LIMIT ? OFFSET ?', [req.session.user.id, elements_per_page, offset], (err, results, fields) => {
                 if (err) {
-                    console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
+                    console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
                 }
-    
-                return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, teacher: teacher });
+
+                var elements = results;
+
+                connection.query('SELECT id, title FROM topics', (err, results, fields) => {
+                    if (err) {
+                        console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
+                        return res.redirect('/error');
+                    }
+
+                    var topics = results;
+
+                    connection.query('SELECT id, name FROM users WHERE type = 2', (err, results, fields) => {
+                        if (err) {
+                            console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
+                            return res.redirect('/error');
+                        }
+
+                        return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: elements, topics: topics, teachers: results, teacher: teacher, search: search.set });
+                    });
+                });
             });
         });
     });

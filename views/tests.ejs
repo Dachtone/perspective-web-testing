@@ -11,11 +11,64 @@
     </form><br>
 <% } %>
 <% if (elements.length === 0) { %>
-    <b>Нет элементов.</b>
+    <% if (search) { %>
+        <b>Поиск не дал результатов.</b><br>
+        <br>
+        <form action="/tests" method="GET">
+            <input type="submit" value="Сбросить фильтры"/>
+        </form>
+    <% } else { %>
+        <b>Нет элементов.</b>
+    <% } %>
     <hr>
 <% } else { %>
     <b>Тесты:</b><br>
     <hr>
+    <i>Поиск</i>
+    <form action="/tests" method="GET" id="testsSearch">
+        <input name="headline" placeholder="По заголовку"><br>
+        <input name="subject" placeholder="По предмету"><br>
+        <select name="topic">
+            <option value="-1" selected>По теме...</option>
+            <% topics.forEach((topic) => { %>
+                <option value="<%= topic.id %>"><%= topic.title %></option>
+            <% }); %>
+        </select><br>
+        <select name="semester">
+            <option value="-1" selected>По уровню подготовки...</option>
+            <option disabled="disabled">──────────</option>
+            <% for (var i = 1; i <= 22; i++) { %>
+                <option value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</option>
+                <% if (i % 2 === 0) { %>
+                    <option disabled="disabled">──────────</option>
+                <% } %>
+            <% } %>
+            <option value="23">Высшее образование</option>
+        </select><br>
+        <select name="teacher">
+            <option value="-1" selected>По преподавателю...</option>
+            <% teachers.forEach((teacher) => { %>
+                <option value="<%= teacher.id %>"><%= teacher.name %></option>
+            <% }); %>
+        </select><br>
+        <div>
+            <input type="checkbox" id="selector1" name="completed" value="0">
+            <label for="selector1">Непройденные тесты</label>
+        
+            <input type="checkbox" id="selector2" name="completed" value="1">
+            <label for="selector2">Пройденные тесты</label>
+        </div><br>
+        <button type="submit">Найти</button><br>
+    </form>
+    <hr>
+    <% if (search) { %>
+        <i>На странице представлены результаты поиска.</i><br>
+        <br>
+        <form action="/tests" method="GET">
+            <input type="submit" value="Сбросить фильтры"/>
+        </form>
+        <hr>
+    <% } %>
     <% elements.forEach(function(element){ %>
         <div>
             Заголовок: <%= element.headline %><br>
@@ -49,3 +102,5 @@
 <form action="/" method="GET">
     <input type="submit" value="На Главную"/>
 </form>
+
+<script src="static/js/testsList.js"></script>
