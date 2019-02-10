@@ -8,11 +8,6 @@ p{
     margin: 0;
     padding: 0;
 }
-.dsblselect{
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none
-}
 a{
     text-decoration: none;
     -webkit-user-drag: none;
