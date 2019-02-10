@@ -227,7 +227,7 @@ module.exports = function(app) {
     /* +------+ Tests +------+ */
 
     app.get('/test/:id', (req, res) => {
-        if (!req.session.user)
+        if (!req.session.user || !req.session.user.verified)
             return res.redirect('/error');
 
         const teacher = (req.session.user.type >= 2 && req.session.user.verified) ? true : false;
@@ -391,7 +391,7 @@ module.exports = function(app) {
     app.post('/send_test/:id', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
 
-        if (!req.session.user)
+        if (!req.session.user || !req.session.user.verified)
             return res.json({ success: false, error: 'Нет доступа' });
         
         connection.query('SELECT NULL FROM tests WHERE id = ?', [req.params.id], (err, results, fields) => {
@@ -424,9 +424,21 @@ module.exports = function(app) {
                     
                     var data = req.body.data;
                     
+                    var abort = false;
                     data.forEach((question, index) => {
+                        if (abort)
+                            return;
+
+                        if (question.answer.length > 128) {
+                            abort = true;
+                            return res.json({ success: false, error: 'Ответы не могут быть длиннее 128 символов' });
+                        }
+
                         question.correct_answer = results[index].answer;
                     });
+                    
+                    if (abort)
+                        return;
 
                     connection.query('INSERT INTO tests_completion (user_id, test_id) VALUES (?, ?)', [req.session.user.id, req.params.id], (err, results, fields) => {
                         if (err) {
@@ -434,7 +446,7 @@ module.exports = function(app) {
                             return res.json({ success: false, error: 'Ошибка Базы Данных' });
                         }
 
-                        var abort = false;
+                        abort = false;
                         var finished = 0;
                         data.forEach((question, index) => {
                             if (abort)
@@ -494,6 +506,8 @@ module.exports = function(app) {
             return res.json({ success: false, error: 'Заголовок должен быть заполнен' });
         if (headline.length < 4)
             return res.json({ success: false, error: 'Заголовок не может быть короче 4 символов' });
+        if (headline.length > 128)
+            return res.json({ success: false, error: 'Заголовок не может быть длиннее 128 символов' });
         
         var topic = data.head.topic;
         topic = parseInt(topic, 10);
@@ -525,6 +539,11 @@ module.exports = function(app) {
                     abort = true;
                     return;
                 }
+                if (question.body.length > 1024) {
+                    response = { success: false, error: 'Вопрос не может быть длиннее 1024 символов' };
+                    abort = true;
+                    return;
+                }
                 
                 if (!question.answer) {
                     response = { success: false, error: 'У вопроса должен быть правильный ответ' };
@@ -534,6 +553,11 @@ module.exports = function(app) {
                 question.answer = question.answer.trim();
                 if (question.answer.length < 1) {
                     response = { success: false, error: 'У вопроса должен быть правильный ответ' };
+                    abort = true;
+                    return;
+                }
+                if (question.answer.length > 128) {
+                    response = { success: false, error: 'Ответ не может быть длиннее 128 символов' };
                     abort = true;
                     return;
                 }
@@ -550,7 +574,7 @@ module.exports = function(app) {
 
                 var test_id = results.insertId;
 
-                connection.query('CREATE TABLE test_?_questions (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `body` VARCHAR(256) NULL DEFAULT NULL, `answer` VARCHAR(128) NULL DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci',
+                connection.query('CREATE TABLE test_?_questions (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `body` VARCHAR(1024) NULL DEFAULT NULL, `answer` VARCHAR(128) NULL DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci',
                                 [test_id], (err, results, fields) => {
                     if (err) {
                         console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
@@ -738,6 +762,8 @@ module.exports = function(app) {
         title = title.trim();
         if (title.length < 3)
             return res.render('create_topic', { messages: ["Название темы не может быть короче 3 символов."], user: req.session.user });
+        if (title.length > 128)
+            return res.render('create_topic', { messages: ["Название темы не может быть длиннее 128 символов."], user: req.session.user });
         
         if (!subject)
             return res.render('create_topic', { messages: ["Введите название предмета."], user: req.session.user });
@@ -745,6 +771,9 @@ module.exports = function(app) {
             return res.render('create_topic', { messages: ["В названии предмета допустима только кириллица."], user: req.session.user });
         if (subject.length < 2)
             return res.render('create_topic', { messages: ["Название предмета не может быть короче 2 символов."], user: req.session.user });
+        if (subject.length > 128)
+            return res.render('create_topic', { messages: ["Название предмета не может быть длиннее 128 символов."], user: req.session.user });
+        
         
         if (!semester)
             return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
@@ -865,13 +894,18 @@ module.exports = function(app) {
             return res.render('register', { messages: ["Введите логин и пароль."] });
         if (login.length < 4)
             return res.render('register', { messages: ["Логин не может быть короче 4 символов."] });
-        if (!(/^[a-zA-Z]+$/.test(login)))
-            return res.render('register', { messages: ["Логин не должен содержать пробелов. Допустимы только латинские буквы."] });
+        if (login.length > 64)
+            return res.render('register', { messages: ["Логин не может быть длиннее 64 символов."] });
+        if (!(/^[a-zA-Z0-9_]+$/.test(login)))
+            return res.render('register', { messages: ["Логин не должен содержать пробелов. Допустимы только латинские буквы, цифры, нижние подчёркивания и тире."] });
+        
         if (password.length < 4)
             return res.render('register', { messages: ["Пароль не может быть короче 4 символов."] });
         
         if (!name)
             return res.render('register', { messages: ["Введите ФИО."] });
+        if (name.length > 128)
+            return res.render('register', { messages: ["ФИО не может быть длиннее 128 символов."] });
         var parts = name.split(" ");
         if (parts.length !== 3)
             return res.render('register', { messages: ["Введите ФИО в формате \"Фамилия Имя Отчество\"."] });
@@ -891,6 +925,8 @@ module.exports = function(app) {
         if (!position)
             return res.render('register', { messages: ["Введите ваш класс/должность."] });
         position = position.trim();
+        if (position.length > 128)
+            return res.render('register', { messages: ["Название класса/должности не может быть длиннее 128 символов."] });
 
         var hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 

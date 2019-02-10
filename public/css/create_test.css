@@ -39,3 +39,8 @@ div[name="question_div"] {
 .alert_animated {
     animation: jsj .3s ease;
 }
+
+.deleting_animation {
+    transition: .2s ease all;
+    opacity: 0;
+}

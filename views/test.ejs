@@ -28,9 +28,7 @@
     <% questions.forEach((question, index) => { %>
         <div class="question" id="question<%= index + 1 %>">
         <label>Вопрос №<%= index + 1 %></label>
-        <div class="mathEnabled" style="width: 300px">
-            <%= question.body %>
-        </div>
+        <div class="mathEnabled" style="width: 300px; white-space: pre-wrap"><%= question.body %></div>
         <% if (!completed) { %>
             <input name="answer" placeholder="Ваш ответ"><br>
         <% } else { %>

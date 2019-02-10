@@ -2,6 +2,9 @@ var notifications = document.getElementById("notifications");
 var questions = Array.from(document.getElementsByClassName("question"));
 var container = document.getElementById("questionsContainer");
 
+var mainContainer = document.getElementById("mainContainer");
+var originalHeight = mainContainer.scrollHeight;
+
 var sendBtn = document.getElementById("sendTest");
 sendBtn.addEventListener("click", () => {
     var data = { head: {}, questions: [] };
@@ -11,7 +14,7 @@ sendBtn.addEventListener("click", () => {
 
     questions.forEach((question) => {
         data.questions.push({
-            body: question.children.question_div.children.qd2.children.qdb.children.body.innerHTML.trim(),
+            body: question.children.question_div.children.qd2.children.qdb.children.body.innerText.trim(),
             answer: question.children.question_div.children.qd2.children.qda1.children.qda2.children.qda3.children.answer.value.trim()
         });
     });
@@ -34,7 +37,7 @@ sendBtn.addEventListener("click", () => {
 var addBtn = document.getElementById("addQuestion");
 addBtn.addEventListener("click", () => {
     var lastQuestion = questions[questions.length - 1].children.question_div.children.qd2.children;
-    if (lastQuestion.qdb.children.body.innerHTML.trim().length === 0 ||
+    if (lastQuestion.qdb.children.body.innerText.trim().length === 0 ||
         lastQuestion.qda1.children.qda2.children.qda3.children.answer.value.trim().length === 0) {
         addNotification("Введите предыдущий вопрос, прежде чем добавлять новый.");
     }
@@ -70,24 +73,31 @@ addBtn.addEventListener("click", () => {
         container.appendChild(newQuestion);
         questions.push(newQuestion);
 
+        // Scroll page to the bottom
+        mainContainer.scrollTo({ top: mainContainer.scrollHeight, behavior: 'smooth' });
+
         var delBtn = newQuestion.children.delBtn.children.deleteQuestionBtn
         delBtn.addEventListener("click", (event) => {
             var questionToDelete = delBtn.parentNode.parentNode;
-            var index = questions.indexOf(questionToDelete);
-            if (index !== -1) {
-                questions.splice(index, 1);
-                for (var i = index; i < questions.length; i++) {
-                    questions[i].setAttribute("id", "question" + (i + 1));
-                    questions[i].children.question_div.children.question_label.innerHTML = "Вопрос №" + (i + 1);
-                }
-            }
 
-            questionToDelete.remove();
+            questionToDelete.className += " deleting_animation";
+            questionToDelete.addEventListener("transitionend", (event) => {
+                var index = questions.indexOf(questionToDelete);
+                if (index !== -1) {
+                    questions.splice(index, 1);
+                    for (var i = index; i < questions.length; i++) {
+                        questions[i].setAttribute("id", "question" + (i + 1));
+                        questions[i].children.question_div.children.question_label.innerHTML = "Вопрос №" + (i + 1);
+                    }
+                }
+
+                questionToDelete.remove();
+            });
         });
     }
 });
 
-addNotification = (text) => {
+var addNotification = (text) => {
     var notification = document.createElement("div");
     notification.setAttribute("class", "alert alert-danger alert-dismissible fade show mt-3 alert_animated");
     notification.innerHTML = text + `
@@ -96,4 +106,7 @@ addNotification = (text) => {
         </button>
     `;
     notifications.appendChild(notification);
+
+    // Scroll page to the top
+    mainContainer.scrollTo({ top: 0, behavior: 'smooth' });
 };
