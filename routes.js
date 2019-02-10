@@ -5,6 +5,15 @@ module.exports = function(app) {
     /* -------- Middleware -------- */
 
     app.use((req, res, next) => {
+        // If there are multiple parameters with the same name
+        // in a GET request, degrade the array into a single value
+        if (req.method === "GET" && req.query) {
+            for (key in req.query) {
+                if (Array.isArray(req.query.key))
+                    req.query.key = req.query.key[0];
+            }
+        }
+
         if (req.session && req.session.user) {
             connection.query('SELECT verified FROM users WHERE login = ?', [req.session.user.login], (err, results, fields) => {
                 if (err)
@@ -197,7 +206,7 @@ module.exports = function(app) {
         if (req.query.page) {
             page = parseInt(req.query.page, 10);
 
-            if (page < 1) {
+            if (page === NaN || page < 1) {
                 messages.push("Страница с введённым номером не существует.");
                 page = 1;
             }
@@ -431,7 +440,7 @@ module.exports = function(app) {
         if (req.query.page) {
             page = parseInt(req.query.page, 10);
 
-            if (page < 1) {
+            if (page === NaN || page < 1) {
                 messages.push("Страница с введённым номером не существует.");
                 page = 1;
             }
@@ -599,7 +608,7 @@ module.exports = function(app) {
         
         var topic = data.head.topic;
         topic = parseInt(topic, 10);
-        if (!topic || topic === -1)
+        if (topic === NaN || topic === -1)
             return res.json({ success: false, error: 'Выберите тему' });
         
         connection.query('SELECT id FROM topics WHERE id = ?', [topic], (err, results, fields) => {
@@ -803,7 +812,7 @@ module.exports = function(app) {
         if (req.query.page) {
             page = parseInt(req.query.page, 10);
 
-            if (page < 1) {
+            if (page === NaN || page < 1) {
                 messages.push("Страница с введённым номером не существует.");
                 page = 1;
             }
@@ -866,7 +875,7 @@ module.exports = function(app) {
         if (!semester)
             return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
         semester = parseInt(semester, 10);
-        if (semester === -1)
+        if (semester === NaN || semester === -1)
             return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
         if (semester < 0)
             return res.render('create_topic', { messages: ["Неверный уровень подготовки."], user: req.session.user });
@@ -1005,7 +1014,7 @@ module.exports = function(app) {
         if (!type)
             return res.render('register', { messages: ["Выберите тип аккаунта."] });
         type = parseInt(type, 10);
-        if (type === -1)
+        if (type === NaN || type === -1)
             return res.render('register', { messages: ["Выберите тип аккаунта."] });
         if (type < 0 || type > 3)
             return res.render('register', { messages: ["Неверный тип аккаунта."] });
