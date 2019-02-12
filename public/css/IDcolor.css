@@ -1,0 +1,33 @@
+
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+span{
+    display: block;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+.dsblselect{
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none
+}
+
+a{
+    text-decoration: none;
+    -webkit-user-drag: none;
+    list-style: none;
+}
+
+.flex{
+    display: flex;
+}
+.m10{
+    margin: 10px;
+}
+

@@ -5,9 +5,14 @@ module.exports = function(app) {
     /* -------- Middleware -------- */
 
     app.use((req, res, next) => {
+        // Redirect a user if there is no connection to the DataBase
+        if (connection.state === 'disconnected') {
+            return res.render('error', { culprit: 'db' });
+        }
+
         // If there are multiple parameters with the same name
         // in a GET request, degrade the array into a single value
-        if (req.method === "GET" && req.query) {
+        if (req.method === 'GET' && req.query) {
             for (key in req.query) {
                 if (Array.isArray(req.query.key))
                     req.query.key = req.query.key[0];
@@ -16,8 +21,10 @@ module.exports = function(app) {
 
         if (req.session && req.session.user) {
             connection.query('SELECT verified FROM users WHERE login = ?', [req.session.user.login], (err, results, fields) => {
-                if (err)
+                if (err) {
                     console.log('An error has occured on middleware. ' + err.code + ': ' + err.sqlMessage);
+                    res.redirect('/error');
+                }
     
                 // Account has been destroyed
                 if (results.length === 0) {
@@ -373,6 +380,7 @@ module.exports = function(app) {
                 invalidField = true;
             }
             else {
+                search.headline = headline;
                 search.sql += ' tests.headline = ' + connection.escape(headline);
                 search.set = true;
             }
@@ -384,6 +392,7 @@ module.exports = function(app) {
                 invalidField = true;
             }
             else {
+                search.subject = subject;
                 search.sql += (search.set ? ' AND' : '') + ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.subject = ' + connection.escape(subject) + ')';
                 search.set = true;
             }
@@ -395,6 +404,7 @@ module.exports = function(app) {
                 invalidField = true;
             }
             else {
+                search.topic = topic;
                 search.sql += (search.set ? ' AND' : '') + ' tests.topic = ' + topic;
                 search.set = true;
             }
@@ -406,17 +416,19 @@ module.exports = function(app) {
                 invalidField = true;
             }
             else {
+                search.semester = semester;
                 search.sql += (search.set ? ' AND' : '') + ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.semester = ' + semester + ')';
                 search.set = true;
             }
         }
-        if (!invalidField && req.query.teacher) {
-            var author = parseInt(req.query.teacher, 10);
+        if (!invalidField && req.query.author) {
+            var author = parseInt(req.query.author, 10);
             if (author === NaN || author < 0) {
                 messages.push('Данного преподавателя не существует.');
                 invalidField = true;
             }
             else {
+                search.author = author;
                 search.sql += (search.set ? ' AND' : '') + ' tests.author = ' + author;
                 search.set = true;
             }
@@ -429,6 +441,7 @@ module.exports = function(app) {
                 invalidField = true;
             }
             else {
+                search.completed = completed;
                 search.sql += (search.set ? ' AND' : '') + ' tests.id ' + (completed === 0 ? 'NOT ' : '') + 'IN (SELECT tests_completion.test_id FROM tests_completion WHERE tests_completion.user_id = ' + req.session.user.id + ')';
                 search.set = true;
             }
@@ -478,7 +491,7 @@ module.exports = function(app) {
                             return res.redirect('/error');
                         }
 
-                        return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: elements, topics: topics, teachers: results, teacher: teacher, search: search.set });
+                        return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: elements, topics: topics, teachers: results, teacher: teacher, search: search });
                     });
                 });
             });
