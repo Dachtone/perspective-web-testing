@@ -26,36 +26,36 @@
     <hr>
     <i>Поиск</i>
     <form action="/tests" method="GET" id="testsSearch">
-        <input name="headline" placeholder="По заголовку"<% if (search.headline !== undefined) { %> value="<%= search.headline %>"<% } %>><br>
-        <input name="subject" placeholder="По предмету"<% if (search.subject !== undefined) { %> value="<%= search.subject %>"<% } %>><br>
+        <input name="headline" placeholder="По заголовку"><br>
+        <input name="subject" placeholder="По предмету"><br>
         <select name="topic">
             <option value="-1" selected>По теме...</option>
             <% topics.forEach((topic) => { %>
-                <option value="<%= topic.id %>"<% if (search.topic !== undefined && search.topic === topic.id) { %> selected<% } %>><%= topic.title %></option>
+                <option value="<%= topic.id %>"><%= topic.title %></option>
             <% }); %>
         </select><br>
         <select name="semester">
             <option value="-1" selected>По уровню подготовки...</option>
             <option disabled="disabled">──────────</option>
             <% for (var i = 1; i <= 22; i++) { %>
-                <option value="<%= i %>"<% if (search.semester !== undefined && search.semester === i) { %> selected<% } %>><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</option>
+                <option value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</option>
                 <% if (i % 2 === 0) { %>
                     <option disabled="disabled">──────────</option>
                 <% } %>
             <% } %>
             <option value="23">Высшее образование</option>
         </select><br>
-        <select name="author">
+        <select name="teacher">
             <option value="-1" selected>По преподавателю...</option>
             <% teachers.forEach((teacher) => { %>
-                <option value="<%= teacher.id %>"<% if (search.author !== undefined && search.author === teacher.id) { %> selected<% } %>><%= teacher.name %></option>
+                <option value="<%= teacher.id %>"><%= teacher.name %></option>
             <% }); %>
         </select><br>
         <div>
-            <input type="checkbox" id="selector1" name="completed" value="0"<% if (search.completed !== undefined && search.completed === 0) { %> checked<% } %>>
+            <input type="checkbox" id="selector1" name="completed" value="0">
             <label for="selector1">Непройденные тесты</label>
         
-            <input type="checkbox" id="selector2" name="completed" value="1"<% if (search.completed !== undefined && search.completed === 1) { %> checked<% } %>>
+            <input type="checkbox" id="selector2" name="completed" value="1">
             <label for="selector2">Пройденные тесты</label>
         </div><br>
         <button type="submit">Найти</button><br>

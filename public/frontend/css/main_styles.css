@@ -131,7 +131,9 @@ input{
     /*  */
     background: #3367d6;
 }
-
+select-placeholder select{
+    display: none;
+}
 .dwajisY::before{
     left: 0 !important;
     right: 0 !important;
@@ -149,6 +151,7 @@ input{
 }
 
 .numPage{
+    text-align: center;
     margin-bottom: 50px;
     margin-top: 20px;
     font-family: 'Roboto';
