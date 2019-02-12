@@ -1,3 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/frontend/css/menu/menu.css">
+    <link rel="stylesheet" href="static/frontend/css/user.css">
+</head>
+<body>
+    <div class="F21sW0EW">
+        <div class="G1qVSlLk">
+            <div class="aSEQzkJ jsxW">
+                <div class="OePZjKkR">Пользователь</div>
+                <div class="exqyWGy2Ko">
+                    <div class="iiHdNvsXDu">
+                        <div class="afobqbROic">
+                            <iron-icon>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill='#5f6368'width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            </iron-icon>
+                            <div class="jBlnmKNrTJ">
+                                <%= profile.name %>
+                            </div>
+                        </div>
+                        <div class="XmpFH7yAUc">
+                            <div class="LX3VCwMZyx">
+                                <div class="IQlkTjhuVf">
+                                    <div class="sj"><% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %><br></div>
+                                </div>
+                                <div class="RPad2FeA">
+                                    <div class="sj">Логин: <span>gansiliera</span></div>
+                                </div>
+                                <div class="RP24t9pFeA">
+                                    <div class="sj">Класс\должность: <span><%= profile.position %></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="JUGIKe6xDr">
+                        <% if (user.id === profile.id) { %>
+                            <form action="/logout" method="POST">
+                                <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Выйти</button>
+                            </form>
+                        <% } %>                    
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="static/frontend/front/user.js" type="module"></script>
+</body>
+</html>
+
 <b>Профиль: <%= profile.name %>.</b>
 
 <hr>
@@ -7,15 +65,8 @@
 <hr>
 
 <% if (user.id === profile.id) { %>
-    <form action="/delete_account" method="POST">
-        <input type="submit" value="Удалить аккаунт"/>
-    </form>
-
     <form action="/logout" method="POST">
         <input type="submit" value="Выйти"/>
     </form>
 <% } %>
 
-<form action="/" method="GET">
-    <input type="submit" value="На Главную"/>
-</form>

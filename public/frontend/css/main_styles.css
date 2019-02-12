@@ -20,6 +20,12 @@ a{
 .m10{
     margin: 10px;
 }
+button{
+    display: block;
+    outline: none;
+    background: none;
+    border: none
+}
 
 /* -------------------- */
 .exqyWGy2Ko{
@@ -141,3 +147,18 @@ input{
     background: #3067CE;
     height: 2px;
 }
+
+.numPage{
+    margin-bottom: 50px;
+    margin-top: 20px;
+    font-family: 'Roboto';
+    color: #000000c4;
+    font-size: 85%;
+}
+.numMain{
+    margin-top: 10px;
+}
+.numMain a{
+    text-decoration: none;
+    color: #3367d6!important
+} 

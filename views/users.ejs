@@ -1,3 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/frontend/css/menu/menu.css">
+    <link rel="stylesheet" href="static/frontend/css/user.css">
+    <link rel="stylesheet" href="static/frontend/css/users_lay.css">
+</head>
+<body>
+    <div class="F21sW0EW">
+        <div class="ud0AdBs"></div>
+        <div class="G1qVSlLk">
+            <div class="aSEQzkJ jsxW">
+                <div class="OePZjKkR">Список пользователей</div>
+                <div class="exqyWGy2Ko">
+                    <% if (elements.length === 0) { %>
+                    <b>Нет элементов.</b>
+                    <% } else { %>
+                    <% elements.forEach(function(element){ %>
+                        <div class="iiHdNvsXDu" >
+                            <div class="dawdAJdaw">
+                                    <div class="afobqbROic">
+                                        <iron-icon>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill='#5f6368'width="20" height="20" viewBox="0 0 24 24"><path fill="none" d="M0 0h28v28H0V0z"/><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                        </iron-icon>
+                                        <div class="jBlnmKNrTJ"><%= element.name %></div>
+                                    </div>
+                                    <div class="XmpFH7yAUc">
+                                        <div class="LX3VCwMZyx">
+                                            <div class="IQlkTjhuVf">
+                                                <div class="sj"><% if (element.type === 0) { %>Гость<% } else if (element.type === 1) { %>Ученик<% } else if (element.type === 2) { %>Учитель/сотрудник<% } else if (element.type === 3) { %>Администратор<% } %></div>
+                                            </div>
+                                            <div class="IQlkTjhuVf">
+                                                <div class="sj"> Логин: <%= element.login %></div>
+                                            </div>
+                                            <div class="IQlkTjhuVf" >
+                                                <div class="sj">Класс/должность: <span><%= element.position %></span></div>
+                                            </div>
+                                            <div class="IQlkTjhuVf" confirmed>
+                                                <div class="sj">Статус аккаунта: <span><% if (element.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %></span></div>
+                                            </div>
+
+                                        </div>
+                                    </div>                            
+                            </div>
+                            <div class="JUGIKe6xDr">
+                            <% if (admin) { %>
+                                <% if (!element.verified) { %>
+                                    <form action="/admin/verify_account/<%= element.id %>" method="POST">
+                                        <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Подтвердить</button>
+                                    </form>
+                                <% } %>
+                                <% if (user.id !== element.id && (element.type !== 3 || !element.verified)) { %>
+                                    <form action="/admin/delete_account/<%= element.id %>" method="POST">
+                                        <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Удалить</button>
+                                    </form>
+                                <% } %>
+                            <% } %>
+                            </div>
+                        </div>
+                    <% }); %>
+                    <% } %>
+                </div>
+                <% if (pages_num > 0) { %>
+                    <div class="numPage">
+                        <div class="numStrict">
+                            Страница <%= page %> из <%= pages_num %>
+                        </div>  
+                        <div class="numMain">
+                            <% for (var i = 1; i <= pages_num; i++) { %>
+                                <a href="users?page=<%= i %>"><% if (i === page) { %><span><%= i %></span><% } else { %><%= i %><% } %></a>   
+                            <% } %>
+                        </div>  
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <script src="static/frontend/front/user.js" type="module"></script>
+</body>
+</html>
+
+
 <% if (typeof messages !== 'undefined') { %>
     <div>
         <% messages.forEach(function(message){ %>
@@ -5,42 +94,6 @@
         <% }); %>
     </div>
 <% } %>
-<% if (elements.length === 0) { %>
-    <b>Нет элементов.</b>
-    <hr>
-<% } else { %>
-    <b>Список пользователей:</b><br>
-    <hr>
-    <% elements.forEach(function(element){ %>
-        <div>
-            Логин: <%= element.login %><br>
-            ФИО: <%= element.name %><br>
-            Тип аккаунта: <% if (element.type === 0) { %>Гость<% } else if (element.type === 1) { %>Ученик<% } else if (element.type === 2) { %>Учитель/сотрудник<% } else if (element.type === 3) { %>Администратор<% } %><br>
-            Статус аккаунта: <% if (element.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %><br>
-            Класс/должность: <%= element.position %><br>
-            <% if (admin) { %>
-                <% if (!element.verified) { %>
-                    <form action="/admin/verify_account/<%= element.id %>" method="POST">
-                        <input type="submit" value="Подтвердить личность"/>
-                    </form>
-                <% } %>
-                <% if (user.id !== element.id && (element.type !== 3 || !element.verified)) { %>
-                    <form action="/admin/delete_account/<%= element.id %>" method="POST">
-                        <input type="submit" value="Удалить аккаунт пользователя"/>
-                    </form>
-                <% } %>
-            <% } %>
-        </div>
-        <hr>
-    <% }); %>
-<% } %>
-<% if (pages_num > 0) { %>
-    <i>Страница <%= page %> из <%= pages_num %></i><br>
-    <% for (var i = 1; i <= pages_num; i++) { %>
-        <a href="users?page=<%= i %>"><% if (i === page) { %><b><%= i %></b><% } else { %><%= i %><% } %></a>   
-    <% } %>
-<% } %>
-<br><br>
-<form action="/" method="GET">
-    <input type="submit" value="На Главную"/>
-</form>
+
+
+

@@ -34,7 +34,7 @@
     font-weight: 500;
     color: #000000a6;
     font-family: 'Roboto';
-    font-size: 88.25%;
+    font-size: 88.25% !important;
     margin-top: 20px;
     margin-bottom: 10px;;
 }
@@ -45,6 +45,7 @@
     background: #E9F2FC !important;
 }
 .MHOai4cPWJs{
+    font-size: 15px !important;
     z-index: 1;
     position: relative;
     overflow: hidden;

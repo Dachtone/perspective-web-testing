@@ -1,0 +1,46 @@
+.afobqbROic{
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.XmpFH7yAUc{
+    font-family: 'Roboto';
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+.iiHdNvsXDu{ padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.233);
+}
+.iiHdNvsXDu:last-child{
+    border: none;
+}
+.MHOai4cPWJs {
+    display: block;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+.afobqbROic iron-icon{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+.afobqbROic{
+    display: flex;
+    align-items: flex-end;
+}
+.jBlnmKNrTJ{
+    margin-left: 5px;
+    font-family: 'Roboto';
+}
+[notconfirmed] span{
+    color: #e51c23
+}
+[confirmed] span{
+    color: #3367d6
+}
