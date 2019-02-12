@@ -1,17 +1,48 @@
+body, html{
+    width: 100%;
+    height: 100%;
+}
+
 .login__wrapper{
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    
-    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
-    border-radius: 6px
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 400px;
+    height: 100vh;
+    margin: 0 auto;
+}
+.login__wrapper::after{
+    content: '';
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.reject_submit{
+    margin-top: 10px;
+}
+.msh{
+    color: #e51c23;
+    text-align: left !important; 
+    font-size: 81.50%;
+    font-family: "Roboto";
+}
+.login__wrapper::before{
+    content: '';
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
 }
 .loginbtn{
     position: relative;
     overflow: hidden;
+    z-index: 1;
+}
+.bj{
+    transition: all .3s ease
+}
+.RWacdkJs{
+    margin-top: 15px;
 }
 .nccttle{
     display: flex;
@@ -56,8 +87,10 @@ input:focus{
 }
 
 .wp_main{
-    position: relative;
-    padding: 50px 40px 30px 40px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-radius: 6px;
+    padding: 50px 40px 10px 40px;
 }
 
 .athrz-main{
@@ -65,11 +98,23 @@ input:focus{
     flex-direction: column;
  
 }
+[type='label']{
+    margin-bottom: 5px;
+    color: rgba(27, 25, 25, 0.87);
+    font-size: 14px;
+    line-height: 24px;
+    font-family: 'Roboto';
+    text-align-last: left;
+}
 .log_wrp{
         padding-top: 8px;
     padding-bottom: 15px; 
     display: block;
     text-align: center;
+}
+select-placeholder .rippleon{
+    z-index: 4;
+    background: rgba(0, 0, 0, 0.055);
 }
 .noacc_ttle{
     margin-top: 38px;
@@ -77,6 +122,7 @@ input:focus{
     display: block;
 }
 .loginbtn{
+    font-family: 'Roboto';
     padding: 8px 0px;
     border-radius: 6px;
     display: block;
@@ -86,7 +132,14 @@ input:focus{
     color: #fff;
     background: #3067CE;
     width: 200px;
-    margin-top: 52px;
+    margin-top: 80px;
+}
+.loginbtn .rippleon{
+    background: rgba(255, 255, 255, 0.322) !important
+}
+
+span{
+    display: block;
 }
 
 .ta{
