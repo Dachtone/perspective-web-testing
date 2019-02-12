@@ -5,70 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Web Testing | Регистрация</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="static/css/IDcolor.css">
-    <link rel="stylesheet" href="static/css/login.css">
-    <link rel="stylesheet" href="static/css/rippleEffect.css">
-    <link rel="stylesheet" href="static/css/input.css">
-    <link rel="stylesheet" href="static/css/font/font.css">
+    <link rel="stylesheet" href="static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="static/frontend/css/login.css">
+    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/frontend/css/input.css">
+    <link rel="stylesheet" href="static/frontend/css/select-module.css">
+    <link rel="stylesheet" href="static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="static/frontend/css/error.css">
+
 </head>
 <body>
     
     <div class="login__wrapper">
-        <div class="wp_main">
+        <div class="wp_main jsxW">
             <div class="wellcome_tittle">
                 <span class="ttle_fr">Добро пожаловать</span>
-                <span class="ttle_lst">Создайте аккаунт для пользования сайтом</span>
+                <span class="ttle_lst">Пройдите регистрацию для дальнейшей работы с сайтом</span>
             </div>
-            <% if (typeof messages !== 'undefined') { %>
-                <div>
-                    <% messages.forEach(function(message){ %>
-                        <b><%= message %></b>
-                    <% }); %>
-                </div>
-            <% } %>
             <div class="log_ttle">
                 <div class="span_logttle">Регистрация</div>
             </div>
             <div class="log_wrp">
             <form action="/register" id="registerForm" method="POST">
                 <div class="athrz-main">
-                    <div class="d2DHdaj">
+                    <div class="d2DHdaj jbefore">
                         <div class="bj">
                             <div class="Rjx2D">Логин</div>
                              <input type="text" name="inputLogin" class="DJad2DAj" required>
                          </div>
                      </div>
-                     <div class="d2DHdaj">
+                     <div class="d2DHdaj jbefore">
                         <div class="bj">
                             <div class="Rjx2D">Пароль</div>
                              <input type="password" name="inputPassword" class="DJad2DAj" required>
                          </div>
                      </div>
-                    <div class="d2DHdaj">
+                    <div class="d2DHdaj jbefore">
                         <div class="bj">
-                            <div class="Rjx2D">ФИО</div>
+                            <div class="Rjx2D">Ф.И.О</div>
                             <input type="text" name="inputName" class="DJad2DAj" required>
                         </div>
                     </div>
-                    <div class="d2DHdaj" style="margin-top: 23px">
-                        <label class="mr-sm-2 Rjx2D" for="inlineFormCustomSelect">Тип аккаунта</label>
-                        <select class="custom-select mr-sm-2" name="inputType" id="inlineFormCustomSelect" style="margin-top: 1.9rem!important">
-                            <option value="-1" selected>Выбрать...</option>
-                            <option value="0">Гость</option>
-                            <option value="1">Ученик</option>
-                            <option value="2">Учитель/сотрудник</option>
-                            <option value="3">Администратор</option>
-                        </select>
+                    <div style="margin-top: 15px">
+                        <div class="" type='label'>Тип аккаунта</div>
+                        <select-tamplate class="fz_tamplate">
+                            <select-placeholder data-this='Выберите вариант' ripple></select-placeholder>
+                            <select-wrap>
+                                <select-item>Ученик</select-item>
+                                <select-item>Учитель</select-item>
+                                <select-item>Администратор</select-item>
+                                <select-item>Тестировщик</select-item>
+                            </select-wrap>
+                        </select-tamplate>  
                     </div>
-                    <div class="d2DHdaj">
-                        <div class="bj">
-                            <div class="Rjx2D">Класс/должность</div>
-                            <input type="text" name="inputPosition" class="DJad2DAj" required>
-                        </div>
+                </div>
+                <div class="notific">
+                <div class="RWacdkJs">
+                    <div class="J21dakAs"> <svg xmlns="https://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" fill="#e51c23"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></div>
+                    <div class="ADWkj2ad">Введите все данные</div>
+                </div>   
+                <% if (typeof messages !== 'undefined') { %>
+                    <div class="reject-submit">
+                        <% messages.forEach(function(message){ %>
+                            <div class='msh'><%= message %></div>
+                        <% }); %>
                     </div>
-                </div>  
-               <div class="loginbtn" onclick="sendRegisterForm()">
+                <% } %>           
+            </div>  
+               <div class="loginbtn dAWDJJKQA2dikdas" disable-select ripple >
                    <div class="ttlebtnspan">Зарегистрироваться</div>
                </div>
             </form>    
@@ -77,28 +81,7 @@
 
 
     </div>
-
-    <script>
-    function sendRegisterForm() {
-        document.getElementById("registerForm").submit();
-    };
-
-    var input = document.getElementsByClassName("bj");
-    for (var i = 0; i < input.length; i++) {
-        input.item(i).addEventListener("keyup", (event) => {
-            event.preventDefault();
-
-            // Enter
-            if (event.keyCode === 13) {
-                sendRegisterForm();
-            }
-        });
-    }
-    </script>
-
-    <script type='module' src="static/js/app.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="static/frontend/front/register.js" type="module"></script>
+    <script src="static/frontend/front/app.js" type="module"></script>
 </body>
 </html>
