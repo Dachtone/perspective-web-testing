@@ -5,7 +5,7 @@ module.exports = function(app) {
     /* -------- Middleware -------- */
 
     app.use((req, res, next) => {
-        // Redirect a user if there is no connection to the DataBase
+        // Redirect the user if there is no connection to the DataBase
         if (connection.state === 'disconnected') {
             return res.render('error', { culprit: 'db' });
         }
