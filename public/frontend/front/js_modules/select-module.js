@@ -23,8 +23,8 @@ export class FZselect{
          ttle.innerHTML = content;
          icon.innerHTML = ' <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
 
-        costyul.setAttribute('form','registerForm')
-        costyul.setAttribute('required', '')
+
+        costyul.setAttribute('_data','')
         costyul.setAttribute('name', 'inputType')
         son_costyul.setAttribute('selected', '')
         costyul.appendChild(son_costyul)

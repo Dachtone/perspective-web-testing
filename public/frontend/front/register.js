@@ -33,10 +33,38 @@ function subRegisterForm(obj, alertblock){
         alert.classList.remove('AjmAWC')
     }
 }
+function collectInputDataRegister(){
+    const input = document.querySelectorAll('[_data]')
+    let data = {}
+    Array.prototype.forEach.call(input, item =>{
+        const attr = item.getAttribute('name')
+        data[attr] = encodeURIComponent(item.value)        
+    })
+    
+    return JSON.stringify(data)
+}
+function sendAjax(value){
+    const xhr = new XMLHttpRequest()
 
+    xhr.open("POST", '/register')
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.send(value)
+
+    xhr.onreadystatechange = ()=>{
+        if(xhr.readyState === 4 && xhr.status === 200){
+            console.log(xhr.responseText)
+        }
+    }
+}
+
+// кликни на ДОБРО ПОЖАЛОВАТЬ, КОГДА ДАННЫЕ БУДУТ ВВЕДЕНЫ
+document.querySelector('.ttle_fr').addEventListener('click', function(){
+    console.log( sendAjax(collectInputDataRegister()) )
+})
 
 // //  Слушатель заглушка
 
-document.querySelector('.loginbtn').addEventListener('click', function(){
-    subRegisterForm({input: '.bj', select: 'select-tamplate'}, '.RWacdkJs')
-})
+// ПОКА ТЕСТИМ. НИЖНЯЯ НЕ РАБОТАЕТ 
+// document.querySelector('.loginbtn').addEventListener('click', function(){
+//     subRegisterForm({input: '.bj', select: 'select-tamplate'}, '.RWacdkJs')
+// })
