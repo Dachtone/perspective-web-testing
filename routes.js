@@ -991,70 +991,74 @@ module.exports = function(app) {
     });
 
     app.post('/register', (req, res) => {
-        if (req.session.user)
-            return res.redirect('/');
+        res.setHeader('Content-Type', 'application/json');
 
-        var login = req.body.inputLogin;
-        var password = req.body.inputPassword;
-        var name = req.body.inputName;
-        var type = req.body.inputType;
-        var position = req.body.inputPosition;
+        if (req.session.user)
+            return res.json({ success: false, error: 'Вы уже вошли как ' + req.session.user.login });
+        
+        var data = req.body;    
+
+        var login = data.inputLogin;
+        var password = data.inputPassword;
+        var name = data.inputName;
+        var type = data.inputType;
+        var position = data.inputPosition;
 
         if (!login || !password)
-            return res.render('register', { messages: ["Введите логин и пароль."] });
+            return res.json({ success: false, error: 'Введите логин и пароль' });
         if (login.length < 4)
-            return res.render('register', { messages: ["Логин не может быть короче 4 символов."] });
+            return res.render({ success: false, error: 'Логин не может быть короче 4 символов' });
         if (login.length > 64)
-            return res.render('register', { messages: ["Логин не может быть длиннее 64 символов."] });
+            return res.render({ success: false, error: 'Логин не может быть длиннее 64 символов' });
         if (!(/^[a-zA-Z0-9_]+$/.test(login)))
-            return res.render('register', { messages: ["Логин не должен содержать пробелов. Допустимы только латинские буквы, цифры, нижние подчёркивания и тире."] });
+            return res.render({ success: false, error: 'Логин не должен содержать пробелов. Допустимы только латинские буквы, цифры, нижние подчёркивания и тире' });
         
         if (password.length < 4)
-            return res.render('register', { messages: ["Пароль не может быть короче 4 символов."] });
+            return res.render({ success: false, error: 'Пароль не может быть короче 4 символов' });
         
         if (!name)
-            return res.render('register', { messages: ["Введите ФИО."] });
+            return res.render({ success: false, error: 'Введите ФИО' });
         if (name.length > 128)
-            return res.render('register', { messages: ["ФИО не может быть длиннее 128 символов."] });
+            return res.render({ success: false, error: 'ФИО не может быть длиннее 128 символов' });
         var parts = name.split(" ");
         if (parts.length !== 3)
-            return res.render('register', { messages: ["Введите ФИО в формате \"Фамилия Имя Отчество\"."] });
+            return res.render({ success: false, error: 'Введите ФИО в формате \"Фамилия Имя Отчество\"' });
         for (part of parts) {
             if (!(/^[а-яА-Я]+$/.test(part)) || part.charAt(0) == part.charAt(0).toLowerCase() || part.length < 2)
-                return res.render('register', { messages: ["Введите ФИО в формате \"Фамилия Имя Отчество\"."] });
+                return res.render({ success: false, error: 'Введите ФИО в формате \"Фамилия Имя Отчество\"' });
         }
 
         if (!type)
-            return res.render('register', { messages: ["Выберите тип аккаунта."] });
+            return res.render({ success: false, error: 'Выберите тип аккаунта' });
         type = parseInt(type, 10);
         if (type === NaN || type === -1)
-            return res.render('register', { messages: ["Выберите тип аккаунта."] });
+            return res.render({ success: false, error: 'Выберите тип аккаунта' });
         if (type < 0 || type > 3)
-            return res.render('register', { messages: ["Неверный тип аккаунта."] });
+            return res.render({ success: false, error: 'Неверный тип аккаунта' });
         
         if (!position)
-            return res.render('register', { messages: ["Введите ваш класс/должность."] });
+            return res.render({ success: false, error: 'Введите ваш класс/должность' });
         position = position.trim();
         if (position.length > 128)
-            return res.render('register', { messages: ["Название класса/должности не может быть длиннее 128 символов."] });
+            return res.render({ success: false, error: 'Название класса/должности не может быть длиннее 128 символов' });
 
         var hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
         connection.query('SELECT id FROM users WHERE login = ?', [login], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /register. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
+                return res.render({ success: false, error: 'Ошибка Базы Данных' });
             }
 
             if (results.length !== 0)
-                return res.render('register', { messages: ["Логин занят."] });
+                return res.json({ success: false, error: 'Логин занят' });
 
             var verified = type === 0 ? true : false;
             connection.query('INSERT INTO users (login, hash, name, type, verified, position) VALUES (?, ?, ?, ?, ?, ?)', 
                             [login, hash, name, type, verified, position], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /register. ' + err.code + ': ' + err.sqlMessage);
-                    return res.redirect('/error');
+                    return res.render({ success: false, error: 'Ошибка Базы Данных' });
                 }
 
                 var user = { 
@@ -1068,7 +1072,8 @@ module.exports = function(app) {
                 };
                 req.session.user = user;
 
-                return res.redirect('/?action=registered');
+                // return res.redirect('/?action=registered');
+                return res.json({ success: true });
             });
         });
     });

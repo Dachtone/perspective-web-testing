@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="static/frontend/css/main_styles.css">
-    <link rel="stylesheet" href="static/frontend/css/font/font.css">
-    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
-    <link rel="stylesheet" href="static/frontend/css/menu/menu.css">
-    <link rel="stylesheet" href="static/frontend/css/user.css">
+    <title>Web Testing | <%= profile.name %></title>
+    <link rel="stylesheet" href="/static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="/static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="/static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="/static/frontend/css/menu/menu.css">
+    <link rel="stylesheet" href="/static/frontend/css/user.css">
 </head>
 <body>
     <div class="F21sW0EW">
@@ -29,11 +29,13 @@
                         <div class="XmpFH7yAUc">
                             <div class="LX3VCwMZyx">
                                 <div class="IQlkTjhuVf">
-                                    <div class="sj"><% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %><br></div>
+                                    <div class="sj"><% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %></div>
                                 </div>
+                                <% if (user.id === profile.id || user.type === 3) { %>
                                 <div class="RPad2FeA">
-                                    <div class="sj">Логин: <span>gansiliera</span></div>
+                                    <div class="sj">Логин: <span><%= profile.login %></span></div>
                                 </div>
+                                <% } %>
                                 <div class="RP24t9pFeA">
                                     <div class="sj">Класс\должность: <span><%= profile.position %></span></div>
                                 </div>
@@ -52,21 +54,6 @@
             </div>
         </div>
     </div>
-    <script src="static/frontend/front/user.js" type="module"></script>
+    <script src="/static/frontend/front/user.js" type="module"></script>
 </body>
 </html>
-
-<b>Профиль: <%= profile.name %>.</b>
-
-<hr>
-Тип аккаунта: <% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %><br>
-Статус аккаунта: <% if (profile.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %><br>
-Класс/должность: <%= profile.position %><br>
-<hr>
-
-<% if (user.id === profile.id) { %>
-    <form action="/logout" method="POST">
-        <input type="submit" value="Выйти"/>
-    </form>
-<% } %>
-
