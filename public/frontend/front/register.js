@@ -38,7 +38,8 @@ function collectInputDataRegister(){
     let data = {}
     Array.prototype.forEach.call(input, item =>{
         const attr = item.getAttribute('name')
-        data[attr] = encodeURIComponent(item.value)        
+        // data[attr] = encodeURIComponent(item.value)
+        data[attr] = item.value
     })
     
     return JSON.stringify(data)

@@ -87,7 +87,7 @@ export class FZselect{
         const select = data.obj.querySelector('option')
         const place = data.obj.querySelector('.place')
         const data_variant = data.item.textContent
-        select.setAttribute('value', data_variant)
+        select.setAttribute('value', data.item.getAttribute('value'))
         select.textContent = data_variant
         place.textContent = data_variant
     }
