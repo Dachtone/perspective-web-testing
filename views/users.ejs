@@ -50,7 +50,7 @@
                                     </div>                            
                             </div>
                             <div class="JUGIKe6xDr">
-                            <% if (admin) { %>
+                            <% if (user.type === 3 && user.verified) { %>
                                 <% if (!element.verified) { %>
                                     <form action="/admin/verify_account/<%= element.id %>" method="POST">
                                         <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Подтвердить</button>

@@ -16,7 +16,7 @@
     Автор теста: <a href="/profile/<%= info.author.id %>"><%= info.author.name %></a><br>
     Дата создания: <%= ("0" + info.created.getDate()).slice(-2) %>.<%= ("0" + (info.created.getMonth() + 1)).slice(-2) %>.<%= info.created.getFullYear() %> <%= ("0" + info.created.getHours()).slice(-2) %>:<%= ("0" + info.created.getMinutes()).slice(-2) %><br>
     Статус: <% if (completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
-    <% if (admin || info.author.id === user.id) { %>
+    <% if (user.type === 3 && user.verified || info.author.id === user.id) { %>
         <form action="/delete_test/<%= info.id %>" method="POST">
             <input type="submit" value="Удалить тест"/>
         </form>

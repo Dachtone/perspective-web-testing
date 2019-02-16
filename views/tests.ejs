@@ -5,7 +5,7 @@
         <% }); %>
     </div>
 <% } %>
-<% if (teacher) { %>
+<% if (user.type >= 2 && user.verified) { %>
     <form action="/create_test" method="GET">
         <input type="submit" value="Создать тест"/>
     </form><br>
@@ -69,7 +69,7 @@
         </form>
         <hr>
     <% } %>
-    <% elements.forEach(function(element){ %>
+    <% elements.forEach((element) => { %>
         <div>
             Заголовок: <%= element.headline %><br>
             Тема: <%= element.title %><br>
@@ -83,7 +83,7 @@
                     <input type="submit" value="Открыть"/>
                 </form>
             <% } %>
-            <% if (admin || info.author.id === user.id) { %>
+            <% if ((user.type === 3 && user.verified) || element.author_id === user.id) { %>
                 <form action="/delete_test/<%= element.id %>" method="POST">
                     <input type="submit" value="Удалить тест"/>
                 </form>

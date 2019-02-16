@@ -85,7 +85,8 @@ module.exports = function(app) {
 
         var messages = [];
         
-        connection.query('SELECT id, login, name, type, verified, position FROM users WHERE id = ?', [req.params.id], (err, results, fields) => {
+        connection.query('SELECT id, login, name, type, verified, position FROM users WHERE id = ?',
+                        [req.params.id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /profile. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
@@ -103,7 +104,12 @@ module.exports = function(app) {
             return res.redirect('/error');
 
         var id = req.session.user.id;
-        connection.query('DELETE FROM users WHERE id = ?; DELETE FROM tests_completion WHERE user = ?; DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE author = ?) OR user = ?; DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE author = ?); DELETE FROM tests WHERE author = ?', [id, id, id, id], (err, results, fields) => {
+        connection.query(`DELETE FROM users WHERE id = ?; 
+                          DELETE FROM tests_completion WHERE user = ?; 
+                          DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE author = ?) OR user = ?; 
+                          DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE author = ?); 
+                          DELETE FROM tests WHERE author = ?`,
+                        [id, id, id, id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /delete_account. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
@@ -150,7 +156,12 @@ module.exports = function(app) {
             var login = results[0].login;
             var id = req.params.id;
 
-            connection.query('DELETE FROM users WHERE id = ?; DELETE FROM tests_completion WHERE user = ?; DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE author = ?) OR user = ?; DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE author = ?); DELETE FROM tests WHERE author = ?', [id, id, id, id, id, id], (err, results, fields) => {
+            connection.query(`DELETE FROM users WHERE id = ?; 
+                              DELETE FROM tests_completion WHERE user = ?; 
+                              DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE author = ?) OR user = ?; 
+                              DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE author = ?); 
+                              DELETE FROM tests WHERE author = ?`,
+                            [id, id, id, id, id, id], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /delete_user. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
@@ -194,9 +205,7 @@ module.exports = function(app) {
     app.get('/users', (req, res) => {
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
             return res.redirect('/error');
-
-        const admin = (req.session.user.type === 3 && req.session.user.verified) ? true : false;
-
+        
         var messages = [];
 
         if (req.query.error) {
@@ -234,13 +243,17 @@ module.exports = function(app) {
             pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
 
             var offset = (page - 1) * elements_per_page;
-            connection.query('SELECT id, login, name, type, verified, position FROM users LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
+            connection.query('SELECT id, login, name, type, verified, position FROM users LIMIT ? OFFSET ?',
+                            [elements_per_page, offset], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /users. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
                 }
     
-                return res.render('users', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, admin: admin });
+                return res.render('users', {
+                    messages: messages, user: req.session.user, page: page,
+                    pages_num: pages_num, elements: results
+                });
             });
         });
     });
@@ -251,8 +264,6 @@ module.exports = function(app) {
         if (!req.session.user || !req.session.user.verified)
             return res.redirect('/error');
 
-        const admin = (req.session.user.type === 3 && req.session.user.verified) ? true : false;
-
         const test_id = req.params.id;
 
         var messages = [];
@@ -260,7 +271,12 @@ module.exports = function(app) {
         if (req.query.completed)
             messages.push("Тест пройдён. Можете ознакомиться с правильными ответами:");
 
-        connection.query('SELECT tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, users.name, tests_completion.user AS completed, tests.created + INTERVAL 3 HOUR AS created FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id LEFT JOIN tests_completion ON tests.id = tests_completion.test AND tests_completion.user = ? WHERE tests.id = ?', [req.session.user.id, test_id], (err, results, fields) => {
+        connection.query(`SELECT tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, 
+                          users.name, tests_completion.user AS completed, tests.created + INTERVAL 3 HOUR AS created 
+                          FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id 
+                          LEFT JOIN tests_completion ON tests.id = tests_completion.test AND tests_completion.user = ? 
+                          WHERE tests.id = ?`,
+                        [req.session.user.id, test_id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /test. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
@@ -285,7 +301,9 @@ module.exports = function(app) {
                 created: results[0].created
             };
 
-            connection.query('SELECT questions.id, questions.body, questions.answer AS correct_answer, questions.points FROM questions WHERE test = ?', [test_id], (err, results, fields) => {
+            connection.query(`SELECT questions.id, questions.body, questions.answer AS correct_answer, questions.points 
+                              FROM questions WHERE test = ?`,
+                            [test_id], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /test. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
@@ -300,10 +318,15 @@ module.exports = function(app) {
                         delete question["correct_answer"];
                     });
 
-                    return res.render('test', { messages: messages, user: req.session.user, info: info, questions: questions, completed: completed, teacher: teacher });
+                    return res.render('test', {
+                        messages: messages, user: req.session.user, info: info,
+                        questions: questions, completed: completed
+                    });
                 }
 
-                connection.query('SELECT question, answer, correct FROM answers WHERE test = ? AND user = ? ORDER BY question ASC', [test_id, req.session.user.id], (err, results, fields) => {
+                connection.query(`SELECT question, answer, correct FROM answers WHERE test = ? AND user = ? 
+                                  ORDER BY question ASC`,
+                                [test_id, req.session.user.id], (err, results, fields) => {
                     if (err) {
                         console.log('An error has occured on /test. ' + err.code + ': ' + err.sqlMessage);
                         return res.redirect('/error');
@@ -327,7 +350,10 @@ module.exports = function(app) {
                         }
                     }
 
-                    return res.render('test', { messages: messages, user: req.session.user, info: info, questions: questions, completed: completed, admin: admin });
+                    return res.render('test', {
+                        messages: messages, user: req.session.user, info: info,
+                        questions: questions, completed: completed
+                    });
                 });
             });
         });
@@ -340,9 +366,7 @@ module.exports = function(app) {
     app.get('/tests', (req, res) => {
         if (!req.session.user)
             return res.redirect('/error');
-
-        const admin = (req.session.user.type === 3 && req.session.user.verified) ? true : false;
-
+        
         var messages = [];
 
         if (req.query.error) {
@@ -376,7 +400,9 @@ module.exports = function(app) {
             }
             else {
                 search.subject = subject;
-                search.sql += (search.set ? ' AND' : '') + ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.subject = ' + connection.escape(subject) + ')';
+                search.sql += (search.set ? ' AND' : '') +
+                    ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.subject = ' +
+                    connection.escape(subject) + ')';
                 search.set = true;
             }
         }
@@ -400,7 +426,9 @@ module.exports = function(app) {
             }
             else {
                 search.semester = semester;
-                search.sql += (search.set ? ' AND' : '') + ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.semester = ' + semester + ')';
+                search.sql += (search.set ? ' AND' : '') +
+                    ' tests.topic IN (SELECT topics.id FROM topics WHERE topics.semester = ' +
+                    semester + ')';
                 search.set = true;
             }
         }
@@ -425,7 +453,10 @@ module.exports = function(app) {
             }
             else {
                 search.completed = completed;
-                search.sql += (search.set ? ' AND' : '') + ' tests.id ' + (completed === 0 ? 'NOT ' : '') + 'IN (SELECT tests_completion.test FROM tests_completion WHERE tests_completion.user = ' + req.session.user.id + ')';
+                search.sql += (search.set ? ' AND' : '') +
+                    ' tests.id ' + (completed === 0 ? 'NOT ' : '') +
+                    'IN (SELECT tests_completion.test FROM tests_completion WHERE tests_completion.user = ' +
+                    req.session.user.id + ')';
                 search.set = true;
             }
         }
@@ -452,7 +483,13 @@ module.exports = function(app) {
             pages_num = results.length !== 0 ? Math.ceil(results.length / elements_per_page) : 0;
 
             var offset = (page - 1) * elements_per_page;
-            connection.query('SELECT tests.id, tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, users.name, tests_completion.user AS completed, tests.created + INTERVAL 3 HOUR AS created FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id LEFT JOIN tests_completion ON tests_completion.test = tests.id AND tests_completion.user = ?' + (search.set ? search.sql : '') + ' ORDER BY tests.id DESC LIMIT ? OFFSET ?', [req.session.user.id, elements_per_page, offset], (err, results, fields) => {
+            connection.query(`SELECT tests.id, tests.headline, topics.title, topics.subject, topics.semester, 
+                              users.id AS author_id, users.name, tests_completion.user AS completed, 
+                              tests.created + INTERVAL 3 HOUR AS created FROM tests 
+                              LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id 
+                              LEFT JOIN tests_completion ON tests_completion.test = tests.id AND tests_completion.user = ? ` +
+                              (search.set ? search.sql : '') + ` ORDER BY tests.id DESC LIMIT ? OFFSET ?`,
+                            [req.session.user.id, elements_per_page, offset], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
@@ -474,7 +511,11 @@ module.exports = function(app) {
                             return res.redirect('/error');
                         }
 
-                        return res.render('tests', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: elements, topics: topics, teachers: results, admin: admin, search: search });
+                        return res.render('tests', {
+                            messages: messages, user: req.session.user, page: page,
+                            pages_num: pages_num, elements: elements, topics: topics,
+                            teachers: results, search: search
+                        });
                     });
                 });
             });
@@ -498,7 +539,8 @@ module.exports = function(app) {
             if (results.length === 0)
                 return res.json({ success: false, error: 'Данный тест не существует' });
 
-            connection.query('SELECT NULL FROM tests_completion WHERE user = ? AND test = ?', [req.session.user.id, id], (err, results, fields) => {
+            connection.query('SELECT NULL FROM tests_completion WHERE user = ? AND test = ?',
+                            [req.session.user.id, id], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
                     return res.json({ success: false, error: 'Ошибка Базы Данных' });
@@ -508,7 +550,8 @@ module.exports = function(app) {
                 if (completed)
                     return res.json({ success: false, error: 'Вы уже прошли этот тест' });
 
-                connection.query('SELECT id, answer FROM questions WHERE test = ? ORDER BY id ASC', [id], (err, results, fields) => {
+                connection.query('SELECT id, answer FROM questions WHERE test = ? ORDER BY id ASC',
+                                [id], (err, results, fields) => {
                     if (err) {
                         console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
                         return res.json({ success: false, error: 'Ошибка Базы Данных' });
@@ -535,7 +578,8 @@ module.exports = function(app) {
                     if (abort)
                         return;
 
-                    connection.query('INSERT INTO tests_completion (user, test) VALUES (?, ?)', [req.session.user.id, id], (err, results, fields) => {
+                    connection.query('INSERT INTO tests_completion (user, test) VALUES (?, ?)',
+                                    [req.session.user.id, id], (err, results, fields) => {
                         if (err) {
                             console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
                             return res.json({ success: false, error: 'Ошибка Базы Данных' });
@@ -553,7 +597,10 @@ module.exports = function(app) {
                             }
 
                             connection.query('INSERT INTO answers (test, question, user, answer, correct) VALUES (?, ?, ?, ?, ?)',
-                                            [id, index + 1, req.session.user.id, question.answer, question.correct_answer.trim().toLowerCase() === question.answer.trim().toLowerCase() ? 1 : 0], (err, results, fields) => {
+                                            [id, index + 1, req.session.user.id, question.answer,
+                                            (question.correct_answer.trim().toLowerCase() === question.answer.trim().toLowerCase()) ?
+                                            1 : 0],
+                                            (err, results, fields) => {
                                 if (err) {
                                     console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
                                     abort = true;
@@ -673,7 +720,8 @@ module.exports = function(app) {
             if (abort)
                 return res.json(response);
 
-            connection.query('INSERT INTO tests (headline, topic, author) VALUES (?, ?, ?)', [headline, topic, req.session.user.id], (err, results, fields) => {
+            connection.query('INSERT INTO tests (headline, topic, author) VALUES (?, ?, ?)',
+                            [headline, topic, req.session.user.id], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
                     return res.json({ success: false, error: 'Ошибка Базы Данных при внесении теста' });
@@ -720,7 +768,8 @@ module.exports = function(app) {
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
             return res.redirect('/error');
 
-        connection.query('SELECT author, headline FROM tests WHERE id = ?', [req.params.id], (err, results, fields) => {
+        connection.query('SELECT author, headline FROM tests WHERE id = ?',
+                        [req.params.id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
@@ -735,7 +784,11 @@ module.exports = function(app) {
             var headline = results[0].headline;
             var test_id = req.params.id;
 
-            connection.query('DELETE FROM tests WHERE id = ?; DELETE FROM tests_completion WHERE test = ?; DELETE FROM questions WHERE test = ?; DELETE FROM answers WHERE test = ?', [test_id, test_id, test_id, test_id], (err, results, fields) => {
+            connection.query(`DELETE FROM tests WHERE id = ?; 
+                              DELETE FROM tests_completion WHERE test = ?; 
+                              DELETE FROM questions WHERE test = ?; 
+                              DELETE FROM answers WHERE test = ?`,
+                            [test_id, test_id, test_id, test_id], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /delete_test. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
@@ -751,9 +804,7 @@ module.exports = function(app) {
     app.get('/topics', (req, res) => {
         if (!req.session.user)
             return res.redirect('/error');
-
-        const teacher = (req.session.user.type >= 2 && req.session.user.verified) ? true : false;
-
+        
         var messages = [];
 
         if (req.query.error) {
@@ -787,13 +838,17 @@ module.exports = function(app) {
             pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
 
             var offset = (page - 1) * elements_per_page;
-            connection.query('SELECT id, title, subject, semester FROM topics LIMIT ? OFFSET ?', [elements_per_page, offset], (err, results, fields) => {
+            connection.query('SELECT id, title, subject, semester FROM topics LIMIT ? OFFSET ?',
+                            [elements_per_page, offset], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /topics. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
                 }
     
-                return res.render('topics', { messages: messages, user: req.session.user, page: page, pages_num: pages_num, elements: results, teacher: teacher });
+                return res.render('topics', {
+                    messages: messages, user: req.session.user, page: page,
+                    pages_num: pages_num, elements: results
+                });
             });
         });
     });
@@ -813,31 +868,71 @@ module.exports = function(app) {
         var subject = req.body.inputSubject;
         var semester = req.body.inputSemester;
 
-        if (!title)
-            return res.render('create_topic', { messages: ["Введите название темы."], user: req.session.user });
+        if (!title) {
+            return res.render('create_topic', { 
+                messages: ["Введите название темы."],
+                user: req.session.user
+            });
+        }
         title = title.trim();
-        if (title.length < 3)
-            return res.render('create_topic', { messages: ["Название темы не может быть короче 3 символов."], user: req.session.user });
-        if (title.length > 128)
-            return res.render('create_topic', { messages: ["Название темы не может быть длиннее 128 символов."], user: req.session.user });
+        if (title.length < 3) {
+            return res.render('create_topic', {
+                messages: ["Название темы не может быть короче 3 символов."],
+                user: req.session.user
+            });
+        }
+        if (title.length > 128) {
+            return res.render('create_topic', {
+                messages: ["Название темы не может быть длиннее 128 символов."],
+                user: req.session.user
+            });
+        }
         
-        if (!subject)
-            return res.render('create_topic', { messages: ["Введите название предмета."], user: req.session.user });
-        if (!(/^[а-яА-Я\s]*$/.test(subject)))
-            return res.render('create_topic', { messages: ["В названии предмета допустима только кириллица."], user: req.session.user });
-        if (subject.length < 2)
-            return res.render('create_topic', { messages: ["Название предмета не может быть короче 2 символов."], user: req.session.user });
-        if (subject.length > 128)
-            return res.render('create_topic', { messages: ["Название предмета не может быть длиннее 128 символов."], user: req.session.user });
+        if (!subject) {
+            return res.render('create_topic', {
+                messages: ["Введите название предмета."],
+                user: req.session.user
+            });
+        }
+        if (!(/^[а-яА-Я\s]*$/.test(subject))) {
+            return res.render('create_topic', {
+                messages: ["В названии предмета допустима только кириллица."],
+                user: req.session.user
+            });
+        }
+        if (subject.length < 2) {
+            return res.render('create_topic', {
+                messages: ["Название предмета не может быть короче 2 символов."],
+                user: req.session.user
+            });
+        }
+        if (subject.length > 128) {
+            return res.render('create_topic', {
+                messages: ["Название предмета не может быть длиннее 128 символов."],
+                user: req.session.user
+            });
+        }
         
         
-        if (!semester)
-            return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
+        if (!semester) {
+            return res.render('create_topic', {
+                messages: ["Выберите необходимый уровень подготовки."],
+                user: req.session.user
+            });
+        }
         semester = parseInt(semester, 10);
-        if (semester === NaN || semester === -1)
-            return res.render('create_topic', { messages: ["Выберите необходимый уровень подготовки."], user: req.session.user });
-        if (semester < 0)
-            return res.render('create_topic', { messages: ["Неверный уровень подготовки."], user: req.session.user });
+        if (semester === NaN || semester === -1) {
+            return res.render('create_topic', {
+                messages: ["Выберите необходимый уровень подготовки."],
+                user: req.session.user
+            });
+        }
+        if (semester < 0) {
+            return res.render('create_topic', {
+                messages: ["Неверный уровень подготовки."],
+                user: req.session.user
+            });
+        }
 
         connection.query('INSERT INTO topics (title, subject, semester) VALUES (?, ?, ?)', 
                         [title, subject, semester], (err, results, fields) => {
@@ -866,7 +961,12 @@ module.exports = function(app) {
             var title = results[0].title;
 
             var id = req.params.id;
-            connection.query('DELETE FROM tests_completion WHERE test IN (SELECT id FROM tests WHERE topic = ?); DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE topic = ?); DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE topic = ?); DELETE FROM tests WHERE topic = ?; DELETE FROM topics WHERE id = ?', [id, id, id, id, id], (err, results, fields) => {
+            connection.query(`DELETE FROM tests_completion WHERE test IN (SELECT id FROM tests WHERE topic = ?); 
+                              DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE topic = ?); 
+                              DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE topic = ?); 
+                              DELETE FROM tests WHERE topic = ?; 
+                              DELETE FROM topics WHERE id = ?`,
+                            [id, id, id, id, id], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /delete_topic. ' + err.code + ': ' + err.sqlMessage);
                     return res.redirect('/error');
@@ -896,7 +996,8 @@ module.exports = function(app) {
         if (!login || !password)
             return res.render('login', { messages: ["Введите логин и пароль."] });
 
-        connection.query('SELECT id, hash, name, type, verified, position FROM users WHERE login = ?', [login], (err, results, fields) => {
+        connection.query('SELECT id, hash, name, type, verified, position FROM users WHERE login = ?',
+                        [login], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /login. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
@@ -964,8 +1065,12 @@ module.exports = function(app) {
             return res.json({ success: false, error: 'Логин не может быть короче 4 символов' });
         if (login.length > 64)
             return res.json({ success: false, error: 'Логин не может быть длиннее 64 символов' });
-        if (!(/^[a-zA-Z0-9_]+$/.test(login)))
-            return res.json({ success: false, error: 'Логин не должен содержать пробелов. Допустимы только латинские буквы, цифры, нижние подчёркивания и тире' });
+        if (!(/^[a-zA-Z0-9_]+$/.test(login))) {
+            return res.json({
+                success: false,
+                error: 'Логин не должен содержать пробелов. Допустимы только латинские буквы, цифры, нижние подчёркивания и тире'
+            });
+        }
         
         if (password.length < 4)
             return res.json({ success: false, error: 'Пароль не может быть короче 4 символов' });
