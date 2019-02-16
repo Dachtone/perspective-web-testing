@@ -11,7 +11,7 @@
     </form><br>
 <% } %>
 <% if (elements.length === 0) { %>
-    <% if (search) { %>
+    <% if (search.set) { %>
         <b>Поиск не дал результатов.</b><br>
         <br>
         <form action="/tests" method="GET">
@@ -61,7 +61,7 @@
         <button type="submit">Найти</button><br>
     </form>
     <hr>
-    <% if (search) { %>
+    <% if (search.set) { %>
         <i>На странице представлены результаты поиска.</i><br>
         <br>
         <form action="/tests" method="GET">
@@ -83,7 +83,7 @@
                     <input type="submit" value="Открыть"/>
                 </form>
             <% } %>
-            <% if (teacher) { %>
+            <% if (admin || info.author.id === user.id) { %>
                 <form action="/delete_test/<%= element.id %>" method="POST">
                     <input type="submit" value="Удалить тест"/>
                 </form>

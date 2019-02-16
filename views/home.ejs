@@ -17,10 +17,12 @@
     <form action="/topics" method="GET">
         <input type="submit" value="Список тем"/>
     </form>
-    <form action="/users" method="GET">
-        <input type="submit" value="Список пользователей"/>
-    </form>
-    <% if (user.type == 3 && user.verified) { %>
+    <% if (user.type >= 2 && user.verified) { %>
+        <form action="/users" method="GET">
+            <input type="submit" value="Список пользователей"/>
+        </form>
+    <% } %>
+    <% if (user.type === 3 && user.verified) { %>
         <form action="/admin" method="GET">
             <input type="submit" value="Административная панель"/>
         </form>

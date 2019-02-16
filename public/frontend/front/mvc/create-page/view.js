@@ -170,7 +170,7 @@ export class view extends eventEmmiter{
 
          xhr.onreadystatechange = ()=>{
              if(xhr.readyState === 4 && xhr.status === 200){
-                 JSON.parse(xhr.responseText).success == true ? window.location.replace('/tests?') : console.log('не-а')
+                 JSON.parse(xhr.responseText).success == true ? window.location.replace('/tests?') : console.log(xhr.responseText)
              }
          }
 
