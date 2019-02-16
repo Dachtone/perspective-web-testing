@@ -1,3 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Testing | Создание теста</title>
+    
+    <link rel="stylesheet" href="static/frontend/css/input.css">
+    <link rel="stylesheet" href="static/frontend/css/create.css">
+    <link rel="stylesheet" href="static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/frontend/css/menu/menu.css">
+    <link rel="stylesheet" href="static/frontend/css/select-module.css">
+
+</head>
+<body>
+    <div class="F21sW0EW">
+    <div class="ud0AdBs"></div> 
+    <div class="G1qVSlLk">
+        <div class="aSEQzkJ jsxW" create-theme>
+            <div class="OePZjKkR">Создание темы</div>
+            <div class="xWDJRVpY">
+                    <div class="Su2KCPWkJ resp">
+                        <div class="yDEYJ3vn">
+                            <div class="d2DHdaj jbefore">
+                                <div class="bj">
+                                    <div class="Rjx2D">Название темы</div>
+                                    <input type="text" name="theme_tittle" class="DJad2DAj">
+                                </div>
+                            </div>
+                            <div class="d2DHdaj jbefore">
+                                <div class="bj">
+                                    <div class="Rjx2D">Название предмета</div>
+                                    <input type="text" name="lesson_tittle" class="DJad2DAj">
+                                </div>
+                            </div>
+                            <select-tamplate class="fz_tamplate">
+                                <select-placeholder data-this='Уровень подготовки' ripple ></select-placeholder>
+                                <select-wrap>
+                                <% for (var i = 1; i <= 22; i++) { %>
+                                    <select-item value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
+                                    <% if (i % 2 === 0) { %>
+                                        <span class="devider"></span>
+                                    <% } %>
+                                <% } %>
+                                </select-wrap>
+                            </select-tamplate>  
+                        </div>
+                    </div>
+
+                    <div class="EBQbR3g07L">
+                    </div>
+
+                    <div class="apbmHPNs">
+                        <div class="DhadhaDAj2al">
+                            <div class="error">
+                                <icon-error>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='#e51c23'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                </icon-error>
+                                <div class="error-ttle"></div>
+                            </div>
+                        </div>
+                        <div class="ZGFO3jPff">
+                            <button class="phw1tr2Ml dAWDJJKQA2dikdas" rjx select-disable ripple>Создать тему</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="/static/frontend/front/create.js" type="module"></script>
+    <script src="/static/frontend/front/sendTheme.js"></script>
+</body>
+</html>     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <% if (typeof messages !== 'undefined') { %>
     <div>
         <% messages.forEach(function(message){ %>

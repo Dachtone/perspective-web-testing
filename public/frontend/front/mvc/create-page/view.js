@@ -106,13 +106,13 @@ export class view extends eventEmmiter{
         const themeSelect = document.querySelector('.fz_tamplate');
         const item = document.querySelectorAll('.item');
         const theme = document.querySelector('.DJad2DAj');
-        const themeSelectValue = themeSelect.querySelector('.place').textContent
+        const themeSelectValue = themeSelect.querySelector('select').value
 
             let error = false
             let bSide = true
             let _data = {}
-            _data.data = []
-            _data.head = []
+            _data.head = {}
+            _data.questions = []
 
             if(theme.value.trim() == ''){
                 error = false;
@@ -139,9 +139,10 @@ export class view extends eventEmmiter{
                             }
                             if(bSide){
                                 error = true
-                    
-                                _data.head.push({'theme': themeSelectValue, 'testname': theme.value})
-                                _data.data.push({'state': statement.textContent, 'point': point.value, 'answer': answer.value})
+                                
+                                _data.head.headline = theme.value
+                                _data.head.topic = themeSelectValue
+                                _data.questions.push({'body': statement.textContent, 'points': point.value, 'answer': answer.value})
                     
                                 this.errorReject()
                             }
@@ -156,23 +157,22 @@ export class view extends eventEmmiter{
             }
 
         if(error){
-            this.sendDataAjax(JSON.stringify(_data))
+            this.sendDataAjax(_data)
         }
  
     }
     sendDataAjax(data){
-        console.log(data)
-        // const xhr = new XMLHttpRequest()
+         const xhr = new XMLHttpRequest()
 
-        // xhr.open('POST', '')
-        // xhr.setRequestHeader("Content-Type", "application/json")
-        // xhr.send(data)
+         xhr.open('POST', '/create_test')
+         xhr.setRequestHeader("Content-Type", "application/json")
+         xhr.send(JSON.stringify(data))
 
-        // xhr.onreadystatechange = ()=>{
-        //     if(xhr.readyState === 4 && xhr.status === 200){
-        //         console.log(xhr.responseText)
-        //     }
-        // }
+         xhr.onreadystatechange = ()=>{
+             if(xhr.readyState === 4 && xhr.status === 200){
+                 JSON.parse(xhr.responseText).success == true ? window.location.replace('/tests?') : console.log('не-а')
+             }
+         }
 
     }
 }

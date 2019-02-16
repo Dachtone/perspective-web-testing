@@ -1,6 +1,14 @@
 .EBQbR3g07L{
     margin-top: 20px;;
 }
+.resp .yDEYJ3vn{
+    width: 54% !important;
+}
+[create-theme] .xWDJRVpY{
+    flex: none;
+    border-radius: 6px !important;
+}
+
 [select-disable]{
     user-select: none;
     -moz-user-select: none;
@@ -266,7 +274,9 @@ div[contenteditable='true']:focus{
 }
 .d2DHdaj {
     width: 100%;
-    margin: 0 !important; 
+}
+.d2DHdaj:first-child{
+    margin: 0;
 }
 .Rjx2D{
     font-family: 'Roboto' !important;

@@ -5,6 +5,11 @@ body{
     box-sizing: border-box;
     background: #F8F9FA;
 }
+.devider{
+    height: 1px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.123);
+}
 p{
     margin: 0;
     padding: 0;
@@ -28,6 +33,7 @@ button{
 }
 
 /* -------------------- */
+
 .exqyWGy2Ko{
     background: #fff;
     padding-left: 20px;
@@ -44,6 +50,19 @@ input{
     padding-bottom: 18px;
     font-size: 16px;
     font-family: "Roboto";
+}
+.slyxFdN{
+    z-index: 2 !important;
+    height: 20px;width: 20px;
+    cursor: pointer;
+    padding: 10px
+}
+.slyxFdN .aria-ripple{
+    z-index: 1!important;
+    background: rgba(255, 255, 255, 0.295) !important;
+}
+.q0VKAhg{
+    margin-left: 6px;
 }
 .xWDJRVpY{
     flex: 1;
@@ -123,7 +142,6 @@ input{
         align-items: center;
         position: relative;
         padding: 15px 15px;
-        z-index: 2;
         color: #fff;
             font-size: 18px;
         box-shadow:  0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
