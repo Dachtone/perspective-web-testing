@@ -19,11 +19,13 @@
 .iiHdNvsXDu:last-child{
     border: none;
 }
-.MHOai4cPWJs {
-    display: block;
-    right: 0;
-    bottom: 0;
-    position: absolute;
+[delete]{
+    color: #e51c23 !important;
+    margin-left: 10px;
+}
+.JUGIKe6xDr{
+    display: flex;
+    margin-left: auto;
 }
 .afobqbROic iron-icon{
     width: 20px;
@@ -43,4 +45,8 @@
 }
 [confirmed] span{
     color: #3367d6
+}
+.MHOai4cPWJs {
+    margin: 0 !important;
+    margin-left: 10px !important;
 }

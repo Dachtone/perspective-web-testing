@@ -58,7 +58,7 @@
                                 <% } %>
                                 <% if (user.id !== element.id && (element.type !== 3 || !element.verified)) { %>
                                     <form action="/admin/delete_account/<%= element.id %>" method="POST">
-                                        <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Удалить</button>
+                                        <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit' delete>Удалить</button>
                                     </form>
                                 <% } %>
                             <% } %>

@@ -6,6 +6,10 @@ select-tamplate{
 ._empty select-placeholder{
     border: 1px solid #e51c23;
 }
+select-placeholder .rippleon{
+    z-index: 4 !important;
+    background: rgba(0, 0, 0, 0.038);
+}
 select-placeholder{
     color: rgba(0, 0, 0, 0.767);
     font-family: 'Roboto';
@@ -13,7 +17,7 @@ select-placeholder{
     position: relative;
     display: flex;
     align-items: center;
-    z-index: 5;
+    z-index: 5 !important;
     background: #fff;
     cursor: pointer;
     padding: 5px;

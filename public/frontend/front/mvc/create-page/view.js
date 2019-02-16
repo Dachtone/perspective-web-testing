@@ -103,56 +103,76 @@ export class view extends eventEmmiter{
         error.removeAttribute('error-reject')
     }
     validate(){
-
+        const themeSelect = document.querySelector('.fz_tamplate');
         const item = document.querySelectorAll('.item');
         const theme = document.querySelector('.DJad2DAj');
+        const themeSelectValue = themeSelect.querySelector('.place').textContent
 
             let error = false
             let bSide = true
             let _data = {}
             _data.data = []
+            _data.head = []
 
-
-        if(theme.value.trim() == ''){
-            error = false;
-
-            this.errorComplit("Введите название темы")
-        }else{
-            if(item.length){
-
-                Array.prototype.forEach.call(item, element => {
-                    const statement = element.querySelector('.id')
-                    const point = element.querySelector('input[type=number]')
-                    const answer = element.querySelector('input[type=text]')
-
-                    if(statement.textContent.trim() == '' || point.value.trim() == '' || answer.value.trim() == ''){
-                        error = false
-                        bSide = false
-                        
-                        this.errorComplit('Заполните все условия задач')
-                    }
-                    if(bSide){
-                        error = true
-
-                        _data.theme = theme.value
-                        _data.data.push({'state': statement.textContent, 'point': point.value, 'answer': answer.value})
-
-                        this.errorReject()
-                    }
-                })
-
-
-
+            if(theme.value.trim() == ''){
+                error = false;
+    
+                this.errorComplit("Введите заголовок теста")
             }else{
-                error = false
+                if((themeSelect.getAttribute('confirmed')) == 'false'){
+                    error = false
+    
+                    this.errorComplit('Выберите тему')
+                }else{
+                    if(item.length){
 
-                this.errorComplit('Необходимо создать задачу')
+                        Array.prototype.forEach.call(item, element => {
+                            const statement = element.querySelector('.id')
+                            const point = element.querySelector('input[type=number]')
+                            const answer = element.querySelector('input[type=text]')
+                    
+                            if(statement.textContent.trim() == '' || point.value.trim() == '' || answer.value.trim() == ''){
+                                error = false
+                                bSide = false
+                                
+                                this.errorComplit('Заполните все условия задач')
+                            }
+                            if(bSide){
+                                error = true
+                    
+                                _data.head.push({'theme': themeSelectValue, 'testname': theme.value})
+                                _data.data.push({'state': statement.textContent, 'point': point.value, 'answer': answer.value})
+                    
+                                this.errorReject()
+                            }
+                        })                    
+                    }else{
+                        error = false
+
+                        this.errorComplit('Необходимо создать задачу')
+                    }
+                }    
+
             }
-        }
 
         if(error){
-            console.log(_data)
+            this.sendDataAjax(JSON.stringify(_data))
         }
  
+    }
+    sendDataAjax(data){
+        console.log(data)
+        // const xhr = new XMLHttpRequest()
+
+        // xhr.open('POST', '')
+        // xhr.setRequestHeader("Content-Type", "application/json")
+        // xhr.send(data)
+
+        // xhr.onreadystatechange = ()=>{
+        //     if(xhr.readyState === 4 && xhr.status === 200){
+        //         console.log(xhr.responseText)
+        //     }
+        // }
+
     }
 }
