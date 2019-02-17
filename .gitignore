@@ -1,5 +1,6 @@
 *.db
 config.json
+theoretical/
 
 # Logs
 logs

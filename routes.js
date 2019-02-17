@@ -958,15 +958,25 @@ module.exports = function(app) {
             });
         }
 
-        connection.query('INSERT INTO topics (title, subject, semester) VALUES (?, ?, ?)', 
-                        [title, subject, semester], (err, results, fields) => {
+        connection.query('SELECT NULL FROM topics WHERE title = ?', 
+                        [title], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /create_topic. ' + err.code + ': ' + err.sqlMessage);
                 return res.json({ success: false, error: 'Ошибка Базы Данных' });
             }
 
-            // return res.redirect('/topics?success=true');
-            return res.json({ success: true });
+            if (results.length !== 0)
+                return res.json({ success: false, error: 'Тема с таким названием уже существует' });
+
+            connection.query('INSERT INTO topics (title, subject, semester) VALUES (?, ?, ?)', 
+                            [title, subject, semester], (err, results, fields) => {
+                if (err) {
+                    console.log('An error has occured on /create_topic. ' + err.code + ': ' + err.sqlMessage);
+                    return res.json({ success: false, error: 'Ошибка Базы Данных' });
+                }
+
+                return res.json({ success: true });
+            });
         });
     });
 
