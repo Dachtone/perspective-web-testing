@@ -272,7 +272,7 @@ module.exports = function(app) {
             messages.push("Тест пройдён. Можете ознакомиться с правильными ответами:");
 
         connection.query(`SELECT tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, 
-                          users.name, tests_completion.user AS completed, tests.created + INTERVAL 3 HOUR AS created 
+                          users.name, tests_completion.mark, tests.created + INTERVAL 3 HOUR AS created 
                           FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id 
                           LEFT JOIN tests_completion ON tests.id = tests_completion.test AND tests_completion.user = ? 
                           WHERE tests.id = ?`,
@@ -285,7 +285,6 @@ module.exports = function(app) {
             if (results.length === 0)
                 return res.redirect('/error');
             
-            const completed = results[0].completed !== null ? true : false;
             var info = {
                 id: test_id,
                 headline: results[0].headline,
@@ -298,6 +297,8 @@ module.exports = function(app) {
                     name: results[0].name
                 },
                 semester: results[0].semester,
+                completed: results[0].mark !== null ? true : false,
+                mark: results[0].mark,
                 created: results[0].created
             };
 
@@ -313,14 +314,13 @@ module.exports = function(app) {
                     return res.redirect('/error');
 
                 var questions = results;
-                if (!completed) {
+                if (!info.completed) {
                     questions.forEach((question) => {
                         delete question["correct_answer"];
                     });
 
                     return res.render('test', {
-                        messages: messages, user: req.session.user, info: info,
-                        questions: questions, completed: completed
+                        messages: messages, user: req.session.user, info: info, questions: questions
                     });
                 }
 
@@ -341,8 +341,8 @@ module.exports = function(app) {
 
                         if (results[index].question - 1 === i) {
                             questions[i].filled = true;
-                            questions[i].answer = results[0].answer;
-                            questions[i].correct = results[0].correct;
+                            questions[i].answer = results[index].answer;
+                            questions[i].correct = results[index].correct;
                             index++;
                         }
                         else {
@@ -351,8 +351,7 @@ module.exports = function(app) {
                     }
 
                     return res.render('test', {
-                        messages: messages, user: req.session.user, info: info,
-                        questions: questions, completed: completed
+                        messages: messages, user: req.session.user, info: info, questions: questions
                     });
                 });
             });
@@ -484,7 +483,7 @@ module.exports = function(app) {
 
             var offset = (page - 1) * elements_per_page;
             connection.query(`SELECT tests.id, tests.headline, topics.title, topics.subject, topics.semester, 
-                              users.id AS author_id, users.name, tests_completion.user AS completed, 
+                              users.id AS author_id, users.name, tests_completion.user AS completed, tests_completion.mark, 
                               tests.created + INTERVAL 3 HOUR AS created FROM tests 
                               LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id 
                               LEFT JOIN tests_completion ON tests_completion.test = tests.id AND tests_completion.user = ? ` +
@@ -550,7 +549,7 @@ module.exports = function(app) {
                 if (completed)
                     return res.json({ success: false, error: 'Вы уже прошли этот тест' });
 
-                connection.query('SELECT id, answer FROM questions WHERE test = ? ORDER BY id ASC',
+                connection.query('SELECT id, answer, points FROM questions WHERE test = ? ORDER BY id ASC',
                                 [id], (err, results, fields) => {
                     if (err) {
                         console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
@@ -562,24 +561,48 @@ module.exports = function(app) {
                     
                     var data = req.body.data;
                     
+                    var points_max = 0;
+                    var points = 0;
+
                     var abort = false;
-                    data.forEach((question, index) => {
+                    results.forEach((question, index) => {
                         if (abort)
                             return;
 
-                        if (question.answer.length > 128) {
-                            abort = true;
-                            return res.json({ success: false, error: 'Ответы не могут быть длиннее 128 символов' });
-                        }
+                        points_max += question.points;
 
-                        question.correct_answer = results[index].answer;
+                        if (index < data.length) {
+                            if (data[index].answer.length > 128) {
+                                abort = true;
+                                return res.json({ success: false, error: 'Ответы не могут быть длиннее 128 символов' });
+                            }
+
+                            data[index].correct_answer = question.answer;
+                            data[index].correct = (question.answer.trim().toLowerCase() === data[index].answer.trim().toLowerCase())
+                                ? 1 : 0;
+                            if (data[index].correct === 1)
+                                points += question.points;
+                        }
                     });
                     
                     if (abort)
                         return;
 
-                    connection.query('INSERT INTO tests_completion (user, test) VALUES (?, ?)',
-                                    [req.session.user.id, id], (err, results, fields) => {
+                    var percent = Math.round(points / points_max * 100);
+                    var mark = 'См.'; // Default value if no mark matches the percentage
+                    var found = false;
+                    config.marks.forEach((grade) => {
+                        if (found)
+                            return;
+
+                        if (percent >= grade.percent) {
+                            mark = grade.mark;
+                            found = true;
+                        }
+                    });
+
+                    connection.query('INSERT INTO tests_completion (user, test, mark) VALUES (?, ?, ?)',
+                                    [req.session.user.id, id, mark], (err, results, fields) => {
                         if (err) {
                             console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
                             return res.json({ success: false, error: 'Ошибка Базы Данных' });
@@ -597,9 +620,7 @@ module.exports = function(app) {
                             }
 
                             connection.query('INSERT INTO answers (test, question, user, answer, correct) VALUES (?, ?, ?, ?, ?)',
-                                            [id, index + 1, req.session.user.id, question.answer,
-                                            (question.correct_answer.trim().toLowerCase() === question.answer.trim().toLowerCase()) ?
-                                            1 : 0],
+                                            [id, index + 1, req.session.user.id, question.answer, question.correct],
                                             (err, results, fields) => {
                                 if (err) {
                                     console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
@@ -861,76 +882,78 @@ module.exports = function(app) {
     });
 
     app.post('/create_topic', (req, res) => {
+        res.setHeader('Content-Type', 'application/json');
+
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
-            return res.redirect('/error');
+            return res.json({ success: false, error: 'Нет доступа' });
 
         var title = req.body.inputTitle;
         var subject = req.body.inputSubject;
         var semester = req.body.inputSemester;
 
         if (!title) {
-            return res.render('create_topic', { 
-                messages: ["Введите название темы."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Введите название темы'
             });
         }
         title = title.trim();
         if (title.length < 3) {
-            return res.render('create_topic', {
-                messages: ["Название темы не может быть короче 3 символов."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Название темы не может быть короче 3 символов'
             });
         }
         if (title.length > 128) {
-            return res.render('create_topic', {
-                messages: ["Название темы не может быть длиннее 128 символов."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Название темы не может быть длиннее 128 символов'
             });
         }
         
         if (!subject) {
-            return res.render('create_topic', {
-                messages: ["Введите название предмета."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Введите название предмета'
             });
         }
         if (!(/^[а-яА-Я\s]*$/.test(subject))) {
-            return res.render('create_topic', {
-                messages: ["В названии предмета допустима только кириллица."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'В названии предмета допустима только кириллица'
             });
         }
         if (subject.length < 2) {
-            return res.render('create_topic', {
-                messages: ["Название предмета не может быть короче 2 символов."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Название предмета не может быть короче 2 символов'
             });
         }
         if (subject.length > 128) {
-            return res.render('create_topic', {
-                messages: ["Название предмета не может быть длиннее 128 символов."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Название предмета не может быть длиннее 128 символов'
             });
         }
         
         
         if (!semester) {
-            return res.render('create_topic', {
-                messages: ["Выберите необходимый уровень подготовки."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Выберите необходимый уровень подготовки'
             });
         }
         semester = parseInt(semester, 10);
         if (semester === NaN || semester === -1) {
-            return res.render('create_topic', {
-                messages: ["Выберите необходимый уровень подготовки."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Выберите необходимый уровень подготовки'
             });
         }
         if (semester < 0) {
-            return res.render('create_topic', {
-                messages: ["Неверный уровень подготовки."],
-                user: req.session.user
+            return res.json({ 
+                sucess: false,
+                error: 'Неверный уровень подготовки'
             });
         }
 
@@ -938,10 +961,11 @@ module.exports = function(app) {
                         [title, subject, semester], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /create_topic. ' + err.code + ': ' + err.sqlMessage);
-                return res.redirect('/error');
+                return res.json({ success: false, error: 'Ошибка Базы Данных' });
             }
 
-            return res.redirect('/topics?success=true');
+            // return res.redirect('/topics?success=true');
+            return res.json({ success: true });
         });
     });
 

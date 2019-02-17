@@ -15,7 +15,11 @@
     Уровень подготовки: <% if (info.semester <= 22) { %><%= Math.ceil(info.semester / 2) %> класс, <%= 2 - (info.semester % 2) %> семестр<% } else { %>Высшее образвание<% } %><br>
     Автор теста: <a href="/profile/<%= info.author.id %>"><%= info.author.name %></a><br>
     Дата создания: <%= ("0" + info.created.getDate()).slice(-2) %>.<%= ("0" + (info.created.getMonth() + 1)).slice(-2) %>.<%= info.created.getFullYear() %> <%= ("0" + info.created.getHours()).slice(-2) %>:<%= ("0" + info.created.getMinutes()).slice(-2) %><br>
-    Статус: <% if (completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
+    Статус: <% if (info.completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
+    <% if (info.completed) { %>
+        Оценка: <%= info.mark %><br>
+    <% } %>
+    <br>
     <% if (user.type === 3 && user.verified || info.author.id === user.id) { %>
         <form action="/delete_test/<%= info.id %>" method="POST">
             <input type="submit" value="Удалить тест"/>
@@ -27,21 +31,24 @@
     
     <% questions.forEach((question, index) => { %>
         <div class="question" id="question<%= index + 1 %>">
-        <label>Вопрос №<%= index + 1 %></label>
-        <div class="mathEnabled" style="width: 300px; white-space: pre-wrap"><%= question.body %></div>
-        <% if (!completed) { %>
-            <input name="answer" placeholder="Ваш ответ"><br>
-        <% } else { %>
-            <label>Правильный ответ: <%= question.correct_answer %></label><br>
-            <% if (question.filled) { %>
-                <label>Ваш ответ: <%= question.answer %></label>  
+            <label>Вопрос №<%= index + 1 %></label><br>
+            <label>Баллы за правильный ответ: <%= question.points %></label><br>
+            <br>
+            <div class="mathEnabled" style="width: 300px; white-space: pre-wrap"><%= question.body %></div>
+            <br>
+            <% if (!info.completed) { %>
+                <input name="answer" placeholder="Ваш ответ"><br>
+            <% } else { %>
+                <label>Правильный ответ: <%= question.correct_answer %></label><br>
+                <% if (question.filled) { %>
+                    <label>Ваш ответ: <%= question.answer %></label>  
+                <% } %>
             <% } %>
-        <% } %>
-        <hr>
+            <hr>
         </div>
     <% }); %>
     
-    <% if (!completed) { %>
+    <% if (!info.completed) { %>
     <button type="button" id="sendTest">Закончить тест</button><br>
     <hr>
     <% } %>

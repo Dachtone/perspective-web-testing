@@ -10,6 +10,7 @@ const mysql = require('mysql');
 
 var config = fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8');
 config = JSON.parse(config);
+global.config = config;
 
 const app = express();
 
