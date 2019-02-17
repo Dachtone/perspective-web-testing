@@ -897,7 +897,7 @@ module.exports = function(app) {
                 error: 'Введите название темы'
             });
         }
-        title = title.trim();
+        title = decodeURIComponent(title.trim());
         if (title.length < 3) {
             return res.json({ 
                 sucess: false,
@@ -917,6 +917,7 @@ module.exports = function(app) {
                 error: 'Введите название предмета'
             });
         }
+        subject = decodeURIComponent(subject);
         if (!(/^[а-яА-Я\s]*$/.test(subject))) {
             return res.json({ 
                 sucess: false,
