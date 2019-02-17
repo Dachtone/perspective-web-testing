@@ -21,7 +21,7 @@ export class FZselect{
         const ttle = createElement('div', {class: 'place'})
         const icon = createElement('select-icon')
          ttle.innerHTML = content;
-         icon.innerHTML = ' <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+         icon.innerHTML = ' <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
 
 
         costyul.setAttribute('_data','')

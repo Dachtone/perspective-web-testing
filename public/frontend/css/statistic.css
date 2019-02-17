@@ -92,15 +92,12 @@ span[blue]{
     font-family: "Roboto";
 }
 .xWDJRVpY{
-    display: flex;
     flex-direction: column;
-    flex: 1;
     /* flex: none !important;
     border-radius: 6px; */
     padding-left: 20px;
     padding-right: 20px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-radius: 6px;
     background: #fff;
     box-shadow:  0 2px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 
@@ -124,7 +121,49 @@ span[blue]{
         transform: translateY(0);
     }
 }
-
+.select_block{
+    margin-top: 12px;
+}
+.QprDheCS{
+    position: relative;
+}
+[search_iput]{
+    padding: 4px;
+    margin: 5px 0px;
+    border: 1px solid #0000002f;
+    border-radius: 4px;
+    outline: none !important;
+}
+.filter-modal input[type="text"]{
+    font-size: 84.25% !important;
+    width: 100%;
+    font-family: "Roboto";
+    outline: none;
+    border: none
+}
+.filter-modal .place{
+    font-family: 'Roboto'  !important;
+    font-size: 84.25% !important;
+}
+.filter-modal select-placeholder{
+    border: 1px solid #0000002f !important;
+    font-size: 90.25%;
+}
+.chekcbox_container{
+    display: flex;
+}
+.filter-modal{
+    transition: .3s all ease;
+    display: flex;
+    flex-direction: column;
+    width: 290px;
+    z-index:5;
+    box-shadow:  0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4) !important;
+    border-radius: 4px;
+    position: absolute;
+    padding: 10px 20px;
+    background: #fff;
+}
 .OePZjKkR{
     align-items: center;
 }
@@ -137,6 +176,7 @@ span[blue]{
     display: flex;flex-direction: column;
 }
 .DSCwycxc{
+    margin-bottom: 20px;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -220,6 +260,19 @@ span[blue]{
 .open_test{
     margin-top: auto;
 }
+.filter-modal [button-tamplate]{
+    font-size: 95%;
+    background: #3367d6;
+    color: #fff;
+    border: none !important;
+    padding: 5px 27px !important;
+    margin-top: 20px;
+    margin-left: auto;
+}
+.filter-modal [button-tamplate] .rippleon{
+
+    background: rgba(255, 255, 255, 0.37)
+}
 .Cw5Gbbtt{
     font-weight: 500;
     font-size: 96%;
@@ -282,4 +335,24 @@ span[blue]{
 }
 .mFoSk7v button{
     padding: 0;
+}
+.filter{
+    margin-top: 20px;
+}
+.filter-open{
+    width: 130px;
+    color: #3367d6;
+    padding: 5px 19px;
+    display: flex;
+    align-items: flex-end;
+}
+.ttle-filter{
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 17px;
+
+}
+.filter-open .rippleon{
+    background: #3367d617;
 }
