@@ -524,7 +524,7 @@ module.exports = function(app) {
     app.post('/send_test/:id', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
 
-        if (!req.session.user || !req.session.user.verified || req.session.user.type === 0)
+        if (!req.session.user || !req.session.user.verified || req.session.user.type !== 1)
             return res.json({ success: false, error: 'Нет доступа' });
 
         var id = req.params.id;

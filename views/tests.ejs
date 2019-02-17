@@ -77,11 +77,11 @@
             Уровень подготовки: <% if (element.semester <= 22) { %><%= Math.ceil(element.semester / 2) %> класс, <%= 2 - (element.semester % 2) %> семестр<% } else { %>Высшее образвание<% } %><br>
             Автор теста: <a href="/profile/<%= element.author_id %>"><%= element.name %></a><br>
             Дата создания: <%= ("0" + element.created.getDate()).slice(-2) %>.<%= ("0" + (element.created.getMonth() + 1)).slice(-2) %>.<%= element.created.getFullYear() %> <%= ("0" + element.created.getHours()).slice(-2) %>:<%= ("0" + element.created.getMinutes()).slice(-2) %><br>
-            <% if (user.type !== 0) { %>
+            <% if (user.type === 1) { %>
                 Статус: <% if (element.completed !== null) { %>Пройден<% } else { %>Не пройден<% } %><br>
-            <% } %>
-            <% if (element.completed) { %>
-                Оценка: <%= element.mark %><br>
+                <% if (element.completed) { %>
+                    Оценка: <%= element.mark %><br>
+                <% } %>
             <% } %>
             <% if (user.verified) { %>
                 <form action="/test/<%= element.id %>" method="GET">

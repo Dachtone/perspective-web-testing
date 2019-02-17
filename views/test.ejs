@@ -38,7 +38,7 @@
             <br>
             <div class="mathEnabled" style="width: 300px; white-space: pre-wrap"><%= question.body %></div>
             <br>
-            <% if (!info.completed && user.verified && user.type !== 0) { %>
+            <% if (!info.completed && user.verified && user.type === 1) { %>
                 <input name="answer" placeholder="Ваш ответ"><br>
             <% } else { %>
                 <% if (user.type !== 0) { %>
@@ -52,7 +52,7 @@
         </div>
     <% }); %>
     
-    <% if (!info.completed) { %>
+    <% if (!info.completed && user.verified && user.type === 1) { %>
     <button type="button" id="sendTest">Закончить тест</button><br>
     <hr>
     <% } %>
