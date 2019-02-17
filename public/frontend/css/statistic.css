@@ -29,6 +29,29 @@ span[blue]{
     display: block !important;
     position: relative !important;
 }
+.test_author{
+    cursor: pointer;
+    
+}
+[test]{
+    width: 82% !important;
+}
+.author{
+    margin-left: 4px;
+    text-decoration: underline;
+}
+.author a{
+    transition: .3s all ease ;
+    color: rgba(44, 44, 44, 0.788) !important;
+}
+.author a:hover{
+    color: #3367d6 !important; 
+}
+.test_theme{
+    margin-bottom: 3px;
+    font-size: 100%;
+    letter-spacing: 0.3px;
+}
 .ud0AdBs{
     /*  */
         display: flex;
@@ -71,8 +94,9 @@ span[blue]{
 .xWDJRVpY{
     display: flex;
     flex-direction: column;
-    flex: none !important;
-    border-radius: 6px;
+    flex: 1;
+    /* flex: none !important;
+    border-radius: 6px; */
     padding-left: 20px;
     padding-right: 20px;
     border-top-left-radius: 6px;
@@ -127,16 +151,22 @@ span[blue]{
     margin-top: 30px;
 }
 .item{
-    position: relative;
     display: flex;
+    flex-direction: column;
+    position: relative;
     font-family: "Roboto";
     color: rgba(44, 44, 44, 0.788);
     justify-content: center;
-    margin-right: 15px;
-    margin-top: 16px;
-    flex-basis: 30%;
-    border-radius: 6px;
+    margin-right: 10px;
+    margin-top: 11px;
+    flex-basis: 32.2%;
+    border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.082);
+    display: flex;
+    flex-direction: column;
+}
+.item:nth-child(3n){
+    margin-right: 0px !important;
 }
 .iP8AakXX{
     width: 80%;
@@ -171,6 +201,12 @@ span[blue]{
 .f7nSQKRPZ{
     margin-bottom: 20px;
 }
+.accepted{
+}
+.TcP5fc{
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
 .state{
     
     margin: 0 auto;
@@ -181,11 +217,28 @@ span[blue]{
     padding-bottom: 8px;;
     border-bottom: 1px solid rgba(44, 44, 44, 0.171);
 }
+.open_test{
+    margin-top: auto;
+}
 .Cw5Gbbtt{
     font-weight: 500;
     font-size: 96%;
     color: #3367d6;
 }
+.pass_test{
+    margin-right: 12px;
+    margin-left: auto;
+    margin-bottom: 10px;
+    padding: 5px 13px;
+    font-size: 87%;
+    background: #3367d6;
+    color: #fff;
+    border: none !important;
+}
+.pass_test .rippleon{
+    background: rgba(255, 255, 255, 0.274);
+}
+
 .mFoSk7v{
     position: absolute;
     top: 0;right: 0;

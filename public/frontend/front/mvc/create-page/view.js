@@ -55,7 +55,15 @@ export class view extends eventEmmiter{
     }
     addListener(object){
         const icon = object.querySelector('iron-icon')
+        const place = object.querySelector('.id')
+        const send = document.querySelector('.phw1tr2Ml')
 
+        place.addEventListener('focus', ()=>{
+            send.setAttribute('data-focused', 'true')
+        })
+        place.addEventListener('blur', ()=>{
+            send.setAttribute('data-focused', 'false')
+        })
         icon.addEventListener('click', ({currentTarget})=>{
             const id = currentTarget.getAttribute('reject')
             
@@ -142,7 +150,7 @@ export class view extends eventEmmiter{
                                 
                                 _data.head.headline = theme.value
                                 _data.head.topic = themeSelectValue
-                                _data.questions.push({'body': statement.textContent, 'points': point.value, 'answer': answer.value})
+                                _data.questions.push({'body': statement.innerText, 'points': point.value, 'answer': answer.value})
                             }
                         })                    
                     }else{
