@@ -763,18 +763,10 @@ module.exports = function(app) {
 
                     var test_id = results.insertId;
 
+                    var finished = 0;
                     abort = false;
-                    response = {};
-
-                    // Workaround to add one last extra element for response logic
-                    data.questions.push({ });
-
                     data.questions.forEach((question, index) => {
-                        // If this is the last element and we got an error, send the response
-                        if (abort && index === data.questions.length - 1)
-                            return res.json(response);
-
-                        if (abort || index === data.questions.length - 1)
+                        if (abort)
                             return;
 
                         connection.query('INSERT INTO questions (test, body, answer, points) VALUES (?, ?, ?, ?)',
@@ -782,17 +774,17 @@ module.exports = function(app) {
                                         (err, results, fields) => {
                             if (err) {
                                 console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
-                                response = { success: false, error: 'Ошибка Базы Данных при внесении вопроса' };
-                                abort = true;
+                                if (!abort) {
+                                    res.json({ success: false, error: 'Ошибка Базы Данных при внесении вопроса' });
+                                    abort = true;
+                                }
 
-                                if (index === data.questions.length - 2)
-                                    return res.json(response);
+                                return;
                             }
             
-                            response = { success: true };
-
-                            if (index === data.questions.length - 2)
-                                return res.json(response);
+                            finished++;
+                            if (!abort && finished === data.length)
+                                return res.json({ success: true });
                         });
                     });
                 });
