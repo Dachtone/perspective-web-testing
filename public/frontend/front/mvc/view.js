@@ -1,9 +1,6 @@
-import {eventEmmiter} from './emmiter/emmiter.js'
 
-export class View extends eventEmmiter{
+export class View{
     constructor(){
-        super()
-        
         this.menu_btn = document.querySelector('.slyxFdN')
         this.menu = document.querySelector('ui-menu-layout')
         this.overlay = document.querySelector('ui-overlay')

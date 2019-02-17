@@ -34,9 +34,8 @@ function getData(){
     }else{
         error = true
 
-        const data = `inputTitle=${theme}&inputSubject=${lesson}&inputSemester=${select.querySelector('select').value}`
+        const data = `inputTitle=${encodeURIComponent(theme)}&inputSubject=${encodeURIComponent(lesson)}&inputSemester=${select.querySelector('select').value}`
         AjaxSend(data)
-        hideError()
     }
 
     
@@ -45,11 +44,16 @@ function getData(){
 function AjaxSend(value){
     const xhr = new XMLHttpRequest()
     xhr.open('POST','/create_topic')
-    xhr.send(encodeURIComponent(value))
-
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(value)
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState === 4 && xhr.status === 200){
-            console.log(xhr.responseText)
+            const result = JSON.parse(xhr.responseText)
+            if(result.success == true){
+                window.location.replace('/topics?success=true')
+            }else{
+                showError(result.error)
+            }
        }
     }
 }
