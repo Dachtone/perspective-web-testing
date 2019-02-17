@@ -15,7 +15,6 @@ global.config = config;
 const app = express();
 
 /* -------- DataBase -------- */
-// ToDo: Move to separate file
 
 var connection = mysql.createConnection({
     host     : config.db.host,

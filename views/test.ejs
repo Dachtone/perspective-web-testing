@@ -15,7 +15,9 @@
     Уровень подготовки: <% if (info.semester <= 22) { %><%= Math.ceil(info.semester / 2) %> класс, <%= 2 - (info.semester % 2) %> семестр<% } else { %>Высшее образвание<% } %><br>
     Автор теста: <a href="/profile/<%= info.author.id %>"><%= info.author.name %></a><br>
     Дата создания: <%= ("0" + info.created.getDate()).slice(-2) %>.<%= ("0" + (info.created.getMonth() + 1)).slice(-2) %>.<%= info.created.getFullYear() %> <%= ("0" + info.created.getHours()).slice(-2) %>:<%= ("0" + info.created.getMinutes()).slice(-2) %><br>
-    Статус: <% if (info.completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
+    <% if (user.type !== 0) { %>
+        Статус: <% if (info.completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
+    <% } %>
     <% if (info.completed) { %>
         Оценка: <%= info.mark %><br>
     <% } %>
@@ -36,10 +38,12 @@
             <br>
             <div class="mathEnabled" style="width: 300px; white-space: pre-wrap"><%= question.body %></div>
             <br>
-            <% if (!info.completed) { %>
+            <% if (!info.completed && user.verified && user.type !== 0) { %>
                 <input name="answer" placeholder="Ваш ответ"><br>
             <% } else { %>
-                <label>Правильный ответ: <%= question.correct_answer %></label><br>
+                <% if (user.type !== 0) { %>
+                    <label>Правильный ответ: <%= question.correct_answer %></label><br>
+                <% } %>
                 <% if (question.filled) { %>
                     <label>Ваш ответ: <%= question.answer %></label>  
                 <% } %>
