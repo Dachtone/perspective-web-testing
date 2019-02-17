@@ -837,7 +837,7 @@ module.exports = function(app) {
         else if (req.query.success)
             messages.push('Тема успешно создана.');
 
-        const elements_per_page = 10;
+        const elements_per_page = 20;
         
         var page = 1;
         if (req.query.page) {
