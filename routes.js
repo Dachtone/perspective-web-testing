@@ -677,108 +677,123 @@ module.exports = function(app) {
         if (topic === NaN || topic === -1)
             return res.json({ success: false, error: 'Выберите тему' });
         
-        connection.query('SELECT id FROM topics WHERE id = ?', [topic], (err, results, fields) => {
+        connection.query('SELECT NULL FROM tests WHERE headline = ? AND topic = ?', [headline, topic], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
                 return res.json({ success: false, error: 'Ошибка Базы Данных при проверке темы' });
             }
 
-            if (results.length === 0)
-                return res.json({ success: false, error: 'Выбранная тема не существует' });
-
-            var abort = false;
-            var response = {};
-            data.questions.forEach((question) => {
-                if (abort)
-                    return;
-
-                if (!question.body) {
-                    response = { success: false, error: 'Пустые вопросы запрещены' };
-                    abort = true;
-                    return;
-                }
-                if (question.body.length < 3) {
-                    response = { success: false, error: 'Вопрос не может быть короче 3 символов' };
-                    abort = true;
-                    return;
-                }
-                if (question.body.length > 1024) {
-                    response = { success: false, error: 'Вопрос не может быть длиннее 1024 символов' };
-                    abort = true;
-                    return;
-                }
-                
-                if (!question.answer) {
-                    response = { success: false, error: 'У вопроса должен быть правильный ответ' };
-                    abort = true;
-                    return;
-                }
-                question.answer = question.answer.trim();
-                if (question.answer.length < 1) {
-                    response = { success: false, error: 'У вопроса должен быть правильный ответ' };
-                    abort = true;
-                    return;
-                }
-                if (question.answer.length > 128) {
-                    response = { success: false, error: 'Ответ не может быть длиннее 128 символов' };
-                    abort = true;
-                    return;
-                }
-
-                if (!question.points) {
-                    response = { success: false, error: 'Каждый вопрос должен давать как минимум один балл' };
-                    abort = true;
-                    return;
-                }
-                question.points = parseInt(question.points, 10);
-                if (question.points === NaN || question.points < 1) {
-                    response = { success: false, error: 'Каждый вопрос должен давать как минимум один балл' };
-                    abort = true;
-                    return;
-                }
-            });
-
-            if (abort)
-                return res.json(response);
-
-            connection.query('INSERT INTO tests (headline, topic, author) VALUES (?, ?, ?)',
-                            [headline, topic, req.session.user.id], (err, results, fields) => {
+            if (results.length !== 0) {
+                return res.json({
+                    success: false,
+                    error: 'Тест с данным заголовком и выбранной темой уже существует'
+                });
+            }
+        
+            connection.query('SELECT NULL FROM topics WHERE id = ?', [topic], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
-                    return res.json({ success: false, error: 'Ошибка Базы Данных при внесении теста' });
+                    return res.json({ success: false, error: 'Ошибка Базы Данных при проверке темы' });
                 }
 
-                var test_id = results.insertId;
+                if (results.length === 0)
+                    return res.json({ success: false, error: 'Выбранная тема не существует' });
 
-                abort = false;
-                response = {};
-
-                // Workaround to add one last extra element for response logic
-                data.questions.push({ });
-
-                data.questions.forEach((question, index) => {
-                    // If this is the last element and we got an error, send the response
-                    if (abort && index === data.questions.length - 1)
-                        return res.json(response);
-
-                    if (abort || index === data.questions.length - 1)
+                var abort = false;
+                var response = {};
+                data.questions.forEach((question) => {
+                    if (abort)
                         return;
 
-                    connection.query('INSERT INTO questions (test, body, answer, points) VALUES (?, ?, ?, ?)',
-                                    [test_id, question.body, question.answer, question.points], (err, results, fields) => {
-                        if (err) {
-                            console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
-                            response = { success: false, error: 'Ошибка Базы Данных при внесении вопроса' };
-                            abort = true;
+                    if (!question.body) {
+                        response = { success: false, error: 'Пустые вопросы запрещены' };
+                        abort = true;
+                        return;
+                    }
+                    if (question.body.length < 3) {
+                        response = { success: false, error: 'Вопрос не может быть короче 3 символов' };
+                        abort = true;
+                        return;
+                    }
+                    if (question.body.length > 1024) {
+                        response = { success: false, error: 'Вопрос не может быть длиннее 1024 символов' };
+                        abort = true;
+                        return;
+                    }
+                    
+                    if (!question.answer) {
+                        response = { success: false, error: 'У вопроса должен быть правильный ответ' };
+                        abort = true;
+                        return;
+                    }
+                    question.answer = question.answer.trim();
+                    if (question.answer.length < 1) {
+                        response = { success: false, error: 'У вопроса должен быть правильный ответ' };
+                        abort = true;
+                        return;
+                    }
+                    if (question.answer.length > 128) {
+                        response = { success: false, error: 'Ответ не может быть длиннее 128 символов' };
+                        abort = true;
+                        return;
+                    }
+
+                    if (!question.points) {
+                        response = { success: false, error: 'Каждый вопрос должен давать как минимум один балл' };
+                        abort = true;
+                        return;
+                    }
+                    question.points = parseInt(question.points, 10);
+                    if (question.points === NaN || question.points < 1) {
+                        response = { success: false, error: 'Каждый вопрос должен давать как минимум один балл' };
+                        abort = true;
+                        return;
+                    }
+                });
+
+                if (abort)
+                    return res.json(response);
+
+                connection.query('INSERT INTO tests (headline, topic, author) VALUES (?, ?, ?)',
+                                [headline, topic, req.session.user.id], (err, results, fields) => {
+                    if (err) {
+                        console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                        return res.json({ success: false, error: 'Ошибка Базы Данных при внесении теста' });
+                    }
+
+                    var test_id = results.insertId;
+
+                    abort = false;
+                    response = {};
+
+                    // Workaround to add one last extra element for response logic
+                    data.questions.push({ });
+
+                    data.questions.forEach((question, index) => {
+                        // If this is the last element and we got an error, send the response
+                        if (abort && index === data.questions.length - 1)
+                            return res.json(response);
+
+                        if (abort || index === data.questions.length - 1)
+                            return;
+
+                        connection.query('INSERT INTO questions (test, body, answer, points) VALUES (?, ?, ?, ?)',
+                                        [test_id, question.body, question.answer, question.points],
+                                        (err, results, fields) => {
+                            if (err) {
+                                console.log('An error has occured on PUT /create_test. ' + err.code + ': ' + err.sqlMessage);
+                                response = { success: false, error: 'Ошибка Базы Данных при внесении вопроса' };
+                                abort = true;
+
+                                if (index === data.questions.length - 2)
+                                    return res.json(response);
+                            }
+            
+                            response = { success: true };
 
                             if (index === data.questions.length - 2)
                                 return res.json(response);
-                        }
-        
-                        response = { success: true };
-
-                        if (index === data.questions.length - 2)
-                            return res.json(response);
+                        });
                     });
                 });
             });
