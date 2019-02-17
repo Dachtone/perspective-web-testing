@@ -1034,11 +1034,6 @@ module.exports = function(app) {
                 tests.push(Object.assign({}, test));
             });
 
-            console.log({
-                user: req.session.user,
-                success: true,
-                tests: tests
-            });
             return res.render('statistics/select', {
                 user: req.session.user,
                 success: true,
@@ -1103,12 +1098,6 @@ module.exports = function(app) {
                         students.push(Object.assign({}, student));
                     });
 
-                    console.log({
-                        user: req.session.user,
-                        success: true,
-                        test: test,
-                        students: students
-                    });
                     return res.render('statistics/test', {
                         user: req.session.user,
                         success: true,
