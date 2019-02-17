@@ -1014,6 +1014,113 @@ module.exports = function(app) {
 
     /* +------+ Statistics +------+ */
 
+    app.get('/statistics', (req, res) => {
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.redirect('/error');
+        
+        connection.query('SELECT id, headline, created AS date FROM tests WHERE author = ?',
+                        [req.session.user.id], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /statistics. ' + err.code + ': ' + err.sqlMessage);
+                return res.render('statistics/select', {
+                    user: req.session.user,
+                    success: false,
+                    error: 'Ошибка Базы Данных'
+                });
+            }
+
+            var tests = [];
+            results.forEach((test) => {
+                tests.push(Object.assign({}, test));
+            });
+
+            console.log({
+                user: req.session.user,
+                success: true,
+                tests: tests
+            });
+            return res.render('statistics/select', {
+                user: req.session.user,
+                success: true,
+                tests: tests
+            });
+        });
+    });
+
+    app.get('/statistics/test/:id', (req, res) => {
+        if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
+            return res.redirect('/error');
+        
+        connection.query('SELECT headline FROM tests WHERE id = ?',
+                        [req.params.id], (err, results, fields) => {
+            if (err) {
+                console.log('An error has occured on /statistics/user. ' + err.code + ': ' + err.sqlMessage);
+                return res.render('statistics/test', {
+                    user: req.session.user,
+                    success: false,
+                    error: 'Ошибка Базы Данных'
+                });
+            }
+
+            if (results.length === 0) {
+                return res.render('statistics/test', {
+                    user: req.session.user,
+                    success: false,
+                    error: 'Тест не найден'
+                });
+            }
+
+            var test = { headline: results[0].headline };
+
+            connection.query('SELECT COUNT(*) FROM users WHERE type = 1', (err, results, fields) => {
+                if (err) {
+                    console.log('An error has occured on /statistics/test. ' + err.code + ': ' + err.sqlMessage);
+                    return res.render('statistics/test', {
+                        user: req.session.user,
+                        success: false,
+                        error: 'Ошибка Базы Данных'
+                    });
+                }
+
+                var count = results[0]['COUNT(*)'];
+
+                connection.query(`SELECT users.name, tests_completion.mark FROM tests_completion 
+                                  LEFT JOIN users ON tests_completion.user = users.id 
+                                  WHERE tests_completion.test = ?`,
+                                [req.params.id], (err, results, fields) => {
+                    if (err) {
+                        console.log('An error has occured on /statistics/test. ' + err.code + ': ' + err.sqlMessage);
+                        return res.render('statistics/test', {
+                            user: req.session.user,
+                            success: false,
+                            error: 'Ошибка Базы Данных'
+                        });
+                    }
+
+                    test.quantity = count - results.length;
+                    var students = [];
+                    results.forEach((student) => {
+                        students.push(Object.assign({}, student));
+                    });
+
+                    console.log({
+                        user: req.session.user,
+                        success: true,
+                        test: test,
+                        students: students
+                    });
+                    return res.render('statistics/test', {
+                        user: req.session.user,
+                        success: true,
+                        test: test,
+                        students: students
+                    });
+                });
+            });
+        });
+    });
+
+    /*
     app.get('/statistics/user/:id', (req, res) => {
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
             return res.redirect('/error');
@@ -1073,6 +1180,7 @@ module.exports = function(app) {
             });
         });
     });
+    */
 
     /* +------+ Authorization +------+ */
     
