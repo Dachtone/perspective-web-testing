@@ -16,3 +16,15 @@
 .reject-submit{
     margin-top: 10px;
 }
+
+.error{
+    transform: translateX(-10px);
+    opacity: 0;
+    transition: .3s ease all;
+    display: flex;
+    align-items: center;
+}
+[error-reject]{
+    transform: translateX(0px) !important;
+    opacity: 1 !important;
+}

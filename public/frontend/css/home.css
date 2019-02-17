@@ -1,0 +1,26 @@
+.welcome_home{
+    font-family: 'Roboto';
+    text-align: center;
+}
+.welcome_ttle{
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 19px;
+    line-height: 24px;
+}
+.welcome_body{
+    margin-top: 10px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.7);
+}
+[home]{
+    width: 620px !important;
+}
+.log_wellcome .rippleon{
+    background: rgba(48, 103, 206, 0.123);
+}
+.log_wellcome{
+    color: #3067CE !important;
+}
+.login{
+    padding: 5px 15px !important
+}

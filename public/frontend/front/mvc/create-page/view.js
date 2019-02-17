@@ -143,8 +143,6 @@ export class view extends eventEmmiter{
                                 _data.head.headline = theme.value
                                 _data.head.topic = themeSelectValue
                                 _data.questions.push({'body': statement.textContent, 'points': point.value, 'answer': answer.value})
-                    
-                                this.errorReject()
                             }
                         })                    
                     }else{
@@ -161,6 +159,9 @@ export class view extends eventEmmiter{
         }
  
     }
+    cleanData(){
+        window.sessionStorage.removeItem('record_dataCreate')
+    }
     sendDataAjax(data){
          const xhr = new XMLHttpRequest()
 
@@ -170,8 +171,16 @@ export class view extends eventEmmiter{
 
          xhr.onreadystatechange = ()=>{
              if(xhr.readyState === 4 && xhr.status === 200){
-                 JSON.parse(xhr.responseText).success == true ? window.location.replace('/tests?') : console.log(xhr.responseText)
-             }
+                 const result = JSON.parse(xhr.responseText)
+                 
+                 if(result.success == true){
+                    window.location.replace('/tests?')
+                   this.cleanData()  
+                 }else{
+                     this.errorComplit(result.error)
+                 }
+                 
+            }
          }
 
     }

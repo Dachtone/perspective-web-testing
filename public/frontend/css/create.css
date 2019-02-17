@@ -1,18 +1,37 @@
 .EBQbR3g07L{
     margin-top: 20px;;
 }
-.resp .yDEYJ3vn{
-    width: 54% !important;
-}
 [create-theme] .xWDJRVpY{
     flex: none;
     border-radius: 6px !important;
 }
-
+[create-theme]{
+    width: 490px !important;
+}
+[create-theme] .yDEYJ3vn{
+    width: 100% !important;
+}
+[create-theme] .apbmHPNs{
+    margin-top: 30px !important;
+    border: none !important
+}
 [select-disable]{
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none
+}
+.topic_input{
+    margin-top: 20px;
+    width: 100%;
+    display: block;
+}
+.topic_input:first-child{
+    margin-top: 0;
+}
+.topic_input .bj{
+    border: 1px solid #BBBBBB;
+    border-radius: 4px;
+    padding: 5px !important;
 }
 .fz_tamplate{
     margin-top: 20px;

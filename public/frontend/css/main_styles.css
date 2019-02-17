@@ -10,6 +10,7 @@ body{
     width: 100%;
     background: rgba(0, 0, 0, 0.123);
 }
+
 p{
     margin: 0;
     padding: 0;
@@ -183,3 +184,22 @@ select-placeholder select{
     text-decoration: none;
     color: #3367d6!important
 } 
+[home] [button-tamplate]{
+    margin: 10px;
+    z-index: 1;
+}
+[button-tamplate] .rippleon{
+    z-index: 0 !important;
+}
+[button-tamplate]{
+    cursor: pointer;
+    border: 1px solid #00000033 !important;
+    border-radius: 5px;
+    font-size: 17px;
+    padding: 5px 10px;
+    font-family: "Roboto" !important;
+}
+.form_container{justify-content: center;
+    margin-top: 30px;
+    display: flex;
+}

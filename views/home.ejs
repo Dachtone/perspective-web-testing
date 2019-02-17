@@ -1,41 +1,74 @@
-<h1>welcome to the club buddy</h1>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Testing | Вход</title>
+    <link rel="stylesheet" href="static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="static/frontend/css/login.css">
+    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="static/frontend/css/input.css">
+    <link rel="stylesheet" href="static/frontend/css/error.css">
+    <link rel="stylesheet" href="static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="static/frontend/css/home.css">
+</head>
+<body>
 <% if (typeof user === 'undefined') { %>
-    <form action="/login" method="GET">
-        <input type="submit" value="Войти"/>
-    </form>
-    <form action="/register" method="GET">
-        <input type="submit" value="Зарегистироваться"/>
-    </form>
+
+    <div class="login__wrapper" home>
+        <div class="wp_main jsxW">
+            <div class="welcome_home">
+                <span class="welcome_ttle">ДОБРО ПОЖАЛОВАТЬ НА САЙТ ОНЛАЙН-ТЕСТИРОВАНИЯ «ПЕРСПЕКТИВА»!</span>
+                <span class="welcome_body">На нашем веб-сервисе учителя могут совершенно бесплатно выкладывать тесты для прохождения, а ученики имеют возможность так же легко их выполнять. Как только тестируемый завершит задания, и у преподавателя, и у ученика буду результаты, представленные в виде статистических данных. Наш сайт очень легок и удобен в использовании для всех</span>
+            </div>
+            <div class="form_container">
+                <form action="/register" method="GET">
+                    <button type="submit" value="Зарегистироваться" class="dAWDJJKQA2dikdas log_wellcome" button-tamplate ripple disable-select>Зарегистироваться</button>
+                </form>   
+                <form action="/login" method="GET">
+                    <button type="submit" value="Войти" class="dAWDJJKQA2dikdas log_wellcome login" enter button-tamplate ripple disable-select>Войти</button>
+                </form>
+                             
+            </div>
+
+        </div>
+    </div>
 <% } else { %>
     <form action="/profile" method="GET">
-        <input type="submit" value="Профиль"/>
+        <button type="submit" value="Профиль" >Профиль</button>
     </form>
     <form action="/tests" method="GET">
-        <input type="submit" value="Список тестов"/>
+        <button type="submit" value="Список тестов">Список тестов</button>
     </form>
     <form action="/topics" method="GET">
-        <input type="submit" value="Список тем"/>
+        <button type="submit" value="Список тем">Список тем</button>
     </form>
     <% if (user.type >= 2 && user.verified) { %>
         <form action="/users" method="GET">
-            <input type="submit" value="Список пользователей"/>
+            <button type="submit" value="Список пользователей">Список пользователей</button>
         </form>
     <% } %>
     <% if (user.type === 3 && user.verified) { %>
         <form action="/admin" method="GET">
-            <input type="submit" value="Административная панель"/>
+            <button type="submit" value="Административная панель">Административная панель</button>
         </form>
     <% } %>
     <form action="/logout" method="POST">
-        <input type="submit" value="Выйти"/>
+        <button type="submit" value="Выйти">Выйти</button>
     </form>
-<% } %>
+    <% } %>
+    <script src="/static/frontend/front/app.js" type='module'></script>
+    <script src="static/frontend/front/enter.js" type="module"></script>        
 
-<% if (typeof messages !== 'undefined') { %>
-<div>
-    <% messages.forEach(function(message){ %>
-        <b><%= message %></b><br>
-    <% }); %>
-</div>
-<% } %>
+</body>
+</html>
+
+
+        <% if (typeof messages !== 'undefined') { %>
+        <div>
+            <% messages.forEach(function(message){ %>
+                <b><%= message %></b><br>
+            <% }); %>
+        </div>
+        <% } %>
