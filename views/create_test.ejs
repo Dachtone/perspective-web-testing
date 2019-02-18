@@ -19,7 +19,7 @@
     <div class="F21sW0EW">
     <div class="ud0AdBs"><%- include('partials/head') -%></div> 
     <div class="G1qVSlLk">
-        <div class="aSEQzkJ jsxW">
+        <div class="aSEQzkJ jsxW" create-test>
             <div class="OePZjKkR">Создание теста</div>
             <div class="xWDJRVpY">
                 <div class="Su2KCPWkJ">
@@ -31,7 +31,11 @@
                             </div>
                         </div>
                         <select-tamplate class="fz_tamplate">
-                            <select-placeholder data-this='Выберите тему' ripple ></select-placeholder>
+                            <select-placeholder data-this='Выберите тему' ripple >
+                                <div class="place">
+                                    Выберите тему
+                                </div>
+                            </select-placeholder>
                             <select-wrap>
                                 <% topics.forEach((topic) => { %>
                                     <select-item value="<%= topic.id %>"><%= topic.title %></select-item>

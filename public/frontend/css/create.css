@@ -130,7 +130,6 @@ icon-error{
 }
 .id{
     font-family: 'Roboto' !important;
-    font-weight: 500;
     font-size: 90%;
     color: rgba(0, 0, 0, 0.897);
     border: 1px solid rgba(0, 0, 0, 0.171);
@@ -206,7 +205,6 @@ input::-webkit-inner-spin-button {
     display: flex;
 }
 .tlsa span{
-    font-weight: 500;
     margin-right: 10px;
     font-size: 90%;
     color: rgba(0, 0, 0, 0.897);
@@ -232,7 +230,6 @@ input, div[contenteditable='true']{
     z-index: 1;
     position: relative;
     overflow: hidden;
-    font-weight: 500;
     font-family: 'Roboto';
     cursor: pointer;
     border-radius: 4px;

@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="select_block">
                                             <div style="margin-top: 5px">
-                                                <select-tamplate class="fz_tamplate">
+                                                <select-tamplate class="fz_tamplate" name='topic'>
                                                     <select-placeholder data-this='По теме...' ripple >
                                                         <div class="place">
                                                             По теме...
@@ -61,7 +61,7 @@
                                                 </select-tamplate>  
                                             </div>
                                             <div style="margin-top: 5px">
-                                                <select-tamplate class="fz_tamplate">
+                                                <select-tamplate class="fz_tamplate" name='semester'>
                                                     <select-placeholder data-this='По уровню подготовки...' ripple >
                                                         <div class="place">
                                                             По уровню подготовки...
@@ -80,7 +80,7 @@
                                             </div>
 
                                             <div style="margin-top: 5px">
-                                                <select-tamplate class="fz_tamplate">
+                                                <select-tamplate class="fz_tamplate" name='author'>
                                                     <select-placeholder data-this='По преподавателю...' ripple >
                                                         <div class="place">
                                                             По преподавателю...
@@ -128,6 +128,7 @@
                                             <div class="iP8AakXX" test>
                                                 <div class="TcP5fc test_theme" ><span>Тема:</span> <%= element.title %></div>
                                                 <div class="TcP5fc"><span>Предмет:</span> <%= element.subject %></div>
+                                                <div class="TcP5fc"><span>Заголовок:</span> <%= element.headline %></div>
                                                 <div class="TcP5fc"><span>Уровень подготовки:</span> <% if (element.semester <= 22) { %><%= Math.ceil(element.semester / 2) %> класс, <%= 2 - (element.semester % 2) %> семестр<% } else { %>Высшее образвание<% } %></div>
                                                 <div class="TcP5fc"><span>Дата создания:</span> <%= ("0" + element.created.getDate()).slice(-2) %>.<%= ("0" + (element.created.getMonth() + 1)).slice(-2) %>.<%= element.created.getFullYear() %> <%= ("0" + element.created.getHours()).slice(-2) %>:<%= ("0" + element.created.getMinutes()).slice(-2) %></div>
                                                 <div class="TcP5fc test_author"><span>Автор:</span><span class="author"><a href="/profile/<%= element.author_id %>"><%= element.name %></a></span></div>

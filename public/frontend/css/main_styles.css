@@ -87,6 +87,16 @@ button{
 input{
     outline: none;
 }
+[create-test] .Rjx2D{
+    font-size: 15px !important;
+}
+[create-test] .uWuQQ9p{
+    font-size: 14px !important;
+}
+
+[create-test] .aria-ripple{
+    background: rgba(0, 0, 0, 0.12) !important;
+}
 .OePZjKkR{
     padding-top: 35px;
     color: #2c2c2c;
@@ -110,8 +120,7 @@ input{
 .xWDJRVpY{
     padding-left: 20px;
     padding-right: 20px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-radius: 6px;
     background: #fff;
     box-shadow:  0 2px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }

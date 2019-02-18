@@ -178,7 +178,6 @@ input, div[contenteditable='true']{
     z-index: 1;
     position: relative;
     overflow: hidden;
-    font-weight: 500;
     font-family: 'Roboto';
     cursor: pointer;
     border-radius: 4px;
