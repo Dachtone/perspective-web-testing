@@ -87,6 +87,7 @@ button{
 input{
     outline: none;
 }
+
 [create-test] .Rjx2D{
     font-size: 15px !important;
 }
@@ -112,7 +113,7 @@ input{
 }
 .slyxFdN .aria-ripple{
     z-index: 1!important;
-    background: rgba(255, 255, 255, 0.096) !important;
+    background: rgba(255, 255, 255, 0.342) !important;
 }
 .q0VKAhg{
     margin-left: 6px;
