@@ -18,9 +18,7 @@ export class FZselect{
         const content = place.getAttribute('data-this')
         const costyul = createElement('select')
         const son_costyul = createElement('option')
-        const ttle = createElement('div', {class: 'place'})
         const icon = createElement('select-icon')
-         ttle.innerHTML = content;
          icon.innerHTML = ' <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
 
 
@@ -29,7 +27,6 @@ export class FZselect{
         son_costyul.setAttribute('selected', '')
         costyul.appendChild(son_costyul)
 
-        place.appendChild(ttle)
         place.appendChild(icon)
         place.appendChild(costyul)
     }

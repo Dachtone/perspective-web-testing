@@ -31,7 +31,6 @@
     height: 24px;
 }
 .XmpFH7yAUc{
-    font-weight: 500;
     color: #000000a6;
     font-family: 'Roboto';
     font-size: 88.25% !important;
@@ -49,7 +48,6 @@
     z-index: 1;
     position: relative;
     overflow: hidden;
-    font-weight: 500;
     font-family: 'Roboto';
     cursor: pointer;
     margin-top: 20px;

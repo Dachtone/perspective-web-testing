@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +15,7 @@
 <body>
     <div class="F21sW0EW">
         <div class="ud0AdBs">
+            <%- include('partials/head') -%>
         </div>
         <div class="G1qVSlLk">
             <div class="aSEQzkJ jsxW">
@@ -61,7 +48,11 @@
                                         <div class="select_block">
                                             <div style="margin-top: 5px">
                                                 <select-tamplate class="fz_tamplate">
-                                                    <select-placeholder data-this='По теме...' ripple ></select-placeholder>
+                                                    <select-placeholder data-this='По теме...' ripple >
+                                                        <div class="place">
+                                                            По теме...
+                                                        </div>
+                                                    </select-placeholder>
                                                     <select-wrap>
                                                         <% topics.forEach((topic) => { %>
                                                             <select-item value="<%= topic.id %>"<% if (search.topic !== undefined && search.topic === topic.id) { %> selected<% } %>><%= topic.title %></select-item>
@@ -71,7 +62,12 @@
                                             </div>
                                             <div style="margin-top: 5px">
                                                 <select-tamplate class="fz_tamplate">
-                                                    <select-placeholder data-this='По уровню подготовки...' ripple ></select-placeholder>
+                                                    <select-placeholder data-this='По уровню подготовки...' ripple >
+                                                        <div class="place">
+                                                            По уровню подготовки...
+                                                        </div>
+                                                    </select-placeholder>
+                                                   
                                                     <select-wrap>
                                                         <% for (var i = 1; i <= 22; i++) { %>
                                                             <select-item value="<%= i %>"<% if (search.semester !== undefined && search.semester === i) { %> selected<% } %>><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
@@ -85,7 +81,11 @@
 
                                             <div style="margin-top: 5px">
                                                 <select-tamplate class="fz_tamplate">
-                                                    <select-placeholder data-this='По преподавателю...' ripple ></select-placeholder>
+                                                    <select-placeholder data-this='По преподавателю...' ripple >
+                                                        <div class="place">
+                                                            По преподавателю...
+                                                        </div>
+                                                    </select-placeholder>
                                                     <select-wrap>
                                                         <% teachers.forEach((teacher) => { %>
                                                             <select-item value="<%= teacher.id %>"<% if (search.author !== undefined && search.author === teacher.id) { %> selected<% } %>><%= teacher.name %></select-item>
@@ -166,9 +166,27 @@
 
                     </div>
                 </div> 
+                <div class='state'>
+                    <% if (pages_num > 0) { %>
+                        <div class="num_state">
+                            <span class="this_state">
+                                Страница <%= page %> из <%= pages_num %>
+                            </span>
+                            <span class="more_state">
+                                <% for (var i = 1; i <= pages_num; i++) { %>
+                                    <a href="topics?page=<%= i %>"><% if (i === page) { %><%= i %><% } else { %><%= i %><% } %></a>   
+                                <% } %>
+                            </span>
+
+                        </div>
+                        
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
+
+    <%- include('partials/menu') -%>
     <script src="/static/frontend/front/search.js" type="module"></script>
     <script src="/static/frontend/front/statapp.js" type="module"></script>
     <script src="/static/frontend/front/app.js" type="module"></script>
@@ -264,7 +282,22 @@
         <hr>
     <% } %>
 
+<div class='state'>
+    <% if (pages_num > 0) { %>
+        <div class="num_state">
+            <span class="this_state">
+                Страница <%= page %> из <%= pages_num %>
+            </span>
+            <span class="more_state">
+                <% for (var i = 1; i <= pages_num; i++) { %>
+                    <a href="topics?page=<%= i %>"><% if (i === page) { %><%= i %><% } else { %><%= i %><% } %></a>   
+                <% } %>
+            </span>
 
+        </div>
+        
+    <% } %>
+</div>
 
 <% if (pages_num > 0) { %>
     <i>Страница <%= page %> из <%= pages_num %></i><br>

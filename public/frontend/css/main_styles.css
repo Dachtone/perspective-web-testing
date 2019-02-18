@@ -1,9 +1,43 @@
-
+.sendback{
+    margin-left: -7px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+}
+.sendback button{
+    padding: 0;
+}
+.sendback iron-icon{
+    z-index: 1;
+    cursor: pointer;
+    padding: 7px;
+    margin-inline-end:0px !important
+}
+.sendback iron-icon .aria-ripple{
+    background: rgba(0, 0, 0, 0.11) !important;
+}
+.OePdZjKkR{
+    margin-left: 10px;
+}
+.OePZjKkR{
+    font-family: 'Roboto'!important;
+    color: rgba(0, 0, 0, 0.692) !important
+}
+.OePdZjKkR{
+    font-weight: 500 !important;
+    font-family: "Roboto";
+    font-size: 14px !important;
+    color: rgba(0, 0, 0, 0.603)
+}
 body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     background: #F8F9FA;
+}
+.sendback .aria-ripple{
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.205);
 }
 [aria-ripple]{
     position: relative;
@@ -68,7 +102,7 @@ input{
 }
 .slyxFdN .aria-ripple{
     z-index: 1!important;
-    background: rgba(255, 255, 255, 0.295) !important;
+    background: rgba(255, 255, 255, 0.096) !important;
 }
 .q0VKAhg{
     margin-left: 6px;
