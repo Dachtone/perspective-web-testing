@@ -38,13 +38,13 @@
     -moz-user-select: none;
     -webkit-user-select: none
 }
+.topic_input:first-child{
+    margin-right: 10px;
+}
 .topic_input{
     margin-top: 10px;
     width: 100%;
     display: block;
-}
-.topic_input:first-child{
-    margin-top: 0;
 }
 .topic_input .bj{
     border: 1px solid #BBBBBB;

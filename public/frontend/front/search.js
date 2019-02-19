@@ -10,8 +10,12 @@ Object.size = (obj)=>{
 
 const button = document.querySelector('.filter-open')
 const modal = document.querySelector('.filter-modal')
-const search = document.querySelector('.filter-modal button')
+const search = document.querySelector('.filter-modal button[search]')
+const clear_button = document.querySelector('.filter-modal button[clear]')
 
+function removeURL(){
+    window.location.replace('/tests?')
+}
 
 function addListener(){
     document.addEventListener('mousedown', ({target})=>{
@@ -20,6 +24,9 @@ function addListener(){
                modal.setAttribute('hidden-modal', '')
            }
        }
+    })
+    clear_button.addEventListener('click', ()=>{
+        removeURL()
     })
     button.addEventListener('click', ()=> {
         modal.toggleAttribute('hidden-modal')

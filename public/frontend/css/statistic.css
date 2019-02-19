@@ -241,8 +241,6 @@ span[blue]{
 .f7nSQKRPZ{
     margin-bottom: 20px;
 }
-.accepted{
-}
 .TcP5fc{
     padding-top: 1px;
     padding-bottom: 1px;
@@ -267,7 +265,6 @@ span[blue]{
     border: none !important;
     padding: 5px 27px !important;
     margin-top: 20px;
-    margin-left: auto;
 }
 .filter-modal [button-tamplate] .rippleon{
 
@@ -322,16 +319,11 @@ span[blue]{
 
 #error{
     font-size: 110%;
-    color: #000000b4;
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 10px;
     display: flex;
     align-items: flex-end;
-}
-#error iron-icon{
-    width: 24px;
-    height: 24px;
 }
 .mFoSk7v button{
     padding: 0;
