@@ -783,7 +783,7 @@ module.exports = function(app) {
                             }
             
                             finished++;
-                            if (!abort && finished === data.length)
+                            if (!abort && finished === data.questions.length)
                                 return res.json({ success: true });
                         });
                     });
