@@ -31,6 +31,16 @@ function addListener(){
 
     })
 }
+function validSelect(node){
+    if(node.getAttribute('select') == 'true'){
+        return node.textContent
+    }else{
+        return ''
+    }
+}
+const d = document.querySelector('[name="topic"] .place')
+
+console.log(validSelect(d))
 function collectDatafromFilter(){
     let data = []
     let radio
@@ -38,11 +48,10 @@ function collectDatafromFilter(){
 
     const tittle = parent.querySelector('[name="headline"]')
     const subject = parent.querySelector('[name="subject"]')
-    const theme = parent.querySelector('[name="topic"] select')
-    const semester = parent.querySelector('[name="semester"] select')
-    const author = parent.querySelector('[name="author"] select')
+    const theme = parent.querySelector('[name="topic"] .place')
+    const semester = parent.querySelector('[name="semester"] .place')
+    const author = parent.querySelector('[name="author"] .place')
     const completed = parent.querySelectorAll('input[type="radio"]')
-
     Array.prototype.forEach.call(completed, item =>{
         if(item.checked){
             radio = item.value
@@ -52,9 +61,9 @@ function collectDatafromFilter(){
     data.push({
         'headline': tittle.value.trim(),
         'subject': subject.value.trim(),
-        'topic': theme.value,
-        'semester': semester.value,
-        'author': author.value,
+        'topic': '',
+        'semester': '',
+        'author': '',
         'completed': radio === undefined ? '' : radio
     })
     clear(data)

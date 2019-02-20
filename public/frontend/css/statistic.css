@@ -16,6 +16,23 @@ body{
 .TcP5fc{
     font-size: 87%;
 }
+
+.redirect-to-create{
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+.redirect-to-create button{
+    font-size: 16px !important; 
+    padding: 8px 24px !important;
+    background: #3367d6 !important;
+    color: #fff !important;
+    border: none !important
+}
+.redirect-to-create button .rippleon{
+    background: rgba(255, 255, 255, 0.349);
+}
+
+
 .F21sW0EW{
     display: flex;
     flex-direction: column;

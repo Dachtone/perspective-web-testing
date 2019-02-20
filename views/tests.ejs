@@ -25,6 +25,99 @@
                 <div class="xWDJRVpY">
                     <div class="Acl360RTd">
                         <div class="QprDheCS">
+
+                            <div class="filter-modal" hidden-modal>
+                                <form action="/tests" method="GET" id="testsSearch">
+                                    <div search_iput>
+                                        <input name="headline" type="text"  placeholder="По заголовку"<% if (search.headline !== undefined) { %> value="<%= search.headline %>"<% } %>><br>
+                                    </div>
+                                    <div search_iput>
+                                        <input name="subject" type="text"  placeholder="По предмету"<% if (search.subject !== undefined) { %> value="<%= search.subject %>"<% } %>><br>
+                                    </div>
+                                    <div class="select_block">
+                                        <div style="margin-top: 5px">
+                                            <select-tamplate class="fz_tamplate" name='topic'>
+                                                <select-placeholder data-this='По теме...' ripple >
+                                                        <% topics.forEach((topic) => { %>
+                                                           <% if (search.topic !== undefined && search.topic === topic.id) { %> 
+                                                            <div class="place" select="true">
+                                                                <%= topic.title %>  
+                                                            </div>
+                                                           <% } else {%>
+                                                            <div class="place" select="false">
+                                                                ddddd
+                                                            </div>
+                                                            <%}%>
+                                                        <% }); %>
+                                                </select-placeholder>
+                                                <select-wrap>
+                                                    <% topics.forEach((topic) => { %>
+                                                        <select-item value="<%= topic.id %>"<% if (search.topic !== undefined && search.topic === topic.id) { %> selected<% } %>><%= topic.title %></select-item>
+                                                    <% }); %>
+                                                </select-wrap>
+                                            </select-tamplate>  
+                                        </div>
+                                        <div style="margin-top: 5px">
+                                            <select-tamplate class="fz_tamplate" name='semester'>
+                                                <select-placeholder data-this='По уровню подготовки...' ripple >
+                                                    <div class="place">
+                                                        По уровню подготовки...
+                                                    </div>
+                                                </select-placeholder>
+                                            
+                                                <select-wrap>
+                                                    <% for (var i = 1; i <= 22; i++) { %>
+                                                        <select-item value="<%= i %>"<% if (search.semester !== undefined && search.semester === i) { %> selected<% } %>><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
+                                                        <% if (i % 2 === 0) { %>
+                                                            <span class="devider"></span>
+                                                        <% } %>
+                                                    <% } %>
+                                                </select-wrap>
+                                            </select-tamplate>  
+                                        </div>
+
+                                        <div style="margin-top: 5px">
+                                            <select-tamplate class="fz_tamplate" name='author'>
+                                                <select-placeholder data-this='По преподавателю...' ripple >
+                                                    <div class="place">
+                                                        По преподавателю...
+                                                    </div>
+                                                </select-placeholder>
+                                                <select-wrap>
+                                                    <% teachers.forEach((teacher) => { %>
+                                                        <select-item value="<%= teacher.id %>"<% if (search.author !== undefined && search.author === teacher.id) { %> selected<% } %>><%= teacher.name %></select-item>
+                                                    <% }); %>
+                                                </select-wrap>
+                                            </select-tamplate>  
+                                        </div>                                             
+                                    </div>
+                                    <div class="chekcbox_container">
+                                        <label class="control control-checkbox">
+                                            
+                                                <input type="radio" id="selector2" name="completed" value="0"<% if (search.completed !== undefined && search.completed === 0) { %> checked<% } %>/>
+                                            <div class="control_indicator"></div>
+                                            <span>Тест не пройден</span>
+                                        </label>
+                                        <label class="control control-checkbox">
+                                            
+                                                <input type="radio" id="selector2" name="completed" value="1"<% if (search.completed !== undefined && search.completed === 1) { %> checked<% } %>/>
+                                            <div class="control_indicator"></div>
+                                            <span>Тест пройден</span>
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="dAWDJJKQA2dikdas" ripple button-tamplate disable-select>Найти</button>
+                                </form>   
+                            </div>
+                        
+                            <div class="filter">
+                                <button class="filter-open dAWDJJKQA2dikdas" ripple disable-select button-tamplate>
+                                    <div class="ttle-filter">
+                                        Фильтр
+                                    </div>
+                                </button>
+                            </div>
+
                             <% if (elements.length === 0) { %>
                                 <% if (search.set) { %>
                                     <b>Поиск не дал результатов.</b><br>
@@ -42,90 +135,6 @@
                                 <% } %>
                                 <hr>
                             <% } else { %>
-                                <div class="filter-modal" hidden-modal>
-                                    <form action="/tests" method="GET" id="testsSearch">
-                                        <div search_iput>
-                                            <input name="headline" type="text"  placeholder="По заголовку"<% if (search.headline !== undefined) { %> value="<%= search.headline %>"<% } %>><br>
-                                        </div>
-                                        <div search_iput>
-                                            <input name="subject" type="text"  placeholder="По предмету"<% if (search.subject !== undefined) { %> value="<%= search.subject %>"<% } %>><br>
-                                        </div>
-                                        <div class="select_block">
-                                            <div style="margin-top: 5px">
-                                                <select-tamplate class="fz_tamplate" name='topic'>
-                                                    <select-placeholder data-this='По теме...' ripple >
-                                                        <div class="place">
-                                                            По теме...
-                                                        </div>
-                                                    </select-placeholder>
-                                                    <select-wrap>
-                                                        <% topics.forEach((topic) => { %>
-                                                            <select-item value="<%= topic.id %>"<% if (search.topic !== undefined && search.topic === topic.id) { %> selected<% } %>><%= topic.title %></select-item>
-                                                        <% }); %>
-                                                    </select-wrap>
-                                                </select-tamplate>  
-                                            </div>
-                                            <div style="margin-top: 5px">
-                                                <select-tamplate class="fz_tamplate" name='semester'>
-                                                    <select-placeholder data-this='По уровню подготовки...' ripple >
-                                                        <div class="place">
-                                                            По уровню подготовки...
-                                                        </div>
-                                                    </select-placeholder>
-                                                   
-                                                    <select-wrap>
-                                                        <% for (var i = 1; i <= 22; i++) { %>
-                                                            <select-item value="<%= i %>"<% if (search.semester !== undefined && search.semester === i) { %> selected<% } %>><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
-                                                            <% if (i % 2 === 0) { %>
-                                                                <span class="devider"></span>
-                                                            <% } %>
-                                                        <% } %>
-                                                    </select-wrap>
-                                                </select-tamplate>  
-                                            </div>
-
-                                            <div style="margin-top: 5px">
-                                                <select-tamplate class="fz_tamplate" name='author'>
-                                                    <select-placeholder data-this='По преподавателю...' ripple >
-                                                        <div class="place">
-                                                            По преподавателю...
-                                                        </div>
-                                                    </select-placeholder>
-                                                    <select-wrap>
-                                                        <% teachers.forEach((teacher) => { %>
-                                                            <select-item value="<%= teacher.id %>"<% if (search.author !== undefined && search.author === teacher.id) { %> selected<% } %>><%= teacher.name %></select-item>
-                                                        <% }); %>
-                                                    </select-wrap>
-                                                </select-tamplate>  
-                                            </div>                                             
-                                        </div>
-                                        <div class="chekcbox_container">
-                                            <label class="control control-checkbox">
-                                                
-                                                    <input type="radio" id="selector2" name="completed" value="0"<% if (search.completed !== undefined && search.completed === 0) { %> checked<% } %>/>
-                                                <div class="control_indicator"></div>
-                                                <span>Тест не пройден</span>
-                                            </label>
-                                            <label class="control control-checkbox">
-                                                
-                                                    <input type="radio" id="selector2" name="completed" value="1"<% if (search.completed !== undefined && search.completed === 1) { %> checked<% } %>/>
-                                                <div class="control_indicator"></div>
-                                                <span>Тест пройден</span>
-                                            </label>
-                                        </div>
-
-                                        <button type="submit" class="dAWDJJKQA2dikdas" ripple button-tamplate disable-select>Найти</button>
-                                    </form>   
-                                </div>
-                                
-
-                                <div class="filter">
-                                    <button class="filter-open dAWDJJKQA2dikdas" ripple disable-select button-tamplate>
-                                        <div class="ttle-filter">
-                                            Фильтр
-                                        </div>
-                                    </button>
-                                </div>
                                 <div class="DSCwycxc">
 
                                     <% elements.forEach((element) => { %>
@@ -168,6 +177,12 @@
                             
                             <% } %>
 
+                            <div class='redirect-to-create'>
+                                <a href="/create_test">
+                                    <button class="dAWDJJKQA2dikdas" ripple disable-select button-tamplate>Создать тест</button>
+                                </a>
+                            </div>
+
                         </div>
 
                     </div>
@@ -206,59 +221,6 @@
 
 
 
-<% if (elements.length === 0) { %>
-    <% if (search.set) { %>
-        <b>Поиск не дал результатов.</b><br>
-        <br>
-        <form action="/tests" method="GET">
-            <input type="submit" value="Сбросить фильтры"/>
-        </form>
-    <% } else { %>
-        <b>Нет элементов.</b>
-    <% } %>
-    <hr>
-<% } else { %>
-    <i>Поиск</i>
-    <form action="/tests" method="GET" id="testsSearch">
-        <input name="headline" placeholder="По заголовку"<% if (search.headline !== undefined) { %> value="<%= search.headline %>"<% } %>><br>
-        <input name="subject" placeholder="По предмету"<% if (search.subject !== undefined) { %> value="<%= search.subject %>"<% } %>><br>
-        <select name="topic">
-            <option value="-1" selected>По теме...</option>
-            <% topics.forEach((topic) => { %>
-                <option value="<%= topic.id %>"<% if (search.topic !== undefined && search.topic === topic.id) { %> selected<% } %>><%= topic.title %></option>
-            <% }); %>
-        </select><br>
-        <select name="semester">
-            <option value="-1" selected>По уровню подготовки...</option>
-            <option disabled="disabled">──────────</option>
-            <% for (var i = 1; i <= 22; i++) { %>
-                <option value="<%= i %>"<% if (search.semester !== undefined && search.semester === i) { %> selected<% } %>><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</option>
-                <% if (i % 2 === 0) { %>
-                    <option disabled="disabled">──────────</option>
-                <% } %>
-            <% } %>
-            <option value="23">Высшее образование</option>
-        </select><br>
-        <select name="author">
-            <option value="-1" selected>По преподавателю...</option>
-            <% teachers.forEach((teacher) => { %>
-                <option value="<%= teacher.id %>"<% if (search.author !== undefined && search.author === teacher.id) { %> selected<% } %>><%= teacher.name %></option>
-            <% }); %>
-        </select><br>
-        <div>
-            <input type="checkbox" id="selector1" name="completed" value="0"<% if (search.completed !== undefined && search.completed === 0) { %> checked<% } %>>
-            <label for="selector1">Непройденные тесты</label>
-        
-            <input type="checkbox" id="selector2" name="completed" value="1"<% if (search.completed !== undefined && search.completed === 1) { %> checked<% } %>>
-            <label for="selector2">Пройденные тесты</label>
-        </div><br>
-        <button type="submit">Найти</button><br>
-    </form>
-    <hr>
-
-
-    
-<% } %>
 
 
 
@@ -272,38 +234,6 @@
 
 
 
-
-
-
-
-
-
-
-    <% if (search.set) { %>
-        <i>На странице представлены результаты поиска.</i><br>
-        <br>
-        <form action="/tests" method="GET">
-            <input type="submit" value="Сбросить фильтры"/>
-        </form>
-        <hr>
-    <% } %>
-
-<div class='state'>
-    <% if (pages_num > 0) { %>
-        <div class="num_state">
-            <span class="this_state">
-                Страница <%= page %> из <%= pages_num %>
-            </span>
-            <span class="more_state">
-                <% for (var i = 1; i <= pages_num; i++) { %>
-                    <a href="topics?page=<%= i %>"><% if (i === page) { %><%= i %><% } else { %><%= i %><% } %></a>   
-                <% } %>
-            </span>
-
-        </div>
-        
-    <% } %>
-</div>
 
 <% if (pages_num > 0) { %>
     <i>Страница <%= page %> из <%= pages_num %></i><br>
@@ -312,10 +242,3 @@
     <% } %>
 <% } %>
 <br><br>
-<% if (typeof messages !== 'undefined') { %>
-    <div>
-        <% messages.forEach(function(message){ %>
-            <b><%= message %></b><br>
-        <% }); %>
-    </div>
-<% } %>
