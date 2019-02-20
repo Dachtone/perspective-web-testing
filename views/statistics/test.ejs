@@ -11,16 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="steelsheet" type="text/css" href="/static/style.css"> 
+    <!-- <link rel="steelsheet" type="text/css" href="/static/style.css"> -->
     <link rel="stylesheet" href="/static/css/main_styles.css">
     <link rel="stylesheet" href="/static/css/font/font.css">
     <link rel="stylesheet" href="/static/css/rippleEffect.css">
     <link rel="stylesheet" href="/static/css/menu/menu.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/user.css">
-    <link rel="stylesheet" href="/static/css/login.css">
-    <link rel="stylesheet" href="/static/css/Новый текстовый документ.css">
-    <link rel="stylesheet" href="/static/css/Chart.css">
+    <link rel="stylesheet" href="/static/frontend/css/user.css">
+    <link rel="stylesheet" href="/static/frontend/css/login.css">
 
 </head>
 
@@ -55,10 +53,7 @@
                         </div>
                         </div>
                     <div class="JUGIKe6xDr">
-                            <canvas id="myChart" width="320" height="320"></canvas>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                            <script src="/static/js/chart.js"></script>
-                            
+                        <canvas id="myChart" width="320" height="320"></canvas>    
                     </div> 
                     <br>  
                     <h1>Оценки за тест <style></style></h1>
@@ -80,6 +75,12 @@
         </div>
     </div>
     <script src="/static/frontend/front/user.js" type="module"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="/static/js/chart.js"></script>
+    <script type="text/javascript">
+        processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
+    </script>
 <%}%>
 </body>
 </html>

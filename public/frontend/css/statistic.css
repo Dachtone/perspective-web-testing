@@ -199,14 +199,11 @@ span[blue]{
     justify-content: center;
     margin-right: 10px;
     margin-top: 11px;
-    flex-basis: 32.2%;
+    flex-basis: 31.4%;
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.082);
     display: flex;
     flex-direction: column;
-}
-.item:nth-child(3n){
-    margin-right: 0px !important;
 }
 .iP8AakXX{
     width: 80%;
@@ -241,6 +238,8 @@ span[blue]{
 .f7nSQKRPZ{
     margin-bottom: 20px;
 }
+.accepted{
+}
 .TcP5fc{
     padding-top: 1px;
     padding-bottom: 1px;
@@ -265,6 +264,7 @@ span[blue]{
     border: none !important;
     padding: 5px 27px !important;
     margin-top: 20px;
+    margin-left: auto;
 }
 .filter-modal [button-tamplate] .rippleon{
 
@@ -317,14 +317,7 @@ span[blue]{
     background: rgba(255, 255, 255, 0.295);
 }
 
-#error{
-    font-size: 110%;
-    margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: flex-end;
-}
+
 .mFoSk7v button{
     padding: 0;
 }

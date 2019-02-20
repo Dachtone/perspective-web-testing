@@ -14,10 +14,9 @@
 .error_msg{
     font-family: "Roboto";
     font-weight: 500;
-    font-size: 87%;
 }
 #error{
-    color: #00000079 !important;
+    color: #00000079;
     margin: 0 auto;
     margin-top: 30px;
     margin-bottom: 10px;
@@ -25,8 +24,6 @@
     align-items: flex-end;
 }
 #error iron-icon{
-    width: 20px !important;
-    height: 20px !important;
     margin-inline-end: 13px;
 }
 .sendback iron-icon{
@@ -366,33 +363,10 @@ label:last-child{
 .control-checkbox input:disabled ~ .control_indicator:after {
     border-color: #7b7b7b;
 }
-.sendContainer{
-    display: flex;
-    margin-left: auto;
-}
-.sendContainer button:first-child{
-    margin-right: 8px;
-}
+
 [hidden-modal]{
     
     opacity: 0 !important;
     transform: translateY(6px) !important;
     visibility: hidden;
-}
-.create_test_button{
-    margin-left: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-.create_test_button button{
-    background: #3367d6;
-    color: #fff;
-    border: none !important;
-    padding: 6px 24px !important;
-}
-.create_test_button .rippleon{
-    background: rgba(255, 255, 255, 0.397);
-}
-.create_test_button a{
-    color: #fff !important;
 }

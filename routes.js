@@ -1109,7 +1109,8 @@ module.exports = function(app) {
                         user: req.session.user,
                         success: true,
                         test: test,
-                        students: students
+                        students: students,
+                        marks: config.marks
                     });
                 });
             });

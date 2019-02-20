@@ -178,17 +178,20 @@ export class view extends eventEmmiter{
          xhr.send(JSON.stringify(data))
 
          xhr.onreadystatechange = ()=>{
-             if(xhr.readyState === 4 && xhr.status === 200){
-                 const result = JSON.parse(xhr.responseText)
+             if(xhr.readyState == 4 && xhr.status == 200){
+                console.log(JSON.parse(xhr.responseText))
+             }
+            //  if(xhr.readyState === 4 && xhr.status === 200){
+            //      const result = JSON.parse(xhr.responseText)
                  
-                 if(result.success == true){
-                    window.location.replace('/tests?')
-                   this.cleanData()  
-                 }else{
-                     this.errorComplit(result.error)
-                 }
+            //      if(result.success == true){
+            //         window.location.replace('/tests?')
+            //        this.cleanData()  
+            //      }else{
+            //          this.errorComplit(result.error)
+            //      }
                  
-            }
+            // }
          }
 
     }
