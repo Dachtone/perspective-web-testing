@@ -82,8 +82,6 @@ module.exports = function(app) {
     app.get('/profile/:id', (req, res) => {
         if (!req.session.user)
             return res.redirect('/error');
-
-        var messages = [];
         
         connection.query('SELECT id, login, name, type, verified, position FROM users WHERE id = ?',
                         [req.params.id], (err, results, fields) => {
@@ -314,7 +312,7 @@ module.exports = function(app) {
                     return res.redirect('/error');
 
                 var questions = results;
-                if (!info.completed) {
+                if (!info.completed && req.session.user.verified && req.session.user.type <= 1) {
                     questions.forEach((question) => {
                         delete question["correct_answer"];
                     });
@@ -509,6 +507,8 @@ module.exports = function(app) {
                             console.log('An error has occured on /tests. ' + err.code + ': ' + err.sqlMessage);
                             return res.redirect('/error');
                         }
+
+                        delete search['sql'];
 
                         return res.render('tests', {
                             messages: messages, user: req.session.user, page: page,

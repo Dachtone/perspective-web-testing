@@ -8,10 +8,35 @@ Object.size = (obj)=>{
     return size
 }
 
+// Workaround to save the filter value for custom selects
+export function setSelects(search) {
+    const selects = Array.from(document.getElementsByClassName('place'))
+    for (var field in search) {
+        if (field === 'set')
+            continue
+
+        for (var i = 0; i < selects.length; i++) {
+            const select_template = selects[i].parentNode.parentNode
+            if (select_template.attributes.name.value !== field)
+                continue
+
+            selects[i].setAttribute('value', search[field])
+            var items = Array.from(select_template.getElementsByTagName('select-item'))
+            for (var j = 0; j < items.length; j++) {
+                if (items[j].attributes.value.value != search[field])
+                    continue
+
+                console.log(selects[i].textContent)
+                selects[i].textContent = items[j].textContent
+            }
+        }
+    }
+}
+
 const button = document.querySelector('.filter-open')
 const modal = document.querySelector('.filter-modal')
-const search = document.querySelector('.filter-modal button')
-
+const search = document.getElementById('searchButton')
+const clearButton = document.getElementById('clearButton')
 
 function addListener(){
     document.addEventListener('mousedown', ({target})=>{
@@ -30,17 +55,12 @@ function addListener(){
         collectDatafromFilter()
 
     })
+    clearButton.addEventListener(('click'), (e) => {
+        e.preventDefault()
+        window.location.replace('/tests')
+    })
 }
-function validSelect(node){
-    if(node.getAttribute('select') == 'true'){
-        return node.textContent
-    }else{
-        return ''
-    }
-}
-const d = document.querySelector('[name="topic"] .place')
 
-console.log(validSelect(d))
 function collectDatafromFilter(){
     let data = []
     let radio
@@ -61,18 +81,19 @@ function collectDatafromFilter(){
     data.push({
         'headline': tittle.value.trim(),
         'subject': subject.value.trim(),
-        'topic': '',
-        'semester': '',
-        'author': '',
+        'topic': theme.getAttribute('value'),
+        'semester': semester.getAttribute('value'),
+        'author': author.getAttribute('value'),
         'completed': radio === undefined ? '' : radio
     })
     clear(data)
 }
+
 function clear(value){
     const item = value[0]
 
-    for(let key in item){
-        if(item[key] == ''){
+    for (let key in item){
+        if (item[key] == '' || item[key] === undefined || item[key] === null) {
             delete item[key]
         }
     }
@@ -84,22 +105,27 @@ function addMask(data){
     let elementPosition = 0
     const length = Object.size(data)
 
-    for(let key in data){
+    for (let key in data) {
         elementPosition++;
-        if(elementPosition !== length){
+
+        if (elementPosition !== length){
             result += `${key}=${data[key]}&`
-        }else{
+        }
+        else {
             result += `${key}=${data[key]}`
         }
     }
 
     sendAjax_filter(result)
 }
-function sendAjax_filter(data){
-    const http = new XMLHttpRequest()
 
+function sendAjax_filter(data){
+    /*
+    const http = new XMLHttpRequest()
+    console.log(data)
     http.open('GET', '/test')
     http.send(data)
+    */
     window.location.replace(`/tests?${data}`)
 }
 
@@ -111,4 +137,5 @@ function setPosition(){
 
     addListener()
 }
+
 setPosition()
