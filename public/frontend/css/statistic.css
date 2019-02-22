@@ -46,8 +46,9 @@ body{
 }
 .sendTestResult button{
     color: #fff;
+    padding: 8px 27px;
     background: #3367d6;
-    border: none;
+    border: none !important;
     margin-left: auto;
 }
 .result_side span{
@@ -65,17 +66,23 @@ body{
     color: rgba(44, 44, 44, 0.74) !important;
     border-bottom: 1px solid rgba(44, 44, 44, 0.74);
 }
+[answer="false"] .backend-d{
+    color: #c52429 !important;
+}
+.sendTestResult button .rippleon{
+    background: rgba(255, 255, 255, 0.356);
+}
 .answer_container{
     margin-top: 10px;
 }
-.true_result{
+.result{
     font-family: 'Roboto';
     display: flex;
     align-items: flex-end;
 }
-.true_result span{
-    font-weight: 500;
-    color:rgba(0, 0, 0, 0.562); 
+.result span{
+    font-size: 87%;
+    color:rgba(0, 0, 0, 0.753); 
 }
 .backend-d{
     margin-left: 5px;
