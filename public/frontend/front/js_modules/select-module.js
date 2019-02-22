@@ -16,19 +16,12 @@ export class FZselect{
     initTittle(obj){
         const place = obj.querySelector('select-placeholder')
         const content = place.getAttribute('data-this')
-        const costyul = createElement('select')
-        const son_costyul = createElement('option')
+        // const costyul = createElement('select')
+        // const son_costyul = createElement('option')
         const icon = createElement('select-icon')
          icon.innerHTML = ' <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
 
-
-        costyul.setAttribute('_data','')
-        costyul.setAttribute('name', 'inputType')
-        son_costyul.setAttribute('selected', '')
-        costyul.appendChild(son_costyul)
-
         place.appendChild(icon)
-        place.appendChild(costyul)
     }
     tamplateSet(){
         Array.prototype.forEach.call(this.obj, item =>{
@@ -81,11 +74,9 @@ export class FZselect{
         this.initTrue(data.obj)
     }
     initChange(data){
-        const select = data.obj.querySelector('option')
         const place = data.obj.querySelector('.place')
         const data_variant = data.item.textContent
-        select.setAttribute('value', data.item.getAttribute('value'))
-        select.textContent = data_variant
+        place.setAttribute('value', data.item.getAttribute('value'))
         place.textContent = data_variant
     }
 }

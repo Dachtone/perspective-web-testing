@@ -34,7 +34,7 @@ function getData(){
     }else{
         error = true
 
-        const data = `inputTitle=${encodeURIComponent(theme)}&inputSubject=${encodeURIComponent(lesson)}&inputSemester=${select.querySelector('select').value}`
+        const data = `inputTitle=${encodeURIComponent(theme)}&inputSubject=${encodeURIComponent(lesson)}&inputSemester=${select.querySelector('.place').getAttribute('value')}`
         AjaxSend(data)
     }
 

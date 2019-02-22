@@ -45,6 +45,9 @@
         <button type="submit" value="Список тем">Список тем</button>
     </form>
     <% if (user.type >= 2 && user.verified) { %>
+        <form action="/statistics" method="GET">
+            <button type="submit" value="Статистика">Статистика</button>
+        </form>
         <form action="/users" method="GET">
             <button type="submit" value="Список пользователей">Список пользователей</button>
         </form>

@@ -1,71 +1,96 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/frontend/css/main_styles.css">
+    <link rel="stylesheet" href="/static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="/static/frontend/css/statistic.css">
+    <link rel="stylesheet" href="/static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="/static/frontend/css/menu/menu.css">
+    <link rel="stylesheet" href="/static/frontend/css/select-module.css">
+</head>
 <body>
-    <div id="notifications">
-    <% if (typeof messages !== 'undefined' && messages.length !== 0) { %> 
-        <% messages.forEach((message) => { %>
-            <b><%= message %></b><br>
-        <% }); %>
-    <% } %>
-    </div>
-    <hr><br>
-    
-    <b>Тестирование:</b><br>
-    Заголовок: <%= info.headline %><br>
-    Тема: <%= info.topic.title %><br>
-    Предмет: <%= info.topic.subject %><br>
-    Уровень подготовки: <% if (info.semester <= 22) { %><%= Math.ceil(info.semester / 2) %> класс, <%= 2 - (info.semester % 2) %> семестр<% } else { %>Высшее образвание<% } %><br>
-    Автор теста: <a href="/profile/<%= info.author.id %>"><%= info.author.name %></a><br>
-    Дата создания: <%= ("0" + info.created.getDate()).slice(-2) %>.<%= ("0" + (info.created.getMonth() + 1)).slice(-2) %>.<%= info.created.getFullYear() %> <%= ("0" + info.created.getHours()).slice(-2) %>:<%= ("0" + info.created.getMinutes()).slice(-2) %><br>
-    <% if (user.type !== 0) { %>
-        Статус: <% if (info.completed) { %>Пройден<% } else { %>Не пройден<% } %><br>
-    <% } %>
-    <% if (info.completed) { %>
-        Оценка: <%= info.mark %><br>
-    <% } %>
-    <br>
-    <% if (user.type === 3 && user.verified || info.author.id === user.id) { %>
-        <form action="/delete_test/<%= info.id %>" method="POST">
-            <input type="submit" value="Удалить тест"/>
-        </form>
-    <% } %>
-    
-    <i>Вопросы:</i>
-    <hr>
-    
-    <% questions.forEach((question, index) => { %>
-        <div class="question" id="question<%= index + 1 %>">
-            <label>Вопрос №<%= index + 1 %></label><br>
-            <label>Баллы за правильный ответ: <%= question.points %></label><br>
-            <br>
-            <div class="mathEnabled" style="width: 300px; white-space: pre-wrap"><%= question.body %></div>
-            <br>
-            <% if (!info.completed && user.verified && user.type === 1) { %>
-                <input name="answer" placeholder="Ваш ответ"><br>
-            <% } else { %>
-                <% if (user.type !== 0) { %>
-                    <label>Правильный ответ: <%= question.correct_answer %></label><br>
-                <% } %>
-                <% if (question.filled) { %>
-                    <label>Ваш ответ: <%= question.answer %></label>  
-                <% } %>
-            <% } %>
-            <hr>
+    <div class="F21sW0EW">
+        <div class="ud0AdBs">
+            <%- include('partials/head') -%>
         </div>
-    <% }); %>
-    
-    <% if (!info.completed && user.verified && user.type === 1) { %>
-    <button type="button" id="sendTest">Закончить тест</button><br>
-    <hr>
-    <% } %>
-    
-    <br><br>
-    <form action="/tests" method="GET">
-        <input type="submit" value="Список тестов"/>
-    </form>
-    <form action="/" method="GET">
-        <input type="submit" value="На Главную"/>
-    </form>
-    
-    <script src="/static/js/testCompletion.js"></script>
-    <!-- eeeee--> 
+        <div class="G1qVSlLk">
+            <div class="aSEQzkJ jsxW" view-test>
+                <div class="OePZjKkR">
+                    Тест: <%= info.headline %> 
+                </div> 
+                <div class="xWDJRVpY">
+                    <div class="Acl360RTd">
+                        <div class="QprDheCS">
+                            <div class="NfbybDsa">
+                            
+                                    <div class="sendback">
+                                        <a href="/tests">
+                                            <iron-icon aria-ripple>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="#000000a9" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                                            </iron-icon>                         
+                                        </a>
+                                        <h1 class="OePdZjKkR">Назад</h1>
+                                    </div> 
+
+                                    <div class="cqigUjz">
+                                        <div class="theme_view daw">
+                                            <span>Тема:</span>
+                                            <div class="view_data">
+                                                <%= info.topic.title %>
+                                            </div>
+                                        </div>
+                                        <div class="subject_view daw">
+                                            <span>Предмет:</span>
+                                            <div class="view_data">
+                                                <%= info.topic.subject %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="task_container">
+
+                                        <% questions.forEach((question, index) => { %>
+                                            <div class="task" id="question<%= index + 1 %>">
+                                                <div class="task_label">
+                                                    Вопрос №<%= index + 1 %>
+                                                </div>
+                                                <div class="mathEnabled" style="white-space: pre-wrap">
+                                                    <%= question.body %>
+                                                </div>
+
+                                                <% if (!info.completed && user.verified && user.type === 1) { %>
+                                                    <input name="answer" placeholder="Ваш ответ"><br>
+                                                <% } else { %>
+                                                    <% if (user.type !== 0) { %>
+                                                        <label>Правильный ответ: <%= question.correct_answer %></label><br>
+                                                    <% } %>
+                                                    <% if (question.filled) { %>
+                                                        <label>Ваш ответ: <%= question.answer %></label>  
+                                                    <% } %>
+                                                <% } %>
+                                                <hr>
+                                            </div>
+                                        <% }); %>    
+                                
+                                    </div>
+                                    
+                            
+                            </div>
+
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <script>
+        console.log(document.querySelector('.mathEnabled')) 
+    </script>
     <%- include('partials/tex'); %>
+    <%- include('partials/menu') -%>
 </body>
+</html>
+   

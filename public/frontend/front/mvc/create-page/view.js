@@ -114,7 +114,7 @@ export class view extends eventEmmiter{
         const themeSelect = document.querySelector('.fz_tamplate');
         const item = document.querySelectorAll('.item');
         const theme = document.querySelector('.DJad2DAj');
-        const themeSelectValue = themeSelect.querySelector('select').value
+        const themeSelectValue = themeSelect.querySelector('.place').getAttribute('value')
 
             let error = false
             let bSide = true

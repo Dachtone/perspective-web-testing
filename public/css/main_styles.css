@@ -1,4 +1,7 @@
-
+#myChart{
+    width: 200px !important;
+    height: 200px !important; 
+}
 body{
     padding: 0;
     margin: 0;

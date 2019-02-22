@@ -1,3 +1,7 @@
+#myChart{
+    width: 520px !important;
+    height: 520px !important; 
+}
 .sendback{
     margin-left: -7px; 
     margin-top: 12px;
@@ -112,6 +116,12 @@ input{
 }
 [create-test] .uWuQQ9p{
     font-size: 14px !important;
+}
+[statistic-page]{
+    width: 860px !important;
+}
+[user-page]{
+    width: 560px !important;
 }
 
 [create-test] .aria-ripple{

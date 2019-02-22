@@ -10,6 +10,47 @@ body{
         background: rgba(0, 0, 0, 0.473);
     }
 /* ------------ */
+
+.cqigUjz .daw{
+    display: flex;
+    align-items: flex-end;
+}
+.view_data{
+    font-family: 'Roboto';
+    margin-left: 6px;
+    font-size: 105%;
+    color: rgba(44, 44, 44, 0.74) !important
+}
+.view_data a{
+    color: rgba(44, 44, 44, 0.74) !important;
+    border-bottom: 1px solid rgba(44, 44, 44, 0.74);
+}
+.cqigUjz .daw span{
+    color: #3367d6;
+    font-family: 'Roboto';
+    font-size: 105%;
+}
+.clear{
+    margin-right: 10px;
+    border-radius: 5px;
+    padding: 0 !important;
+}
+.clear button{
+    font-family: "Roboto";
+    font-size: 95%;
+    color: #fff;
+}
+.search-container{display: flex;
+    margin-top: 20px !important; 
+margin-left: auto;}
+.search-container a{
+    color: #fff;
+    display: block;
+    padding: 5px 27px !important;
+    background: #3367d6;
+    font-size: 95% !important;
+    font-family: "Roboto";
+}
 .TcP5fc span{
     color: #3367d6;
 }
@@ -31,7 +72,9 @@ body{
 .redirect-to-create button .rippleon{
     background: rgba(255, 255, 255, 0.349);
 }
-
+.cqigUjz{
+    margin-top: 10px;
+}
 
 .F21sW0EW{
     display: flex;
@@ -49,6 +92,18 @@ span[blue]{
 .test_author{
     cursor: pointer;
     
+}
+.MathJax_Display{
+    display: block !important;
+    text-align: left !important;
+}
+.mathEnabled{
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start !important;
+}
+.task_container{
+    margin-top: 30px;
 }
 [test]{
     width: 82% !important;
@@ -213,7 +268,7 @@ span[blue]{
     position: relative;
     font-family: "Roboto";
     color: rgba(44, 44, 44, 0.788);
-    justify-content: center;
+
     margin-right: 10px;
     margin-top: 11px;
     flex-basis: 31.4%;
@@ -280,8 +335,6 @@ span[blue]{
     color: #fff;
     border: none !important;
     padding: 5px 27px !important;
-    margin-top: 20px;
-    margin-left: auto;
 }
 .filter-modal [button-tamplate] .rippleon{
 

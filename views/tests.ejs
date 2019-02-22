@@ -38,17 +38,12 @@
                                         <div style="margin-top: 5px">
                                             <select-tamplate class="fz_tamplate" name='topic'>
                                                 <select-placeholder data-this='По теме...' ripple >
-                                                        <% topics.forEach((topic) => { %>
-                                                           <% if (search.topic !== undefined && search.topic === topic.id) { %> 
+                                        
+                                                      
                                                             <div class="place" select="true">
-                                                                <%= topic.title %>  
+                                                               По теме...
                                                             </div>
-                                                           <% } else {%>
-                                                            <div class="place" select="false">
-                                                                ddddd
-                                                            </div>
-                                                            <%}%>
-                                                        <% }); %>
+                                                          
                                                 </select-placeholder>
                                                 <select-wrap>
                                                     <% topics.forEach((topic) => { %>
@@ -106,8 +101,15 @@
                                         </label>
                                     </div>
 
-                                    <button type="submit" class="dAWDJJKQA2dikdas" ripple button-tamplate disable-select>Найти</button>
+                                    
                                 </form>   
+                                
+                                <div class="search-container">
+                                    <a href="/test?" class="clear dAWDJJKQA2dikdas" button-tamplate ripple disable-select>
+                                        <button >Очистить</button>
+                                    </a>
+                                    <button type="submit" form="testsSearch" class="dAWDJJKQA2dikdas" ripple button-tamplate disable-select>Найти</button>
+                                </div>
                             </div>
                         
                             <div class="filter">
