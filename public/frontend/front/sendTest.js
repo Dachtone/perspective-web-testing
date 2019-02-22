@@ -35,7 +35,7 @@ function sendTest(data, location){
 
     http.onreadystatechange = ()=> {
         if (http.readyState == 4 && http.status == 200) {
-            var json = JSON.parse(xhr.responseText);
+            var json = JSON.parse(http.responseText);
             if (json.success)
                 window.location.replace("?completed=true");
             /*
