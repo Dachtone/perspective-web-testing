@@ -70,7 +70,7 @@
                                                         </div>
                                                     <% } else { %>
                                                         <% if (user.type !== 0) { %>
-                                                            <div class="true_result">
+                                                            <div class="true_result result">
                                                                 <span>Правильный ответ:</span>
                                                                 <div class="backend-d">
                                                                     <%= question.correct_answer %>
@@ -78,7 +78,12 @@
                                                             </div>
                                                         <% } %>
                                                         <% if (question.filled) { %>
-                                                            <label>Ваш ответ: <%= question.answer %></label>  
+                                                            <div class="u_result result" <% if (question.correct) { %> answer="true" <%} else {%> answer="false" <%}%>> 
+                                                                <span>Ваш ответ:</span>
+                                                                <div class="backend-d">
+                                                                   <%= question.answer %> 
+                                                                </div>
+                                                            </div>
                                                         <% } %>
                                                     <% } %>                                                    
                                                 </div>
@@ -99,6 +104,8 @@
             </div>
         </div>
     </div>
+
+    <script src="/static/frontend/front/sendTest.js" type="module"></script>
     <%- include('partials/tex'); %>
     <%- include('partials/menu') -%>
 </body>
