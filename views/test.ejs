@@ -60,24 +60,32 @@
                                                 <div class="mathEnabled" style="white-space: pre-wrap">
                                                     <%= question.body %>
                                                 </div>
+                                                <div class="answer_container">
+                                                    <% if (!info.completed && user.verified && user.type === 1) { %>
+                                                        <div class="result_side">
+                                                            <span>Ваш ответ:</span>
+                                                            <div class="result_input">
+                                                                <input type="text" name="inputResult">
+                                                            </div>
+                                                        </div>
+                                                    <% } else { %>
+                                                        <% if (user.type !== 0) { %>
+                                                            <label>Правильный ответ: <%= question.correct_answer %></label><br>
+                                                        <% } %>
+                                                        <% if (question.filled) { %>
+                                                            <label>Ваш ответ: <%= question.answer %></label>  
+                                                        <% } %>
+                                                    <% } %>                                                    
+                                                </div>
 
-                                                <% if (!info.completed && user.verified && user.type === 1) { %>
-                                                    <input name="answer" placeholder="Ваш ответ"><br>
-                                                <% } else { %>
-                                                    <% if (user.type !== 0) { %>
-                                                        <label>Правильный ответ: <%= question.correct_answer %></label><br>
-                                                    <% } %>
-                                                    <% if (question.filled) { %>
-                                                        <label>Ваш ответ: <%= question.answer %></label>  
-                                                    <% } %>
-                                                <% } %>
-                                                <hr>
                                             </div>
                                         <% }); %>    
                                 
                                     </div>
-                                    
-                            
+
+                                    <div class="sendTestResult">
+                                        <button class="dAWDJJKQA2dikdas" button-tamplate ripple disable-select>Завершить тест</button>
+                                    </div>
                             </div>
 
                         </div>
@@ -86,9 +94,6 @@
             </div>
         </div>
     </div>
-    <script>
-        console.log(document.querySelector('.mathEnabled')) 
-    </script>
     <%- include('partials/tex'); %>
     <%- include('partials/menu') -%>
 </body>

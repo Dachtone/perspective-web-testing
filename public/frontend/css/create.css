@@ -136,6 +136,7 @@ icon-error{
     outline: none;
     padding: 8px;
     padding-bottom: 20px;
+    word-wrap: break-word;
 }
 .yDEYJ3vn{
     margin-top: 0 !important;

@@ -92,6 +92,7 @@ input:focus{
     font-size: 91.25%
 }
 .ttle_lst{
+    line-height: 20px;
     font-size: 16px;
 }
 

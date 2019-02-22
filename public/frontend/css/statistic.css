@@ -10,7 +10,12 @@ body{
         background: rgba(0, 0, 0, 0.473);
     }
 /* ------------ */
-
+.task_label{
+    font-family: 'Roboto';
+    font-size: 89%;
+    color: #000000b9;
+    font-weight: 500;
+}
 .cqigUjz .daw{
     display: flex;
     align-items: flex-end;
@@ -18,8 +23,43 @@ body{
 .view_data{
     font-family: 'Roboto';
     margin-left: 6px;
-    font-size: 105%;
+    font-size: 96%;
     color: rgba(44, 44, 44, 0.74) !important
+}
+.result_side{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+.result_side input{
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.712);
+    font-family: "Roboto";
+    font-size: 14px;
+    outline: none;
+    border: none;
+}
+.sendTestResult{
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.sendTestResult button{
+    color: #fff;
+    background: #3367d6;
+    border: none;
+    margin-left: auto;
+}
+.result_side span{
+    font-weight: 500;
+    font-size: 14px;
+    color: #000000bb;
+    font-family: "Roboto";
+}
+.result_input{
+    margin-left: 10px;
+    padding: 3px;padding-left: 5px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.329)
 }
 .view_data a{
     color: rgba(44, 44, 44, 0.74) !important;
@@ -28,7 +68,25 @@ body{
 .cqigUjz .daw span{
     color: #3367d6;
     font-family: 'Roboto';
-    font-size: 105%;
+    font-size: 96%;
+}
+.mathEnabled{
+    display: block;
+    margin-right: auto;
+    text-align: left;
+    font-family: "Roboto";
+    color: rgba(0, 0, 0, 0.569)
+}
+.task{
+    padding-top: 13px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.377);
+}
+.task:last-child{
+    border: 0;
+}
+.task:first-child{
+    padding-top: 0 !important; 
 }
 .clear{
     margin-right: 10px;

@@ -6,7 +6,7 @@ function subRegisterForm(obj, alertblock){
     const alert = document.querySelector(alertblock)
     const select = document.querySelector(obj.select)
     const parent = document.querySelectorAll(obj.input)
-   let error = 0;
+    let error = 0;
     Array.prototype.forEach.call(parent, element =>{
         const value = element.querySelector('input').value
             if(select.getAttribute('confirmed') == 'false'){
@@ -36,11 +36,12 @@ function subRegisterForm(obj, alertblock){
 function collectInputDataRegister(){
     const input = document.querySelectorAll('[_data]')
     let data = {}
+    
     Array.prototype.forEach.call(input, item =>{
         const attr = item.getAttribute('name')
-        data[attr] = item.value
+        data[attr] = item.tagName == 'INPUT' ? item.value : item.getAttribute('value')
     })
-    
+
     return JSON.stringify(data)
 }
 function sendAjax(value){
