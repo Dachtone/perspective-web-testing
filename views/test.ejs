@@ -57,10 +57,9 @@
                                                 <div class="task_label">
                                                     Вопрос №<%= index + 1 %>
                                                 </div>
-<<<<<<< HEAD
-                                                <div class="mathEnabled" style="white-space: pre-wrap">
-                                                    <%= question.body %>
-                                                </div>
+
+                                                <div class="mathEnabled" style="white-space: pre-wrap"><%= question.body %></div>
+
                                                 <div class="answer_container">
                                                     <% if (!info.completed && user.verified && user.type === 1) { %>
                                                         <div class="result_side">
@@ -78,10 +77,6 @@
                                                         <% } %>
                                                     <% } %>                                                    
                                                 </div>
-=======
-                                                
-                                                <div class="mathEnabled" style="white-space: pre-wrap"><%= question.body %></div>
->>>>>>> 305b37b131497691f28032b9e1e444633165932b
 
                                             </div>
                                         <% }); %>    
