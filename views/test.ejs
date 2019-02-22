@@ -49,6 +49,20 @@
                                                 <%= info.topic.subject %>
                                             </div>
                                         </div>
+                                        <% if (info.completed) { %>
+                                            <div class="points_view daw">
+                                                <span>Набранные баллы:</span>
+                                                <div class="view_data">
+                                                    <%= info.points %>
+                                                </div>
+                                            </div>
+                                            <div class="mark_view daw">
+                                                <span>Оценка:</span>
+                                                <div class="view_data">
+                                                    <%= info.mark %>
+                                                </div>
+                                            </div>
+                                        <% } %>
                                     </div>
                                     <div class="task_container">
 
@@ -93,9 +107,11 @@
                                 
                                     </div>
 
-                                    <div class="sendTestResult">
-                                        <button class="dAWDJJKQA2dikdas" button-tamplate ripple disable-select>Завершить тест</button>
-                                    </div>
+                                    <% if (!info.completed && user.verified && user.type === 1) { %>
+                                        <div class="sendTestResult">
+                                            <button class="dAWDJJKQA2dikdas" button-tamplate ripple disable-select>Завершить тест</button>
+                                        </div>
+                                    <% } %>
                             </div>
 
                         </div>

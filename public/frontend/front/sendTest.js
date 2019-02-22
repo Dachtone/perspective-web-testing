@@ -2,12 +2,13 @@ import {rippleEffect} from './js_modules/rippleEffect.js'
 const ripple = new rippleEffect('[ripple]')
 
 const send = document.querySelector('.sendTestResult button')
-
-send.addEventListener('click', (e)=>{
-    e.preventDefault()
-    
-    sendTest(collect(), window.location.pathname.match(/[0-9]+/g)[0])
-})
+if (send !== null) {
+    send.addEventListener('click', (e)=>{
+        e.preventDefault()
+        
+        sendTest(collect(), window.location.pathname.match(/[0-9]+/g)[0])
+    })
+}
 
 function collect(){
     let data = []
@@ -33,8 +34,14 @@ function sendTest(data, location){
     http.send(JSON.stringify({'data': data}))
 
     http.onreadystatechange = ()=> {
-        if(http.readyState == 4 && http.status == 200){
-            console.log(http.responseText)
+        if (http.readyState == 4 && http.status == 200) {
+            var json = JSON.parse(xhr.responseText);
+            if (json.success)
+                window.location.replace("?completed=true");
+            /*
+            else
+                // Вывод ошибки json.error; 
+            */
         }
     }
 }
