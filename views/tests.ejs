@@ -47,7 +47,7 @@
                                                 </select-placeholder>
                                                 <select-wrap>
                                                     <% topics.forEach((topic) => { %>
-                                                        <select-item value="<%= topic.id %>"<% if (search.topic !== undefined && search.topic === topic.id) { %> selected<% } %>><%= topic.title %></select-item>
+                                                        <select-item value="<%= topic.id %>"><%= topic.title %></select-item>
                                                     <% }); %>
                                                 </select-wrap>
                                             </select-tamplate>  
@@ -62,7 +62,7 @@
                                             
                                                 <select-wrap>
                                                     <% for (var i = 1; i <= 22; i++) { %>
-                                                        <select-item value="<%= i %>"<% if (search.semester !== undefined && search.semester === i) { %> selected<% } %>><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
+                                                        <select-item value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
                                                         <% if (i % 2 === 0) { %>
                                                             <span class="devider"></span>
                                                         <% } %>
@@ -80,7 +80,7 @@
                                                 </select-placeholder>
                                                 <select-wrap>
                                                     <% teachers.forEach((teacher) => { %>
-                                                        <select-item value="<%= teacher.id %>"<% if (search.author !== undefined && search.author === teacher.id) { %> selected<% } %>><%= teacher.name %></select-item>
+                                                        <select-item value="<%= teacher.id %>"><%= teacher.name %></select-item>
                                                     <% }); %>
                                                 </select-wrap>
                                             </select-tamplate>  
@@ -105,10 +105,12 @@
                                 </form>   
                                 
                                 <div class="search-container">
-                                    <a href="/test?" class="clear dAWDJJKQA2dikdas" button-tamplate ripple disable-select>
-                                        <button >Очистить</button>
-                                    </a>
-                                    <button type="submit" form="testsSearch" class="dAWDJJKQA2dikdas" ripple button-tamplate disable-select>Найти</button>
+                                    <div id="clearButton">
+                                        <a href="#" id="clearButton" class="clear dAWDJJKQA2dikdas" button-tamplate ripple disable-select>
+                                            Очистить
+                                        </a>
+                                    </div>
+                                    <button type="submit" form="testsSearch" id="searchButton" class="dAWDJJKQA2dikdas" ripple button-tamplate disable-select>Найти</button>
                                 </div>
                             </div>
                         
@@ -211,6 +213,12 @@
 
     <%- include('partials/menu') -%>
     <script src="/static/frontend/front/search.js" type="module"></script>
+    <% if (search.set) { %>
+        <script type="module">
+            import { setSelects } from '/static/frontend/front/search.js';
+            setSelects(JSON.parse('<%- JSON.stringify(search) %>'))
+        </script>
+    <% } %>
     <script src="/static/frontend/front/statapp.js" type="module"></script>
     <script src="/static/frontend/front/app.js" type="module"></script>
 </body>
