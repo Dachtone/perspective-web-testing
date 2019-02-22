@@ -296,6 +296,7 @@ module.exports = function(app) {
                 },
                 semester: results[0].semester,
                 completed: results[0].mark !== null ? true : false,
+                points: 0,
                 mark: results[0].mark,
                 created: results[0].created
             };
@@ -322,7 +323,7 @@ module.exports = function(app) {
                     });
                 }
 
-                connection.query(`SELECT question, answer, correct FROM answers WHERE test = ? AND user = ? 
+                connection.query(`SELECT question, answer, points, correct FROM answers WHERE test = ? AND user = ? 
                                   ORDER BY question ASC`,
                                 [test_id, req.session.user.id], (err, results, fields) => {
                     if (err) {
@@ -341,6 +342,8 @@ module.exports = function(app) {
                             questions[i].filled = true;
                             questions[i].answer = results[index].answer;
                             questions[i].correct = results[index].correct;
+                            if (questions[i].correct)
+                                info.points += results[index].points;
                             index++;
                         }
                         else {
