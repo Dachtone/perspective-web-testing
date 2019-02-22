@@ -42,7 +42,7 @@ body{
 .sendTestResult{
     display: block;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 .sendTestResult button{
     color: #fff;
@@ -64,6 +64,23 @@ body{
 .view_data a{
     color: rgba(44, 44, 44, 0.74) !important;
     border-bottom: 1px solid rgba(44, 44, 44, 0.74);
+}
+.answer_container{
+    margin-top: 10px;
+}
+.true_result{
+    font-family: 'Roboto';
+    display: flex;
+    align-items: flex-end;
+}
+.true_result span{
+    font-weight: 500;
+    color:rgba(0, 0, 0, 0.562); 
+}
+.backend-d{
+    margin-left: 5px;
+    color: #3367d6;
+    font-weight: 500px;
 }
 .cqigUjz .daw span{
     color: #3367d6;

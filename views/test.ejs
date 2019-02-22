@@ -58,7 +58,7 @@
                                                     Вопрос №<%= index + 1 %>
                                                 </div>
 
-                                                <div class="mathEnabled" style="white-space: pre-wrap"><%= question.body %></div>
+                                                <div class="mathEnabled" style="margin-top: 10px; white-space: pre-wrap"><%= question.body %></div>
 
                                                 <div class="answer_container">
                                                     <% if (!info.completed && user.verified && user.type === 1) { %>
@@ -70,7 +70,12 @@
                                                         </div>
                                                     <% } else { %>
                                                         <% if (user.type !== 0) { %>
-                                                            <label>Правильный ответ: <%= question.correct_answer %></label><br>
+                                                            <div class="true_result">
+                                                                <span>Правильный ответ:</span>
+                                                                <div class="backend-d">
+                                                                    <%= question.correct_answer %>
+                                                                </div>
+                                                            </div>
                                                         <% } %>
                                                         <% if (question.filled) { %>
                                                             <label>Ваш ответ: <%= question.answer %></label>  
