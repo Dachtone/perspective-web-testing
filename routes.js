@@ -314,7 +314,7 @@ module.exports = function(app) {
                     return res.redirect('/error');
 
                 var questions = results;
-                if (!info.completed) {
+                if (!info.completed && req.session.user.verified && req.session.user.type <= 1) {
                     questions.forEach((question) => {
                         delete question["correct_answer"];
                     });

@@ -57,9 +57,8 @@
                                                 <div class="task_label">
                                                     Вопрос №<%= index + 1 %>
                                                 </div>
-                                                <div class="mathEnabled" style="white-space: pre-wrap">
-                                                    <%= question.body %>
-                                                </div>
+                                                
+                                                <div class="mathEnabled" style="white-space: pre-wrap"><%= question.body %></div>
 
                                                 <% if (!info.completed && user.verified && user.type === 1) { %>
                                                     <input name="answer" placeholder="Ваш ответ"><br>
