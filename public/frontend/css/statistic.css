@@ -235,6 +235,7 @@ span[blue]{
     font-family: "Roboto";
 }
 .xWDJRVpY{
+    margin-bottom: 40px;
     flex-direction: column;
     /* flex: none !important;
     border-radius: 6px; */
@@ -339,12 +340,11 @@ span[blue]{
     position: relative;
     font-family: "Roboto";
     color: rgba(44, 44, 44, 0.788);
-
     margin-right: 10px;
     margin-top: 11px;
     flex-basis: 31.4%;
     border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.082);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
 }
