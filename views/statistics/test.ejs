@@ -41,6 +41,15 @@
                     <div class="JUGIKe6xDr">
                         <canvas id="myChart" ></canvas>    
                     </div> 
+                    <div>
+                    <% var count = 0,sum=0,result=0; %>
+                    <% students.forEach((student) => { %>
+                       <% sum+=parseInt(student.mark); %>
+                       <% count++; %>
+                       <% }); %>
+                      <% result=sum/count; %>
+                      <h1>Средняя оценка за тест: <%= result %></h1>
+                    </div>
                     <br>  
                     <h1>Оценки за тест <style></style></h1>
                     <br>  
