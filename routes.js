@@ -468,7 +468,7 @@ module.exports = function(app) {
             }
         }
 
-        const elements_per_page = 3;
+        const elements_per_page = 10;
         
         var page = 1;
         if (req.query.page) {
