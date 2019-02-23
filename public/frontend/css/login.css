@@ -6,6 +6,15 @@ body, html{
     border-bottom: 1px solid rgba(0, 0, 0, 0.123);
     padding-bottom: 20px;
 }
+.jBlnmKNrTJ{
+    display: flex;
+    font-family: "Roboto";  
+    font-size: 16px;
+}
+.state_ttle{
+    color: #3067CE;
+    margin-right: 7px;
+}
 .registation{
     margin-top: 20px;
     justify-content: center;

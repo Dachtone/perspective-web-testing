@@ -15,24 +15,11 @@
 </head>
 
 <body>
-<b>Проект: </b><i>Достатки</i> и <i>Недостоинства</i>.<br>
-<% if (!success) { %>
-    <br>
-    <b>Ошибка: </b><i><%= error %></i>
-    
-<% } else{  %>
+
     <div class="F21sW0EW" >
         <div class="ud0AdBs"> 
-                <div class="phw1tr2Ml dAWDJJKQA2dikdas">
-                <div class="slyxFdN IsQ" >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="#fff" preserveAspectRatio="xMidYMid meet"><rect x="0" y="4" width="20" height="2"></rect><rect x="0" y="9" width="20" height="2"></rect><rect x="0" y="14" width="20" height="2"></rect></svg>
-                    </div>
-                </div>
-                    <div class="q0VKAhg">
-                           &nbsp;&nbsp; Журнал
-                        </div>
-                    
-            </div>
+            <%- include('../partials/head', {page: 'Тесты'}) -%>
+        </div>
         <div class="G1qVSlLk">
             <div class="aSEQzkJ jsxW" statistic-page>
                 <div class="OePZjKkR">Статистика</div>
@@ -40,7 +27,8 @@
                     <div class="iiHdNvsXDu">
                         <div class="afobqbROic">
                             <div class="jBlnmKNrTJ">
-                                Тест: <%= test.headline %>
+                                <span class="state_ttle">Тест: </span>
+                                <span><%= test.headline%></span>
                             </div>
                         </div>
                         <div class="XmpFH7yAUc">
@@ -72,13 +60,15 @@
             </div>
         </div>
     </div>
-    <script src="/static/frontend/front/user.js" type="module"></script>
 
+
+
+    <%- include('../partials/menu', {pageId: "tests"}) -%>
+    <script src="/static/frontend/front/user.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="/static/js/chart.js"></script>
     <script type="text/javascript">
         processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
     </script>
-<%}%>
 </body>
 </html>

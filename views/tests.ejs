@@ -167,13 +167,21 @@
                                                 </form>
                                             <% } %>
                                             </div>
-                                            <div class="open_test">
-                                                <% if (user.verified) { %>
-                                                    <form action="/test/<%= element.id %>" method="GET">
-                                                        <button type="submit" button-tamplate ripple disable-select class="pass_test dAWDJJKQA2dikdas">Открыть тест</button>
-                                                    </form>
-                                                <% } %>
+                                            <div class="test_button_Container">
+                                                <div class="open_test">
+                                                    <% if ((user.type === 3 && user.verified) || element.author_id === user.id) { %>
+                                                        <form action="/statistics/test/<%= element.id %>?" method="GET">
+                                                            <button type="submit" button-tamplate ripple disable-select class="pass_satate dAWDJJKQA2dikdas">Статистика</button>
+                                                        </form>
+                                                    <% } %>
+                                                    <% if (user.verified) { %>
+                                                        <form action="/test/<%= element.id %>" method="GET">
+                                                            <button type="submit" button-tamplate ripple disable-select class="pass_test dAWDJJKQA2dikdas">Открыть тест</button>
+                                                        </form>
+                                                    <% } %>
+                                                </div>
                                             </div>
+
                                         </div>
 
                                     <% }); %>

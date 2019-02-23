@@ -354,6 +354,7 @@ span[blue]{
     display: flex;
     flex-direction: column;
     padding: 13px;
+    padding-bottom: 20px;
 }
 .item iron-icon{
     padding: 4px;
@@ -398,7 +399,11 @@ span[blue]{
     border-bottom: 1px solid rgba(44, 44, 44, 0.171);
 }
 .open_test{
+    margin-top: 6px;
     margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .filter-modal [button-tamplate]{
     font-size: 95%;
@@ -416,6 +421,16 @@ span[blue]{
     font-size: 96%;
     color: #3367d6;
 }
+.pass_satate{
+    margin-right: 5px;
+    margin-left: auto;
+    margin-bottom: 10px;
+    padding: 5px 13px;
+    font-size: 87%;
+    background: #3367d6;
+    color: #fff;
+    border: none !important;
+}
 .pass_test{
     margin-right: 12px;
     margin-left: auto;
@@ -427,6 +442,10 @@ span[blue]{
     border: none !important;
 }
 .pass_test .rippleon{
+    background: rgba(255, 255, 255, 0.274);
+}
+
+.pass_satate .rippleon{
     background: rgba(255, 255, 255, 0.274);
 }
 
