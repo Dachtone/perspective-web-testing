@@ -26,7 +26,6 @@ export function setSelects(search) {
                 if (items[j].attributes.value.value != search[field])
                     continue
 
-                console.log(selects[i].textContent)
                 selects[i].textContent = items[j].textContent
             }
         }

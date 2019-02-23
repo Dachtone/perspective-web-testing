@@ -296,7 +296,10 @@ module.exports = function(app) {
                 },
                 semester: results[0].semester,
                 completed: results[0].mark !== null ? true : false,
-                points: 0,
+                points: {
+                    gained: 0,
+                    max: 0
+                },
                 mark: results[0].mark,
                 created: results[0].created
             };
@@ -315,6 +318,7 @@ module.exports = function(app) {
                 var questions = results;
                 if (!info.completed && req.session.user.verified && req.session.user.type <= 1) {
                     questions.forEach((question) => {
+                        info.points.max += question.points;
                         delete question["correct_answer"];
                     });
 
@@ -322,6 +326,9 @@ module.exports = function(app) {
                         messages: messages, user: req.session.user, info: info, questions: questions
                     });
                 }
+                questions.forEach((question) => {
+                    info.points.max += question.points;
+                });
 
                 connection.query(`SELECT question, answer, correct FROM answers WHERE test = ? AND user = ? 
                                   ORDER BY question ASC`,
@@ -343,7 +350,7 @@ module.exports = function(app) {
                             questions[i].answer = results[index].answer;
                             questions[i].correct = results[index].correct;
                             if (questions[i].correct)
-                                info.points += questions[i].points;
+                                info.points.gained += questions[i].points;
                             index++;
                         }
                         else {
@@ -461,7 +468,7 @@ module.exports = function(app) {
             }
         }
 
-        const elements_per_page = 10;
+        const elements_per_page = 3;
         
         var page = 1;
         if (req.query.page) {

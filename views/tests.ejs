@@ -201,7 +201,7 @@
                             </span>
                             <span class="more_state">
                                 <% for (var i = 1; i <= pages_num; i++) { %>
-                                    <a href="topics?page=<%= i %>"><% if (i === page) { %><%= i %><% } else { %><%= i %><% } %></a>   
+                                    <a href="#" value="<%= i %>" class="pageButton"><%= i %></a>   
                                 <% } %>
                             </span>
 
@@ -221,6 +221,7 @@
             setSelects(JSON.parse('<%- JSON.stringify(search) %>'))
         </script>
     <% } %>
+    <script src="/static/frontend/front/pagination.js"></script>
     <script src="/static/frontend/front/statapp.js" type="module"></script>
     <script src="/static/frontend/front/app.js" type="module"></script>
 </body>
