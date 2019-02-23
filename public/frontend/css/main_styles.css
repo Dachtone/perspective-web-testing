@@ -206,6 +206,38 @@ input{
     flex-direction: column;
     background:#F8F9FA;
 }
+.db_error{
+    font-family: 'Roboto';
+    font-weight: 500;
+    margin-top: 10px;
+    text-align: center;
+    color: #00000096
+}
+.error-ttle_page{
+    color: #00000070;
+    margin-left: 15px;
+    font-family: 'Roboto';
+    font-size: 35px;
+    font-weight: 500;
+}
+.error-page{
+    padding: 0;margin: 0;
+    height: 100%;
+    width: 100%;
+}
+.error-page .G1qVSlLk{
+    justify-content: center;
+    overflow: hidden !important;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: auto !important;
+}
+.error-page icon-error{
+    width: 48px !important;
+    height: 48px !important;
+}
+
 .aSEQzkJ{
     width: 860px;
     margin: 0 auto;
