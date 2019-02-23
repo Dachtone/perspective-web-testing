@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Web Testing | Вход</title>
+    <% if (typeof user === 'undefined') { %>
+        <title>Web Testing | Вход</title>
+    <% } else { %>
+        <title>Web Testing | Главная страница</title>
+    <% } %>
     <link rel="stylesheet" href="static/frontend/css/main_styles.css">
     <link rel="stylesheet" href="static/frontend/css/login.css">
     <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
@@ -12,15 +16,15 @@
     <link rel="stylesheet" href="static/frontend/css/error.css">
     <link rel="stylesheet" href="static/frontend/css/font/font.css">
     <link rel="stylesheet" href="static/frontend/css/home.css">
+    <link rel="stylesheet" href="/static/frontend/css/menu/menu.css">
 </head>
 <body>
 <% if (typeof user === 'undefined') { %>
-
     <div class="login__wrapper" home>
         <div class="wp_main jsxW">
             <div class="welcome_home">
                 <span class="welcome_ttle">ДОБРО ПОЖАЛОВАТЬ НА САЙТ ОНЛАЙН-ТЕСТИРОВАНИЯ «ПЕРСПЕКТИВА»!</span>
-                <span class="welcome_body">На нашем веб-сервисе учителя могут совершенно бесплатно выкладывать тесты для прохождения, а ученики имеют возможность так же легко их выполнять. Как только тестируемый завершит задания, и у преподавателя, и у ученика буду результаты, представленные в виде статистических данных. Наш сайт очень легок и удобен в использовании для всех</span>
+                <span class="welcome_body">На нашем веб-сервисе учителя могут совершенно бесплатно выкладывать тесты для прохождения, а ученики имеют возможность так же легко их выполнять. Как только тестируемый завершит задания, и у преподавателя, и у ученика буду результаты, представленные в виде статистических данных. Наш сайт очень легок и удобен в использовании для всех.</span>
             </div>
             <div class="form_container">
                 <form action="/register" method="GET">
@@ -35,46 +39,51 @@
         </div>
     </div>
 <% } else { %>
-    <form action="/profile" method="GET">
-        <button type="submit" value="Профиль" >Профиль</button>
-    </form>
-    <form action="/tests" method="GET">
-        <button type="submit" value="Список тестов">Список тестов</button>
-    </form>
-    <form action="/topics" method="GET">
-        <button type="submit" value="Список тем">Список тем</button>
-    </form>
-    <% if (user.type >= 2 && user.verified) { %>
-        <form action="/statistics" method="GET">
-            <button type="submit" value="Статистика">Статистика</button>
-        </form>
-        <form action="/users" method="GET">
-            <button type="submit" value="Список пользователей">Список пользователей</button>
-        </form>
-    <% } %>
-    <% if (user.type === 3 && user.verified) { %>
-        <form action="/admin" method="GET">
-            <button type="submit" value="Административная панель">Административная панель</button>
-        </form>
-    <% } %>
-    <div class="menu_logout">
-        <form action="/logout" method="POST">
-            <button type="submit" value="Выйти">Выйти</button>
-        </form>
+    <div class="F21sW0EW">
+        <div class="ud0AdBs">
+            <%- include('partials/head', {page: 'Главная страница'}) -%>
+        </div>
+        <div class="G1qVSlLk">
+            <div class="login__wrapper" home>
+                <div class="wp_main jsxW">
+                    <div class="welcome_home">
+                        <span class="welcome_ttle">ДОБРО ПОЖАЛОВАТЬ НА САЙТ ОНЛАЙН-ТЕСТИРОВАНИЯ «ПЕРСПЕКТИВА»!</span>
+                        <% if (!user.verified) { %>
+                            <span class="welcome_body">Ваш аккаунт ожидает подтверждения Администратором. В настоящее время Вам доступен функционал гостя. Вы можете просматривать некоторые разделы сайта, но не принимать никакого участия в работе.</span>
+                        <% } else if (user.type === 0) { %>
+                            <span class="welcome_body">Желаем приятного ознакомления с сайтом. Вы, будучи гостем, можете просматривать список тем, тестов, а также открывать сами тесты, но не проходить их.</span>
+                        <% } else if (user.type === 1) { %>
+                            <span class="welcome_body">Ученикам доступен список тем и тестов. На прохождение теста даётся одна попытка. Преподаватели смогут просмотреть статистику Ваших результатов.</span>
+                        <% } else if (user.type === 2) { %>
+                            <span class="welcome_body">Преподаватели могут создавать собственные темы и тесты, просматривать существующие. Учителям, создавшим тест, доступна детальная статистика по его результатам.</span>
+                        <% } else if (user.type === 3) { %>
+                            <span class="welcome_body">Администраторы соблюдают техническую работоспособность сайта и следят за порядочностью содержания сайта. Вам доступны следующие инструменты: удаление тем, тестов, пользователей; подтверждение пользователей.</span> 
+                        <% } %>
+                    </div>
+                    <div class="form_container">
+                        <form action="/profile" method="GET">
+                            <button type="submit" value="Профиль" class="dAWDJJKQA2dikdas log_wellcome" button-tamplate ripple disable-select>Профиль</button>
+                        </form>   
+                        <form action="/tests" method="GET">
+                            <button type="submit" value="Список тестов" class="dAWDJJKQA2dikdas log_wellcome login" enter button-tamplate ripple disable-select>Список тестов</button>
+                        </form>       
+                    </div>
+                </div>
+            </div>   
+        </div>
     </div>
-
-    <% } %>
+    <%- include('partials/menu', {pageId: "home"}) -%>
+<% } %>
     <script src="/static/frontend/front/app.js" type='module'></script>
     <script src="static/frontend/front/enter.js" type="module"></script>        
-
 </body>
 </html>
 
 
-        <% if (typeof messages !== 'undefined') { %>
-        <div>
-            <% messages.forEach(function(message){ %>
-                <b><%= message %></b><br>
-            <% }); %>
-        </div>
-        <% } %>
+<% if (typeof messages !== 'undefined') { %>
+<div>
+    <% messages.forEach(function(message){ %>
+        <b><%= message %></b><br>
+    <% }); %>
+</div>
+<% } %>
