@@ -57,9 +57,12 @@
             <button type="submit" value="Административная панель">Административная панель</button>
         </form>
     <% } %>
-    <form action="/logout" method="POST">
-        <button type="submit" value="Выйти">Выйти</button>
-    </form>
+    <div class="menu_logout">
+        <form action="/logout" method="POST">
+            <button type="submit" value="Выйти">Выйти</button>
+        </form>
+    </div>
+
     <% } %>
     <script src="/static/frontend/front/app.js" type='module'></script>
     <script src="static/frontend/front/enter.js" type="module"></script>        

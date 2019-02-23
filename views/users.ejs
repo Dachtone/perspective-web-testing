@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="F21sW0EW">
-        <div class="ud0AdBs"><%- include('partials/head') -%></div>
+        <div class="ud0AdBs"><%- include('partials/head', {page: 'Пользователи'}) -%></div>
         <div class="G1qVSlLk">
             <div class="aSEQzkJ jsxW" user-page>
                 <div class="OePZjKkR">Список пользователей</div>
@@ -83,6 +83,8 @@
 
         </div>
     </div>
+
+    <%- include('partials/menu') -%>
     <script src="static/frontend/front/user.js" type="module"></script>
 </body>
 </html>
