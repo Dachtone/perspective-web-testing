@@ -1031,6 +1031,7 @@ module.exports = function(app) {
 
     /* +------+ Statistics +------+ */
 
+    /*
     app.get('/statistics', (req, res) => {
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
             return res.redirect('/error');
@@ -1058,12 +1059,13 @@ module.exports = function(app) {
             });
         });
     });
+    */
 
     app.get('/statistics/test/:id', (req, res) => {
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
             return res.redirect('/error');
         
-        connection.query('SELECT headline FROM tests WHERE id = ?',
+        connection.query('SELECT headline, author FROM tests WHERE id = ?',
                         [req.params.id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /statistics/user. ' + err.code + ': ' + err.sqlMessage);
@@ -1079,6 +1081,14 @@ module.exports = function(app) {
                     user: req.session.user,
                     success: false,
                     error: 'Тест не найден'
+                });
+            }
+
+            if (req.session.user.type !== 3 && results.author !== req.session.user.id) {
+                return res.render('statistics/test', {
+                    user: req.session.user,
+                    success: false,
+                    error: 'Нет доступа'
                 });
             }
 
