@@ -15,7 +15,12 @@
 </head>
 
 <body>
-
+    <b>Проект: </b><i>Достатки</i> и <i>Недостоинства</i>.<br>
+    <% if (!success) { %>
+        <br>
+        <b>Ошибка: </b><i><%= error %></i>
+        
+    <% } else{  %>
     <div class="F21sW0EW" >
         <div class="ud0AdBs"> 
             <%- include('../partials/head', {page: 'Тесты'}) -%>
@@ -28,7 +33,7 @@
                         <div class="afobqbROic">
                             <div class="jBlnmKNrTJ">
                                 <span class="state_ttle">Тест: </span>
-                                <span><%= test.headline%></span>
+                                <span><%= test.headline %></span>
                             </div>
                         </div>
                         <div class="XmpFH7yAUc">
@@ -79,5 +84,6 @@
     <script type="text/javascript">
         processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
     </script>
+    <%}%>
 </body>
 </html>
