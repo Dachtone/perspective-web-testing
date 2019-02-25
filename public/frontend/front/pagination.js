@@ -8,7 +8,7 @@ function updateQueryStringParameter(uri, key, value) {
         return uri + separator + key + '=' + value;
     }
 }
-
+console.log(document.querySelector('.pageButton'))
 const pageButtons = Array.from(document.getElementsByClassName('pageButton') || []);
 pageButtons.forEach((page) => {
     page.addEventListener('click', (event) => {

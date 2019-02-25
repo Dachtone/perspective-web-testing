@@ -86,10 +86,10 @@ body{
 }
 .backend-d{
     margin-left: 5px;
-    color: #3367d6;
+    color: #3367d6ce;
     font-family: "Roboto";
     font-size: 95%;
-    font-weight: 500px;
+    font-weight: 500 ;
 }
 .cqigUjz .daw span{
     color: #3367d6;
@@ -297,7 +297,7 @@ span[blue]{
     display: flex;
 }
 .filter-modal{
-    transition: .3s all ease;
+    transition: all .3s cubic-bezier(.25,.8,.25,1);
     display: flex;
     flex-direction: column;
     width: 290px;
@@ -345,8 +345,10 @@ span[blue]{
     flex-basis: 31.4%;
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
+
+}
+.test_button_Container{
+    margin-top: auto;
 }
 .iP8AakXX{
     width: 80%;
@@ -485,6 +487,7 @@ span[blue]{
     margin-top: 20px;
 }
 .filter-open{
+    border: 1px solid rgba(0, 0, 0, 0.274);
     width: 130px;
     color: #3367d6;
     padding: 5px 19px;

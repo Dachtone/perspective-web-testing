@@ -149,7 +149,7 @@
                                                 <div class="TcP5fc"><span>Предмет:</span> <%= element.subject %></div>
                                                 <div class="TcP5fc"><span>Уровень подготовки:</span> <% if (element.semester <= 22) { %><%= Math.ceil(element.semester / 2) %> класс, <%= 2 - (element.semester % 2) %> семестр<% } else { %>Высшее образвание<% } %></div>
                                                 <div class="TcP5fc"><span>Дата создания:</span> <%= ("0" + element.created.getDate()).slice(-2) %>.<%= ("0" + (element.created.getMonth() + 1)).slice(-2) %>.<%= element.created.getFullYear() %> <%= ("0" + element.created.getHours()).slice(-2) %>:<%= ("0" + element.created.getMinutes()).slice(-2) %></div>
-                                                <div class="TcP5fc test_author"><span>Автор:</span><span class="author"><a href="/profile/<%= element.author_id %>"><%= element.name %></a></span></div>
+                                                <div class="TcP5fc test_author"><span>Автор:</span><span class="author"><a href="/profile/<%= element.author_id %>?source=tests"><%= element.name %></a></span></div>
                                                 <% if (user.type === 1) { %>
                                                         <div class="TcP5fc"><span>Статус:</span> <% if (element.completed !== null) { %>Пройден<% } else { %>Не пройден<% } %></div>
                                                         <% if (element.completed) { %>
@@ -229,6 +229,7 @@
             setSelects(JSON.parse('<%- JSON.stringify(search) %>'))
         </script>
     <% } %>
+
     <script src="/static/frontend/front/pagination.js"></script>
     <script src="/static/frontend/front/statapp.js" type="module"></script>
     <script src="/static/frontend/front/app.js" type="module"></script>
@@ -253,13 +254,3 @@
 
 
 
-
-
-
-<% if (pages_num > 0) { %>
-    <i>Страница <%= page %> из <%= pages_num %></i><br>
-    <% for (var i = 1; i <= pages_num; i++) { %>
-        <a href="tests?page=<%= i %>"><% if (i === page) { %><b><%= i %></b><% } else { %><%= i %><% } %></a>   
-    <% } %>
-<% } %>
-<br><br>

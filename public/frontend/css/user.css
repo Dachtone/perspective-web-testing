@@ -1,16 +1,35 @@
 .afobqbROic{font-family: "Roboto";
     color: #5f6368;
-    border-bottom: 1px solid #00000059;
     display: flex;
     font-size: 15px;
     align-items: flex-end;
-    padding-bottom: 8px;
-    margin-bottom: 10px;;
+    padding-bottom: 3px;
 }
 .afobqbROic iron-icon{
     margin-inline-end: 10px;
     width: 24px;
     height: 24px;
+}
+[redirect-profile] .exqyWGy2Ko{
+    display: flex !important;
+    flex-direction: column !important;
+}
+[redirect-profile] .iiHdNvsXDu{
+    margin-top: 8px !important;
+}
+
+[redirect-profile]  .sendback
+{
+    order: -1 !important;
+}
+[redirect-profile]  .afobqbROic{
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+[redirect-profile] .XmpFH7yAUc{
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
 }
 /* .aSEQzkJ{
     width: 560px !important;
@@ -34,7 +53,7 @@
     color: #000000a6;
     font-family: 'Roboto';
     font-size: 88.25% !important;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;;
 }
 .sj{
