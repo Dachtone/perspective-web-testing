@@ -41,6 +41,11 @@ iron-icon{
 [this] svg{
     fill: #3367d6 !important
 }
+[this] .number_new{
+    color: #fff;
+    background: #3367d6e1;
+}
+
 .rootUp-ui_span{
     font-family: 'Roboto';
     font-size: 14px !important;
@@ -85,4 +90,25 @@ ui-menu-layout[hidden]{
 ui-overlay[hidden]{
     visibility: hidden;
     opacity: 0;
+}
+.number_new {
+    margin-left: 20px;
+    font-family: "Roboto";
+    font-weight: 400 !important;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.342);
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    color: #fff;
+    display: flex;
+}
+
+.number_new span{
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }

@@ -240,7 +240,7 @@ input{
     width: 48px !important;
     height: 48px !important;
 }
-
+[notverified]{color:#e51c23 !important;}
 .aSEQzkJ{
     width: 860px;
     margin: 0 auto;

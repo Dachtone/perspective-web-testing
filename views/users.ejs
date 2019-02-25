@@ -43,7 +43,7 @@
                                                 <div class="sj">Класс/должность: <span><%= element.position %></span></div>
                                             </div>
                                             <div class="IQlkTjhuVf" confirmed>
-                                                <div class="sj">Статус аккаунта: <span><% if (element.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %></span></div>
+                                                <div class="sj">Статус аккаунта: <span <% if(!element.verified) { %> notverified <% } %>  ><% if (element.verified) { %>Подтверждён<% } else { %>Не подтверждён<% } %></span></div>
                                             </div>
 
                                         </div>
