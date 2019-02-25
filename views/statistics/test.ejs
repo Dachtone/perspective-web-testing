@@ -32,72 +32,94 @@
                             </div>
         </div>
                 </div>
-        </div>
-    <% } else{  %>
-    <div class="F21sW0EW" >
-        <div class="ud0AdBs"> 
-            <%- include('../partials/head', {page: 'Тесты'}) -%>
-        </div>
-        <div class="G1qVSlLk">
-            <div class="aSEQzkJ jsxW" statistic-page>
-                <div class="OePZjKkR">Статистика</div>
-                <div class="exqyWGy2Ko">
-                    <div class="iiHdNvsXDu">
-                        <div class="afobqbROic">
-                            <div class="jBlnmKNrTJ">
-                                <span class="state_ttle">Тест: </span>
-                                <span><%= test.headline %></span>
+        </div> 
+        <% } else { %>
+        <% var sum =0; %>
+        <% students.forEach((student) => { %>
+            <% sum+=parseInt(student.mark); %>
+            <% }); %>
+            <% if(sum==0){ %>
+                <%- include('../partials/menu', {pageId: "tests"}) -%>
+                <div class="F21sW0EW" >
+                        <div class="ud0AdBs"> 
+                            <%- include('../partials/head', {page: 'Тесты'}) -%>
+                        </div>
+                </div>
+                <div  class="error-page">
+                        <div class="login__wrapper">
+                                <div class="G1qVSlLk"> 
+                                   <icon-error>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill='#00000070'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                    </icon-error>
+                                    <div class="error-ttle_page">
+                                        Никто не прошёл тест
+                                    </div>
+                </div>
+                        </div>
+                </div> 
+           <% } else { %>
+            <div class="F21sW0EW" >
+                <div class="ud0AdBs"> 
+                    <%- include('../partials/head', {page: 'Тесты'}) -%>
+                </div>
+                <div class="G1qVSlLk">
+                    <div class="aSEQzkJ jsxW" statistic-page>
+                        <div class="OePZjKkR">Статистика</div>
+                        <div class="exqyWGy2Ko">
+                            <div class="iiHdNvsXDu">
+                                <div class="afobqbROic">
+                                    <div class="jBlnmKNrTJ">
+                                        <span class="state_ttle">Тест: </span>
+                                        <span><%= test.headline %></span>
+                                    </div>
+                                </div>
+                                <div class="XmpFH7yAUc">
+                                    <div class="LX3VCwMZyx">
+                                        <div class="RP24t9pFeA">
+                                    </div>
+                                </div>  
+                                </div>
+                                </div>
+                            <div class="JUGIKe6xDr">
+                                <canvas id="myChart" ></canvas>    
+                            </div> 
+                            <div>
+                            <% var count = 0,sum=0,result=0; %>
+                            <% students.forEach((student) => { %>
+                               <% sum+=parseInt(student.mark); %>
+                               <% count++; %>
+                               <% }); %>
+                              <% result=sum/count; %>
+                              <% result=result.toFixed(2); %>
+                              <h1>Средняя оценка за тест: <%= result %></h1>
                             </div>
-                        </div>
-                        <div class="XmpFH7yAUc">
-                            <div class="LX3VCwMZyx">
-                                <div class="RP24t9pFeA">
+                            <br>  
+                            <h1>Оценки за тест <style></style></h1>
+                            <br>  
+                            <% if(students.length==0){%>
+                            <div>Нет учеников,прошедших данный тест</div>
+                            <br>
+                            <%}else{%>
+                            <% students.forEach((student) => { %> 
+                            <div>
+                                Оценка: <%= student.mark %> &nbsp; Тест проходил: <%= student.name %><br>
+                                <hr>
                             </div>
-                        </div>  
+                            <% }); %>
+                            <% } %>
+        
                         </div>
-                        </div>
-                    <div class="JUGIKe6xDr">
-                        <canvas id="myChart" ></canvas>    
-                    </div> 
-                    <div>
-                    <% var count = 0,sum=0,result=0; %>
-                    <% students.forEach((student) => { %>
-                       <% sum+=parseInt(student.mark); %>
-                       <% count++; %>
-                       <% }); %>
-                      <% result=sum/count; %>
-                      <% result=result.toFixed(2); %>
-                      <h1>Средняя оценка за тест: <%= result %></h1>
                     </div>
-                    <br>  
-                    <h1>Оценки за тест <style></style></h1>
-                    <br>  
-                    <% if(students.length==0){%>
-                    <div>Нет учеников,прошедших данный тест</div>
-                    <br>
-                    <%}else{%>
-                    <% students.forEach((student) => { %> 
-                    <div>
-                        Оценка: <%= student.mark %> &nbsp; Тест проходил: <%= student.name %><br>
-                        <hr>
-                    </div>
-                    <% }); %>
-                    <% } %>
-
                 </div>
             </div>
-        </div>
-    </div>
-
-
-
-    <%- include('../partials/menu', {pageId: "tests"}) -%>
+            <%- include('../partials/menu', {pageId: "tests"}) -%>
+            <% } %>
     <script src="/static/frontend/front/user.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="/static/js/chart.js"></script>
     <script type="text/javascript">
         processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
     </script>
-    <%}%>
+    <% } %>
 </body>
 </html>
