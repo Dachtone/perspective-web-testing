@@ -19,54 +19,57 @@
     <div class="F21sW0EW">
     <div class="ud0AdBs"><%- include('partials/head', {page: 'Тесты'}) -%></div> 
     <div class="G1qVSlLk">
-        <div class="aSEQzkJ jsxW" create-test>
-            <div class="OePZjKkR">Создание теста</div>
-            <div class="xWDJRVpY">
- 
-                <%- include('partials/back', {page:'tests'}) -%>
+        <div class="aSEQzkJ" create-test>
+            <div class="jsW_wrapper jsxW">
+                                <div class="OePZjKkR">Создание теста</div>
+                <div class="xWDJRVpY">
+    
+                    <%- include('partials/back', {page:'tests'}) -%>
 
-                <div class="Su2KCPWkJ">
-                    <div class="yDEYJ3vn">
-                        <div class="d2DHdaj jbefore">
-                            <div class="bj">
-                                <div class="Rjx2D">Заголовок теста</div>
-                                <input type="text" name="Логин" class="DJad2DAj">
+                    <div class="Su2KCPWkJ">
+                        <div class="yDEYJ3vn">
+                            <div class="d2DHdaj jbefore">
+                                <div class="bj">
+                                    <div class="Rjx2D">Заголовок теста</div>
+                                    <input type="text" name="Логин" class="DJad2DAj">
+                                </div>
+                            </div>
+                            <select-tamplate class="fz_tamplate">
+                                <select-placeholder data-this='Выберите тему' ripple >
+                                    <div class="place">
+                                        Выберите тему
+                                    </div>
+                                </select-placeholder>
+                                <select-wrap>
+                                    <% topics.forEach((topic) => { %>
+                                        <select-item value="<%= topic.id %>"><%= topic.title %></select-item>
+                                    <% }); %>
+                                </select-wrap>
+                            </select-tamplate>  
+                        </div>
+                        <div class="sdAWjd2dl dAWDJJKQA2dikdas" select-disable ripple>Добавить</div>
+                    </div>
+
+                    <div class="EBQbR3g07L">
+                    </div>
+
+                    <div class="apbmHPNs">
+                        <div class="DhadhaDAj2al">
+                            <div class="error">
+                                <icon-error>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='#e51c23'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                </icon-error>
+                                <div class="error-ttle"></div>
                             </div>
                         </div>
-                        <select-tamplate class="fz_tamplate">
-                            <select-placeholder data-this='Выберите тему' ripple >
-                                <div class="place">
-                                    Выберите тему
-                                </div>
-                            </select-placeholder>
-                            <select-wrap>
-                                <% topics.forEach((topic) => { %>
-                                    <select-item value="<%= topic.id %>"><%= topic.title %></select-item>
-                                <% }); %>
-                            </select-wrap>
-                        </select-tamplate>  
-                    </div>
-                    <div class="sdAWjd2dl dAWDJJKQA2dikdas" select-disable ripple>Добавить</div>
-                </div>
-
-                <div class="EBQbR3g07L">
-                </div>
-
-                <div class="apbmHPNs">
-                    <div class="DhadhaDAj2al">
-                        <div class="error">
-                            <icon-error>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='#e51c23'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                            </icon-error>
-                            <div class="error-ttle"></div>
+                        <div class="ZGFO3jPff">
+                            <div class="AIt6QirCx dAWDJJKQA2dikdas" rjx select-disable ripple>Удалить все</div>
+                            <div class="phw1tr2Ml dAWDJJKQA2dikdas" data-focused="false" rjx select-disable ripple enter>Готово</div>
                         </div>
-                    </div>
-                    <div class="ZGFO3jPff">
-                        <div class="AIt6QirCx dAWDJJKQA2dikdas" rjx select-disable ripple>Удалить все</div>
-                        <div class="phw1tr2Ml dAWDJJKQA2dikdas" data-focused="false" rjx select-disable ripple enter>Готово</div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     </div>

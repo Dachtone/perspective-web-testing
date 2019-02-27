@@ -92,20 +92,21 @@ ui-overlay[hidden]{
     opacity: 0;
 }
 .number_new {
+    overflow: hidden;
     margin-left: 20px;
     font-family: "Roboto";
     font-weight: 400 !important;
     font-size: 14px;
     background: rgba(0, 0, 0, 0.342);
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     color: #fff;
     display: flex;
 }
 
 .number_new span{
-    font-size: 12px;
+    font-size:12px;
     display: flex;
     justify-content: center;
     align-items: center;

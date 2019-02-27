@@ -19,56 +19,59 @@
     <div class="F21sW0EW">
     <div class="ud0AdBs"> <%- include('partials/head',{page: "Список тем"}) -%> </div> 
     <div class="G1qVSlLk">
-        <div class="aSEQzkJ jsxW" create-theme>
-            <div class="OePZjKkR">Создание темы</div>
-            <div class="xWDJRVpY">
-                    <%- include('partials/back', {page:'topics'}) -%>
-                    <div class="Su2KCPWkJ resp">
-                        
-                        <div class="yDEYJ3vn">
-                            <div class="daDJHAdx">
-                                <div class="topic_input">
-                                    <div class="bj">
-                                        <input type="text" name="theme_tittle" placeholder="Название темы" class="DJad2DAj">
+        <div class="aSEQzkJ" create-theme>
+            <div class="jsW_wrapper jsxW">
+                <div class="OePZjKkR">Создание темы</div>
+                <div class="xWDJRVpY">
+                        <%- include('partials/back', {page:'topics'}) -%>
+                        <div class="Su2KCPWkJ resp">
+                            
+                            <div class="yDEYJ3vn">
+                                <div class="daDJHAdx">
+                                    <div class="topic_input">
+                                        <div class="bj">
+                                            <input type="text" name="theme_tittle" placeholder="Название темы" class="DJad2DAj">
+                                        </div>
+                                    </div>
+                                    <div class="topic_input">
+                                        <div class="bj">
+                                            <input type="text" name="lesson_tittle" placeholder="Название предмета" class="DJad2DAj">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="topic_input">
-                                    <div class="bj">
-                                        <input type="text" name="lesson_tittle" placeholder="Название предмета" class="DJad2DAj">
-                                    </div>
-                                </div>
-                            </div>
-                            <select-tamplate class="fz_tamplate">
-                                <select-placeholder data-this='Уровень подготовки' ripple >
-                                    <div class="place">
-                                        Уровень подготовки
-                                    </div>
-                                </select-placeholder>
-                                <select-wrap>
-                                <% for (var i = 1; i <= 22; i++) { %>
-                                    <select-item value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
-                                    <% if (i % 2 === 0) { %>
-                                        <span class="devider"></span>
+                                <select-tamplate class="fz_tamplate">
+                                    <select-placeholder data-this='Уровень подготовки' ripple >
+                                        <div class="place">
+                                            Уровень подготовки
+                                        </div>
+                                    </select-placeholder>
+                                    <select-wrap>
+                                    <% for (var i = 1; i <= 22; i++) { %>
+                                        <select-item value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
+                                        <% if (i % 2 === 0) { %>
+                                            <span class="devider"></span>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
-                                </select-wrap>
-                            </select-tamplate>  
-                        </div>
-                    </div>
-                    <div class="apbmHPNs asrjaw">
-                        <div class="DhadhaDAj2al">
-                            <div class="error">
-                                <icon-error>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='#e51c23'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                                </icon-error>
-                                <div class="error-ttle"></div>
+                                    </select-wrap>
+                                </select-tamplate>  
                             </div>
                         </div>
-                        <div class="ZGFO3jPff">
-                            <button class="phw1tr2Ml dAWDJJKQA2dikdas" rjx select-disable ripple enter>Создать тему</button>
+                        <div class="apbmHPNs asrjaw">
+                            <div class="DhadhaDAj2al">
+                                <div class="error">
+                                    <icon-error>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='#e51c23'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                    </icon-error>
+                                    <div class="error-ttle"></div>
+                                </div>
+                            </div>
+                            <div class="ZGFO3jPff">
+                                <button class="phw1tr2Ml dAWDJJKQA2dikdas" rjx select-disable ripple enter>Создать тему</button>
+                            </div>
                         </div>
-                    </div>
+                </div>                
             </div>
+
         </div>
     </div>
     </div>

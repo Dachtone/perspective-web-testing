@@ -221,11 +221,10 @@ input{
     font-weight: 500;
 }
 .error-page{
-    padding: 0;margin: 0;
     height: 100%;
     width: 100%;
 }
-.error-page .G1qVSlLk{
+.error-page .G1qVSldaLk{
     justify-content: center;
     overflow: hidden !important;
     display: flex;
@@ -247,6 +246,10 @@ input{
     height: 100%;
     display: flex;
     flex-direction: column
+}
+.jsW_wrapper{
+    display: flex;
+    flex-direction: column;
 }
 .dAWDJJKQA2dikdas:active{
     box-shadow:  0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4) !important;

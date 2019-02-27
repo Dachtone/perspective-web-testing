@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/frontend/css/font/font.css">
     <link rel="stylesheet" href="/static/frontend/css/rippleEffect.css">
     <link rel="stylesheet" href="/static/frontend/css/menu/menu.css">
-    <link rel="stylesheet" href="/static/frontend/css/user.css">
+    <link rel="stylesheet" href="/static/frontend/css/test_statistic.css">
     <link rel="stylesheet" href="/static/frontend/css/login.css">
 </head>
 
@@ -30,7 +30,7 @@
                             <div class="error-ttle_page">
                                 Ошибка:<%= error %>
                             </div>
-        </div>
+                        </div>
                 </div>
         </div> 
         <% } else { %>
@@ -39,24 +39,29 @@
             <% sum+=parseInt(student.mark); %>
             <% }); %>
             <% if(sum==0){ %>
-                <%- include('../partials/menu', {pageId: "tests"}) -%>
                 <div class="F21sW0EW" >
                         <div class="ud0AdBs"> 
                             <%- include('../partials/head', {page: 'Тесты'}) -%>
                         </div>
-                </div>
-                <div  class="error-page">
-                        <div class="login__wrapper">
-                                <div class="G1qVSlLk"> 
-                                   <icon-error>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill='#00000070'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                                    </icon-error>
-                                    <div class="error-ttle_page">
-                                        Никто не прошёл тест
+                        <div class="G1qVSlLk">
+                            <div class="aSEQzkJ jsxW" statistic-page>
+                                <div class="OePZjKkR">Статистика</div>
+                                <div class="exqyWGy2Ko">
+                                    <%- include('../partials/back', {page: 'tests'}) -%>
+                                    <div class="error-page">
+                                                    <div class="G1qVSldaLk"> 
+                                                    <icon-error>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill='#00000070'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                                        </icon-error>
+                                                        <div class="error-ttle_page">
+                                                            Никто не прошёл тест
+                                                        </div>
+                                                </div>
                                     </div>
-                </div>
+                                </div>
+                            </div>
                         </div>
-                </div> 
+                </div>
            <% } else { %>
             <div class="F21sW0EW" >
                 <div class="ud0AdBs"> 
@@ -112,14 +117,17 @@
                     </div>
                 </div>
             </div>
-            <%- include('../partials/menu', {pageId: "tests"}) -%>
-            <% } %>
-    <script src="/static/frontend/front/user.js" type="module"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <script src="/static/js/chart.js"></script>
-    <script type="text/javascript">
-        processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
-    </script>
+
+            <script src="/static/frontend/front/user.js" type="module"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+            <script src="/static/js/chart.js"></script>
+            <script type="text/javascript">
+                processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
+            </script>
+            
+        <% } %>
     <% } %>
+    
+    <%- include('../partials/menu', {pageId: "tests"}) -%>
 </body>
 </html>

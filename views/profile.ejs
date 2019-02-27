@@ -15,43 +15,46 @@
     <div class="F21sW0EW">
         <div class="ud0AdBs"><%- include('partials/head', {page: 'Профиль'}) -%></div>
         <div class="G1qVSlLk">
-            <div class="aSEQzkJ jsxW" user-page>
-                <div class="OePZjKkR">Пользователь</div>
-                <div class="exqyWGy2Ko">
-                    <div class="iiHdNvsXDu">
-                        <div class="afobqbROic">
-                            <iron-icon>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill='#5f6368'width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                            </iron-icon>
-                            <div class="jBlnmKNrTJ">
-                                <%= profile.name %>
+            <div class="aSEQzkJ" user-page>
+                <div class="jsW_wrapper jsxW">
+                    <div class="OePZjKkR">Пользователь</div>
+                    <div class="exqyWGy2Ko">
+                        <div class="iiHdNvsXDu">
+                            <div class="afobqbROic">
+                                <iron-icon>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill='#5f6368'width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                </iron-icon>
+                                <div class="jBlnmKNrTJ">
+                                    <%= profile.name %>
+                                </div>
+                            </div>
+                            <div class="XmpFH7yAUc">
+                                <div class="LX3VCwMZyx">
+                                    <div class="IQlkTjhuVf">
+                                        <div class="sj"><% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %></div>
+                                    </div>
+                                    <% if (user.id === profile.id || user.type === 3) { %>
+                                    <div class="RPad2FeA">
+                                        <div class="sj">Логин: <span><%= profile.login %></span></div>
+                                    </div>
+                                    <% } %>
+                                    <div class="RP24t9pFeA">
+                                        <div class="sj">Класс\должность: <span><%= profile.position %></span></div>
+                                    </div>
+                                </div> 
                             </div>
                         </div>
-                        <div class="XmpFH7yAUc">
-                            <div class="LX3VCwMZyx">
-                                <div class="IQlkTjhuVf">
-                                    <div class="sj"><% if (profile.type === 0) { %>Гость<% } else if (profile.type === 1) { %>Ученик<% } else if (profile.type === 2) { %>Учитель/сотрудник<% } else if (profile.type === 3) { %>Администратор<% } %></div>
-                                </div>
-                                <% if (user.id === profile.id || user.type === 3) { %>
-                                <div class="RPad2FeA">
-                                    <div class="sj">Логин: <span><%= profile.login %></span></div>
-                                </div>
-                                <% } %>
-                                <div class="RP24t9pFeA">
-                                    <div class="sj">Класс\должность: <span><%= profile.position %></span></div>
-                                </div>
-                            </div> 
+                        <div class="JUGIKe6xDr">
+                            <% if (user.id === profile.id) { %>
+                                <form action="/logout" method="POST">
+                                    <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Выйти</button>
+                                </form>
+                            <% } %>                    
+                            
                         </div>
                     </div>
-                    <div class="JUGIKe6xDr">
-                        <% if (user.id === profile.id) { %>
-                            <form action="/logout" method="POST">
-                                <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Выйти</button>
-                            </form>
-                        <% } %>                    
-                        
-                    </div>
                 </div>
+
             </div>
         </div>
     </div>
