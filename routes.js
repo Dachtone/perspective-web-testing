@@ -35,10 +35,28 @@ module.exports = function(app) {
                 }
                 else {
                     // Workaround for session disappearing while request is processing
-                    if (req.session && req.session.user)
+                    if (req.session && req.session.user) {
                         req.session.user.verified = results[0].verified;
+                        
+                        if (req.session.user.verified && req.session.user.type === 3) {
+                            connection.query('SELECT NULL FROM users WHERE verified = 0',
+                                            (err, results, fields) => {
+                                if (err) {
+                                    console.log('An error has occured on middleware. ' + err.code + ': ' + err.sqlMessage);
+                                    res.redirect('/error');
+                                }
                     
-                    next();
+                                res.locals.unverified_count = results.length;
+                                next();
+                            });
+                        }
+                        else {
+                            next();
+                        }     
+                    }
+                    else {
+                        next();
+                    }
                 }
             });
         }
