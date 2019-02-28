@@ -10,3 +10,87 @@
 [statistic-page] .G1qVSldaLk{
     background: #fff !important;
 }
+.state_ttle{
+    color: #3367d6;
+    font-family: "Roboto";
+}
+[statistic-page] .iiHdNvsXDu{
+    margin-top: 10px;
+}
+[statistic-page] .jBlnmKNrTJ{
+    margin-top: 4px;
+    letter-spacing: -0.6px;
+    font-size: 17px !important;
+}
+.data_ttle{
+    color: rgba(0, 0, 0, 0.719)
+}
+[statistic-page] .JUGIKe6xDr{
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+.user_result_data{
+    margin-left: auto;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.user_name{
+    margin-right: 50px;
+}
+.dia_container{
+    margin-right: 60px;
+    margin-left: auto;
+}
+.marks_result{
+    margin-top:30px;
+}
+.data_res{
+    color: #3367d6;
+}
+.user_result_data div{
+    margin-right: 18px;
+}
+.average_score{
+    font-size: 18px;
+    margin-top: 20px;
+    font-family: 'Roboto';
+}
+.user_result_data{
+    display: flex;
+    font-family: "Roboto";
+}
+.marks_result{
+    border-radius: 6px;
+    padding: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.082)
+}
+.marks_container{
+    flex-basis: 46%;
+    margin-top: 20px;
+}
+.marks_ttle{
+    font-family: 'Roboto';
+    font-size: 21px;
+    color: rgba(0, 0, 0, 0.74)
+}
+.user_result{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+}
+.user_result:last-child{
+}
+.user_result span{
+    display: inline;
+}
+.ttle_scrore{
+    color: #3367d6;
+}
+.user_name{
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Roboto";
+    color: #3367d6 !important; 
+}

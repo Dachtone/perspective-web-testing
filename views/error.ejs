@@ -8,32 +8,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Web Testing | Ошибка</title>
     <link rel="stylesheet" href="/static/frontend/css/main_styles.css">
-    <link rel="stylesheet" href="static/frontend/css/font/font.css">
-    <link rel="stylesheet" href="static/frontend/css/rippleEffect.css">
-    <link rel="stylesheet" href="static/frontend/css/login.css">
-    <link rel="stylesheet" href="static/frontend/css/menu/menu.css">
-</head>
-<body class="error-page"> 
-    <div class="login__wrapper">
-        <div class="G1qVSlLk"> 
-           <icon-error>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill='#00000070'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            </icon-error>
-            <div class="error-ttle_page">
-                Ошибка
-            </div>
-            
-        </div>
-        <% if (typeof culprit !== 'undefined' && culprit === 'db') { %>
-            <div class="db_error">База Данных недоступна в данный момент</div>
-        <% } %>
-    </div>
+    <link rel="stylesheet" href="/static/frontend/css/font/font.css">
+    <link rel="stylesheet" href="/static/frontend/css/rippleEffect.css">
+    <link rel="stylesheet" href="/static/frontend/css/menu/menu.css">
+    <link rel="stylesheet" href="/static/frontend/css/test_statistic.css">
+    <link rel="stylesheet" href="/static/frontend/css/login.css">
+</head>      
 
-
-
-
-</body>
-</html>
 <% if (typeof culprit !== 'undefined' && culprit === 'db') { %>
-    <div class="db_error">База Данных недоступна в данный момент</div>
+    <body error-page> 
+        <div  class="error-page">
+            <div class="login__wrapper">
+                    <div class="G1qVSldaLk"> 
+                    <icon-error>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill='#00000070'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        </icon-error>
+                        <div class="error-ttle_page">
+                            В данный момент сайт недоступен
+                        </div>
+                    </div>
+            </div>
+        </div> 
+    </body>
 <% } %>
+</html>

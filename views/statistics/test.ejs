@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/static/frontend/css/rippleEffect.css">
     <link rel="stylesheet" href="/static/frontend/css/menu/menu.css">
     <link rel="stylesheet" href="/static/frontend/css/test_statistic.css">
-    <link rel="stylesheet" href="/static/frontend/css/login.css">
 </head>
 
 <body>
@@ -23,7 +22,7 @@
         </div>
         <div  class="error-page">
                 <div class="login__wrapper">
-                        <div class="G1qVSlLk"> 
+                        <div class="G1qVSldaLk"> 
                            <icon-error>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill='#00000070'><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
                             </icon-error>
@@ -63,60 +62,82 @@
                         </div>
                 </div>
            <% } else { %>
-            <div class="F21sW0EW" >
-                <div class="ud0AdBs"> 
-                    <%- include('../partials/head', {page: 'Тесты'}) -%>
-                </div>
-                <div class="G1qVSlLk">
-                    <div class="aSEQzkJ jsxW" statistic-page>
-                        <div class="OePZjKkR">Статистика</div>
-                        <div class="exqyWGy2Ko">
-                            <div class="iiHdNvsXDu">
-                                <div class="afobqbROic">
-                                    <div class="jBlnmKNrTJ">
-                                        <span class="state_ttle">Тест: </span>
-                                        <span><%= test.headline %></span>
+                <div class="F21sW0EW" >
+                    <div class="ud0AdBs"> 
+                        <%- include('../partials/head', {page: 'Тесты'}) -%>
+                    </div>
+                    <div class="G1qVSlLk">
+                        <div class="aSEQzkJ jsxW" statistic-page>
+                            <div class="OePZjKkR">Статистика</div>
+                            <div class="exqyWGy2Ko">
+                                <%- include('../partials/back', {page: 'tests'}) -%>
+                                <div class="iiHdNvsXDu">
+                                    <div class="afobqbROic">
+                                        <div class="jBlnmKNrTJ">
+                                            <span class="state_ttle">Тест: </span>
+                                            <span class="data_ttle">Логарифмические неравенства</span>
+                                        </div>
+                                        <div class="jBlnmKNrTJ">
+                                            <span class="state_ttle">Тема: </span>
+                                            <span class="data_ttle">Задание №15 ЕГЭ</span>
+                                        </div>
+                                        <div class="jBlnmKNrTJ">
+                                            <span class="state_ttle">Максимальное кол-во баллов: </span>
+                                            <span class="data_ttle">29</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="XmpFH7yAUc">
-                                    <div class="LX3VCwMZyx">
-                                        <div class="RP24t9pFeA">
+                                <div class="JUGIKe6xDr">
+                                    <div class="marks_container">
+                                        <% var count = 0,sum=0,result=0; %>
+                                        <% students.forEach((student) => { %>
+                                            <% sum+=parseInt(student.mark); %>
+                                            <% count++; %>
+                                            <% }); %>
+                                            <% result=sum/count; %>
+                                            <% result=result.toFixed(2); %>
+                                            
+                                            <div class="marks_ttle">
+                                                Результаты теста
+                                            </div>
+                                            <div class="marks_result">
+                                                <% if(students.length==0){%>
+                                                    <div>Нет учеников,прошедших данный тест</div>
+                                                <%}else{%>
+                                                    <% students.forEach((student) => { %> 
+                                                        <div class="user_result">
+                                                            <div class="user_name">
+                                                                <%= student.name %>
+                                                            </div>       
+                                                            <div class="user_result_data">
+                                                                <div>
+                                                                    <span class="data_res">Oценка: </span>
+                                                                    <span class="data-RESULT"><%= student.mark %></span>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="data_res">Баллы: </span>
+                                                                    <span class="data-RESULT">1 из 29</span>
+                                                                </div>
+                                                            </div>                                 
+                                                        </div>
+                                                <% }); %>   
+                                            </div>
+                                            
+                                        <% } %>
                                     </div>
-                                </div>  
-                                </div>
-                                </div>
-                            <div class="JUGIKe6xDr">
-                                <canvas id="myChart" ></canvas>    
-                            </div> 
-                            <div>
-                            <% var count = 0,sum=0,result=0; %>
-                            <% students.forEach((student) => { %>
-                               <% sum+=parseInt(student.mark); %>
-                               <% count++; %>
-                               <% }); %>
-                              <% result=sum/count; %>
-                              <% result=result.toFixed(2); %>
-                              <h1>Средняя оценка за тест: <%= result %></h1>
+                                    <div class="dia_container">
+                                        <canvas id="myChart" ></canvas>  
+                                        <div class='average_score'>
+                                            <span class="ttle_scrore">Средний балл за тест: </span>
+                                            <span class="scrore"><%= result %></span>
+                                        </div>
+                                    </div>
+                                    </div> 
+                                </div> 
+            
                             </div>
-                            <br>  
-                            <h1>Оценки за тест <style></style></h1>
-                            <br>  
-                            <% if(students.length==0){%>
-                            <div>Нет учеников,прошедших данный тест</div>
-                            <br>
-                            <%}else{%>
-                            <% students.forEach((student) => { %> 
-                            <div>
-                                Оценка: <%= student.mark %> &nbsp; Тест проходил: <%= student.name %><br>
-                                <hr>
-                            </div>
-                            <% }); %>
-                            <% } %>
-        
                         </div>
                     </div>
                 </div>
-            </div>
 
             <script src="/static/frontend/front/user.js" type="module"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -131,3 +152,4 @@
     <%- include('../partials/menu', {pageId: "tests"}) -%>
 </body>
 </html>
+

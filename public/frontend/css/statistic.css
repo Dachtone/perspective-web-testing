@@ -182,6 +182,7 @@ span[blue]{
     text-align: left !important;
 }
 .mathEnabled{
+    text-align: left !important;
     display: flex !important;
     flex-direction: column;
     justify-content: flex-start !important;
