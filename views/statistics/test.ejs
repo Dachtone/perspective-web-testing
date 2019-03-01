@@ -33,11 +33,11 @@
                 </div>
         </div> 
         <% } else { %>
-        <% var sum =0; %>
-        <% students.forEach((student) => { %>
-            <% sum+=parseInt(student.mark); %>
+            <% var sum =0; %>
+            <% students.forEach((student) => { %>
+                <% sum+=parseInt(student.mark); %>
             <% }); %>
-            <% if(sum==0){ %>
+            <% if(sum == 0){ %>
                 <div class="F21sW0EW" >
                         <div class="ud0AdBs"> 
                             <%- include('../partials/head', {page: 'Тесты'}) -%>
@@ -75,26 +75,26 @@
                                     <div class="afobqbROic">
                                         <div class="jBlnmKNrTJ">
                                             <span class="state_ttle">Тест: </span>
-                                            <span class="data_ttle">Логарифмические неравенства</span>
+                                            <span class="data_ttle"><%= test.headline %></span>
                                         </div>
                                         <div class="jBlnmKNrTJ">
                                             <span class="state_ttle">Тема: </span>
-                                            <span class="data_ttle">Задание №15 ЕГЭ</span>
+                                            <span class="data_ttle"><%= test.topic %></span>
                                         </div>
                                         <div class="jBlnmKNrTJ">
                                             <span class="state_ttle">Максимальное кол-во баллов: </span>
-                                            <span class="data_ttle">29</span>
+                                            <span class="data_ttle"><%= test.points_max %></span>
                                         </div>
                                     </div>
                                 <div class="JUGIKe6xDr">
                                     <div class="marks_container">
-                                        <% var count = 0,sum=0,result=0; %>
+                                        <% var count = 0, sum=0, result=0; %>
                                         <% students.forEach((student) => { %>
-                                            <% sum+=parseInt(student.mark); %>
+                                            <% sum += parseInt(student.mark); %>
                                             <% count++; %>
-                                            <% }); %>
-                                            <% result=sum/count; %>
-                                            <% result=result.toFixed(2); %>
+                                        <% }); %>
+                                        <% result=sum/count; %>
+                                        <% result=result.toFixed(2); %>
                                             
                                             <div class="marks_ttle">
                                                 Результаты теста
@@ -106,7 +106,7 @@
                                                     <% students.forEach((student) => { %> 
                                                         <div class="user_result">
                                                             <div class="user_name">
-                                                                <%= student.name %>
+                                                                <span class="student"><a href="/profile/<%= student.id %>?source=tests"><%= student.name %></a></span>
                                                             </div>       
                                                             <div class="user_result_data">
                                                                 <div>
@@ -115,7 +115,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <span class="data_res">Баллы: </span>
-                                                                    <span class="data-RESULT">1 из 29</span>
+                                                                    <span class="data-RESULT"><%= student.points %> из <%= test.points_max %></span>
                                                                 </div>
                                                             </div>                                 
                                                         </div>

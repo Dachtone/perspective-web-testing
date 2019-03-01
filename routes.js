@@ -629,8 +629,8 @@ module.exports = function(app) {
                         }
                     });
 
-                    connection.query('INSERT INTO tests_completion (user, test, mark) VALUES (?, ?, ?)',
-                                    [req.session.user.id, id, mark], (err, results, fields) => {
+                    connection.query('INSERT INTO tests_completion (user, test, mark, points) VALUES (?, ?, ?, ?)',
+                                    [req.session.user.id, id, mark, points], (err, results, fields) => {
                         if (err) {
                             console.log('An error has occured on /send_test. ' + err.code + ': ' + err.sqlMessage);
                             return res.json({ success: false, error: 'Ошибка Базы Данных' });
@@ -1083,7 +1083,9 @@ module.exports = function(app) {
         if (!req.session.user || req.session.user.type < 2 || !req.session.user.verified)
             return res.redirect('/error');
         
-        connection.query('SELECT headline, author FROM tests WHERE id = ?',
+        connection.query(`SELECT tests.headline, tests.author, topics.title 
+                          FROM tests LEFT JOIN topics ON tests.topic = topics.id 
+                          WHERE tests.id = ?`,
                         [req.params.id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /statistics/user. ' + err.code + ': ' + err.sqlMessage);
@@ -1110,7 +1112,7 @@ module.exports = function(app) {
                 });
             }
 
-            var test = { headline: results[0].headline };
+            var test = { headline: results[0].headline, topic: results[0].title };
 
             connection.query('SELECT COUNT(*) FROM users WHERE type = 1', (err, results, fields) => {
                 if (err) {
@@ -1124,9 +1126,7 @@ module.exports = function(app) {
 
                 var count = results[0]['COUNT(*)'];
 
-                connection.query(`SELECT users.name, tests_completion.mark FROM tests_completion 
-                                  LEFT JOIN users ON tests_completion.user = users.id 
-                                  WHERE tests_completion.test = ?`,
+                connection.query('SELECT SUM(points) FROM questions WHERE test = ?',
                                 [req.params.id], (err, results, fields) => {
                     if (err) {
                         console.log('An error has occured on /statistics/test. ' + err.code + ': ' + err.sqlMessage);
@@ -1137,18 +1137,35 @@ module.exports = function(app) {
                         });
                     }
 
-                    test.quantity = count - results.length;
-                    var students = [];
-                    results.forEach((student) => {
-                        students.push(Object.assign({}, student));
-                    });
+                    test.points_max = results[0]['SUM(points)'];
 
-                    return res.render('statistics/test', {
-                        user: req.session.user,
-                        success: true,
-                        test: test,
-                        students: students,
-                        marks: config.marks
+                    connection.query(`SELECT users.id, users.name, tests_completion.mark, tests_completion.points 
+                                      FROM tests_completion 
+                                      LEFT JOIN users ON tests_completion.user = users.id 
+                                      WHERE tests_completion.test = ?`,
+                                    [req.params.id], (err, results, fields) => {
+                        if (err) {
+                            console.log('An error has occured on /statistics/test. ' + err.code + ': ' + err.sqlMessage);
+                            return res.render('statistics/test', {
+                                user: req.session.user,
+                                success: false,
+                                error: 'Ошибка Базы Данных'
+                            });
+                        }
+
+                        test.quantity = count - results.length;
+                        var students = [];
+                        results.forEach((student) => {
+                            students.push(Object.assign({}, student));
+                        });
+
+                        return res.render('statistics/test', {
+                            user: req.session.user,
+                            success: true,
+                            test: test,
+                            students: students,
+                            marks: config.marks
+                        });
                     });
                 });
             });
