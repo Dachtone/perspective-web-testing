@@ -1112,7 +1112,11 @@ module.exports = function(app) {
                 });
             }
 
-            var test = { headline: results[0].headline, topic: results[0].title };
+            var test = {
+                id: req.params.id,
+                headline: results[0].headline,
+                topic: results[0].title
+            };
 
             connection.query('SELECT COUNT(*) FROM users WHERE type = 1', (err, results, fields) => {
                 if (err) {
