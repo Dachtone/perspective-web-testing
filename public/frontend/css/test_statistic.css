@@ -29,6 +29,7 @@
     margin-bottom: 40px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     margin-top: 20px;
 }
 .user_result_data{
@@ -50,7 +51,12 @@
     color: #3367d6;
 }
 .user_result_data div{
+    text-align: right;
+    margin-left: 0;
     margin-right: 18px;
+}
+.user_result_data div:last-child{
+    margin: 0;
 }
 .average_score{
     font-size: 18px;

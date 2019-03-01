@@ -20,6 +20,7 @@
 
 .Rjx2D{position: absolute;
     font-family: 'Roboto';
+    z-index: 0;
     font-size: 15px;
     color: rgba(27, 25, 25, 0.87);
     background: #fff;

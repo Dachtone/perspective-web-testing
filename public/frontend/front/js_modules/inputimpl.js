@@ -1,66 +1,44 @@
 export class JSinputImplementation{
-    constructor(wrap, obj){
-        this.placeholder = obj.placeholder
-        this.wrap = document.querySelectorAll(wrap)
-        this.addStrict()
-        
-        
-    }
-    addStrict(){
-        Array.prototype.forEach.call(this.wrap, element => {
-            this.listeners(element)
+    constructor(wrap){
+        this.wrap = Array.from(document.querySelectorAll(wrap))
+
+        this.wrap.forEach(element => {
+            this.input = element.querySelector('input')
+            
+           this.addListener(this.input, element)
         })
-        this.desnull()
     }
-    animating(element){
-        const form = element.querySelector('input')
-        const placeholder = element.querySelector(this.placeholder)
+    addListener(node, wrap){
+        const wrapper = wrap
+
+        node.addEventListener('focus', ()=>{
+            this.isFocused(wrapper)
+        })
+        node.addEventListener('blur', ()=>{
+            this.IsBlur(wrapper)
+        })
+    }
+
+    isFocused(element){
+        const placeholder = element.querySelector('.Rjx2D')
 
         placeholder.classList.add('uWuQQ9p')
         placeholder.classList.add('h5DzSLL')
         element.classList.add('dwajisY')
-        this.onCheked(form)
     }
-    disableAnimating(element){
+    IsBlur(element){
         const value = element.querySelector('input').value
-        const placeholder = element.querySelector(this.placeholder)
+        const placeholder = element.querySelector('.Rjx2D')
+
         element.classList.remove('dwajisY')
-        
         let error = 0 
-        if(value.trim() == ''){
-            
+         if(value.trim() == ''){
             placeholder.classList.remove('uWuQQ9p')
             placeholder.classList.remove('h5DzSLL')
-        }else{
-            
+         }else{
             placeholder.classList.remove('h5DzSLL')
-        }
-    }
-    onCheked(element){
-        window.setTimeout(() =>{
-            element.focus()
-        }, 0)
-    }
-    listeners(element){
-        const input = element.querySelector('input')
-            this.check(element, input)
-
-        input.addEventListener('focus', ({target}) =>{
-            this.animating(element)
-        })
-        input.addEventListener('blur', () => {
-            this.disableAnimating(element)
-        })
-    }
-    check(element, input){
-        if(input.getAttribute('autofocus') !== null){
-            this.animating(element)
-        }
-    }
-    desnull(){
-        Array.prototype.forEach.call(this.wrap, element => {
-            element.querySelector('input').value = ''
-        })
+         }
     }
 }
+
 
