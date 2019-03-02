@@ -60,7 +60,7 @@
 }
 .average_score{
     font-size: 18px;
-    margin-top: 20px;
+    margin-top: 30px;
     font-family: 'Roboto';
 }
 .user_result_data{
@@ -68,6 +68,7 @@
     font-family: "Roboto";
 }
 .marks_result{
+    transition: .2s ease all;
     border-radius: 6px;
     padding: 16px;
     border: 1px solid rgba(0, 0, 0, 0.082)
@@ -99,4 +100,51 @@
     cursor: pointer;
     font-family: "Roboto";
     color: #3367d6 !important; 
+}
+[statistic-page-empty]{
+  width: 560px !important;  
+  
+}
+[statistic-page-empty] .error-page {
+    transform: scale(0.70);
+    height: auto !important;
+    margin-top: 20px !important;
+    margin-bottom: 30px !important;
+}
+@media screen and (max-width: 1625px){
+    .JUGIKe6xDr{
+        flex-direction: column !important;
+        transition: .2s ease all
+    }
+    .dia_container{
+        margin-right: auto !important;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    .marks_container{
+        width: 60% !important;
+    }
+
+}
+@media screen and (max-width: 1260px){
+    .marks_container{
+        width: 542px !important;
+    }
+    .dia_container{
+        margin-top: 20px !important;
+    }
+
+}
+@media screen and (max-width: 880px){
+    .marks_container{
+        width: 100% !important;
+    }
+    [statistic-page]{
+        width: 660px !important;
+    }
+    .dia_container{
+        margin: 0 auto !important;
+        margin-top: 20px !important;
+    }
+
 }

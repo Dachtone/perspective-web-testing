@@ -31,7 +31,7 @@ export class View{
        this.menu_btn.addEventListener('click', () =>{ this._openmenu()})
        this.overlay.addEventListener('mousedown', () =>{ this._closemenu()})
        document.addEventListener('keyup', (e)=>{
-           e.keyCode == 17 ? this._menu_switcher() : 0
+           e.keyCode == 27 ? this._menu_switcher() : 0
        })
     }
 }
