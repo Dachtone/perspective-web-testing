@@ -72,6 +72,7 @@
             </div>   
         </div>
     </div>
+    <%- include('partials/widnow') -%>
     <%- include('partials/menu', {pageId: "home"}) -%>
 <% } %>
     <script src="/static/frontend/front/app.js" type='module'></script>
@@ -79,11 +80,3 @@
 </body>
 </html>
 
-
-<% if (typeof messages !== 'undefined') { %>
-<div>
-    <% messages.forEach(function(message){ %>
-        <b><%= message %></b><br>
-    <% }); %>
-</div>
-<% } %>

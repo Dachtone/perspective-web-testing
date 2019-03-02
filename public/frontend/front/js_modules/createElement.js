@@ -7,4 +7,4 @@ export function createElement(tag,attr, ...child){
         DOMelement.appendChild(element)
     })
     return DOMelement
-    }
+}

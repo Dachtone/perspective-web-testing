@@ -46,9 +46,7 @@
                         </div>
                         <div class="JUGIKe6xDr">
                             <% if (user.id === profile.id) { %>
-                                <form action="/logout" method="POST">
-                                    <button class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit'>Выйти</button>
-                                </form>
+                                    <button context="/logout" terminate context-out='0' class="MHOai4cPWJs dAWDJJKQA2dikdas" disable-select type='submit' >Выйти</button>
                             <% } %>                    
                             
                         </div>
@@ -58,6 +56,7 @@
             </div>
         </div>
     </div>
+    <%- include('partials/widnow') -%>
     <%- include('partials/menu', {pageId: 'user'}) -%>    
     <script src="/static/frontend/front/redirect.js"></script>
     <script src="/static/frontend/front/user.js" type="module"></script>

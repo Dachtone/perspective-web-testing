@@ -31,6 +31,77 @@ iron-icon{
     width: 21px;
     display: block;
 }
+modal-template{
+    font-family: 'Roboto';
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+modal-template::before{
+        content: '';
+        display: flex;
+        flex-grow: 1;
+        width: 100%;
+}
+modal-template::after{
+    content: '';
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+
+modal-template[hidden]{
+    display: none;
+}
+
+.modal-esc button .rippleon{
+    background: rgba(51, 103, 214, 0.144) 
+}
+.modal-esc button{
+    border: 1px solid rgb(218, 220, 224);
+    color: #3367d6 !important
+}
+.modal-ent button{
+
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background: #3367d6;
+    border: transparent !important;
+    color: #fff!important
+}
+.modal-ent button .rippleon{
+    background: rgba(255, 255, 255, 0.301);
+}
+.modal-container{
+    display: flex;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+.modal-container button{
+    font-size: 14px !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 10px;
+}
+.modal-notific{
+    color: rgba(0, 0, 0, 0.589)
+}
+
+window-template{
+    transition: .2s all cubic-bezier(.04,.16,.11,.93);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow:  0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4) !important;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px 30px 5px 30px;
+}
 .ui-route{
     height: inherit;
     background: #fff;

@@ -335,6 +335,7 @@ span[blue]{
     padding-bottom:12px;
     margin-top: 30px;
 }
+
 .item{
     display: flex;
     flex-direction: column;
@@ -359,10 +360,13 @@ span[blue]{
     padding: 13px;
     padding-bottom: 20px;
 }
+.mFoSk7v button{
+    margin: 5px !important;
+}
 .item iron-icon{
     padding: 4px;
     cursor: pointer;
-    margin: 5px !important;
+    margin: 0 !important;
     height: 18px;
     width: 18px;
 }

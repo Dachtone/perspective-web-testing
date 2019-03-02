@@ -1,14 +1,27 @@
 
 export class rippleEffect{
     constructor(obj){
-        this.button = document.querySelectorAll(obj)
-
-        this.button_listener()
+        this.getRipple(obj);
     }
-    button_listener(){
-        Array.prototype.forEach.call(this.button, element =>{
-            element.addEventListener('mousedown', this.createRipple.bind(this) )
-        })
+    getRipple(obj){
+        if(obj instanceof HTMLElement){
+            this.setListener(obj)
+        }else{
+            if(Array.isArray(obj)){
+                Array.prototype.forEach.call(obj, element => {
+                    this.setListener(element)
+                })
+            }
+            if(typeof obj == 'string'){
+                const node = document.querySelectorAll(obj)
+                Array.prototype.forEach.call(node, element => {
+                    this.setListener(element)
+                })
+            }
+        }
+    }
+    setListener(target){
+        target.addEventListener('mousedown', this.createRipple.bind(this))
     }
     createRipple(event){
         const target = event.currentTarget

@@ -114,7 +114,42 @@ button{
 input{
     outline: none;
 }
+[redirect-page] .exqyWGy2Ko{
+    display: flex !important;
+    flex-direction: column !important;
+}
+[redirect-page] .iiHdNvsXDu{
+    margin-top: 8px !important;
+}
+.student a{
+    transition: inherit;
+    color: rgb(0, 0, 0, 0.6) !important
+}
+.student{
+    padding-bottom: 1px;
+    transition: .2s ease all;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.425);
+}
 
+.student:hover{
+    border-bottom: 1px solid #3067CE;
+}
+.student:hover a{
+    color: #3067CE !important
+}
+[redirect-page]  .sendback
+{
+    order: -1 !important;
+}
+[redirect-page]  .afobqbROic{
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+[redirect-page] .XmpFH7yAUc{
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+}
 [create-test] .Rjx2D{
     font-size: 15px !important;
 }
