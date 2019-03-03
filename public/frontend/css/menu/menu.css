@@ -1,8 +1,14 @@
-
+.rootUp-ui button {
+    margin: 0 !important;
+}
 ui-overlay, ui-menu-layout{
     position: fixed;
     transition: .2s all cubic-bezier(.04,.16,.11,.93);
     display: block;
+}
+.rootUp-ui .rippleon{
+background: rgba(0, 0, 0, 0.123);
+z-index: 0;
 }
 ui-overlay{
     left: 0 !important;
