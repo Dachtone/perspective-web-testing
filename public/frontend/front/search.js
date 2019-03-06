@@ -32,6 +32,24 @@ export function setSelects(search) {
     }
 }
 
+function clearFilters() {
+    const inputs = Array.from(document.querySelectorAll('div[search_iput]'))
+    inputs.forEach((input) => {
+        input.children[0].value = ''
+    })
+
+    const selects = Array.from(document.getElementsByClassName('place'))
+    selects.forEach((select) => {
+        select.removeAttribute('value')
+        select.textContent = select.parentNode.getAttribute('data-this')
+    })
+
+    const checkboxes = Array.from(document.querySelectorAll('#selector2'))
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false
+    })
+}
+
 const button = document.querySelector('.filter-open')
 const modal = document.querySelector('.filter-modal')
 const search = document.getElementById('searchButton')
@@ -56,7 +74,8 @@ function addListener(){
     })
     clearButton.addEventListener(('click'), (e) => {
         e.preventDefault()
-        window.location.replace('/tests')
+        clearFilters()
+        // window.location.replace('/tests')
     })
 }
 
