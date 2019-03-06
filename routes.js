@@ -1104,7 +1104,7 @@ module.exports = function(app) {
                 });
             }
 
-            if (req.session.user.type !== 3 && results.author !== req.session.user.id) {
+            if (req.session.user.type !== 3 && results[0].author !== req.session.user.id) {
                 return res.render('statistics/test', {
                     user: req.session.user,
                     success: false,
