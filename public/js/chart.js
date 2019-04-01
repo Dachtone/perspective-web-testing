@@ -3,10 +3,23 @@
 	var labels = [];
 	var colors = [];
 	var data = [];
+	var a=0;
 	results.forEach((result) => {
 		labels.push(result.name);
 		data.push(result.value);
-		colors.push('rgba(' + Math.round(Math.random() * 255) + ', ' + Math.round(Math.random() * 255) + ', ' + Math.round(Math.random() * 255) + ', ' + (1 / ((result.value *100) / 255)) + ')');
+		if(result.name==5){
+			a=0.3;
+		}
+		else if(result.name==4){
+			a=0.8;
+		}
+		else if(result.name==3){
+			a=0.85	;
+		}
+		else{
+			a=1;
+		}
+		colors.push('rgba(' + Math.round(Math.random() * 255) + ', ' + Math.round(Math.random() * 255) + ', ' + Math.round(Math.random() * 255) + ', ' + a + ')');
 	});
 	var myChart = new Chart(ctx, {
 		type: 'pie',
