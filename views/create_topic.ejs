@@ -46,12 +46,13 @@
                                         </div>
                                     </select-placeholder>
                                     <select-wrap>
-                                    <% for (var i = 1; i <= 22; i++) { %>
-                                        <select-item value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
-                                        <% if (i % 2 === 0) { %>
-                                            <span class="devider"></span>
+                                        <% for (var i = 1; i <= 22; i++) { %>
+                                            <select-item value="<%= i %>"><%= Math.ceil(i / 2) %> класс, <%= 2 - (i % 2) %> семестр</select-item>
+                                            <% if (i % 2 === 0) { %>
+                                                <span class="devider"></span>
+                                            <% } %>
                                         <% } %>
-                                    <% } %>
+                                        <select-item value="23">Высшее образование</select-item>
                                     </select-wrap>
                                 </select-tamplate>  
                             </div>
