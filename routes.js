@@ -288,7 +288,7 @@ module.exports = function(app) {
             messages.push("Тест пройдён. Можете ознакомиться с правильными ответами:");
 
         connection.query(`SELECT tests.headline, topics.title, topics.subject, topics.semester, users.id AS author_id, 
-                          users.name, tests_completion.mark, tests.created + INTERVAL 3 HOUR AS created 
+                          users.name, tests_completion.mark, tests.created AS created 
                           FROM tests LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id 
                           LEFT JOIN tests_completion ON tests.id = tests_completion.test AND tests_completion.user = ? 
                           WHERE tests.id = ?`,
@@ -510,7 +510,7 @@ module.exports = function(app) {
             var offset = (page - 1) * elements_per_page;
             connection.query(`SELECT tests.id, tests.headline, topics.title, topics.subject, topics.semester, 
                               users.id AS author_id, users.name, tests_completion.user AS completed, tests_completion.mark, 
-                              tests.created + INTERVAL 3 HOUR AS created FROM tests 
+                              tests.created AS created FROM tests 
                               LEFT JOIN topics ON tests.topic = topics.id LEFT JOIN users ON tests.author = users.id 
                               LEFT JOIN tests_completion ON tests_completion.test = tests.id AND tests_completion.user = ? ` +
                               (search.set ? search.sql : '') + ` ORDER BY tests.id DESC LIMIT ? OFFSET ?`,

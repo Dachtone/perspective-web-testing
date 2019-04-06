@@ -16,6 +16,23 @@ const app = express();
 
 /* -------- Logging -------- */
 
+var log = console.log;
+console.log = function() {
+    var msg = arguments[0];
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    var date = new Date(Date.now());
+    var printableDate = '[' +
+        ("0" + date.getDate()).slice(-2) +'.' +         // Date.
+        ("0" + (date.getMonth() + 1)).slice(-2) + '.' + // Month.
+        date.getFullYear() + ' ' +                      // Year 
+        ("0" + date.getHours()).slice(-2) + ':'+        // Hours:
+        ("0" + date.getMinutes()).slice(-2) +           // Minutes
+    '] ';
+
+    log.apply(console, [printableDate + msg].concat(args));
+};
+
 if (config.production === 'true') {
     var logFile = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
     process.stdout.write = process.stderr.write = logFile.write.bind(logFile);
