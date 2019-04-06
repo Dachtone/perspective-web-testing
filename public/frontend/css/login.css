@@ -34,7 +34,7 @@ body, html{
     flex-direction: column;
     position: relative;
     width: 400px;
-    height: 100vh;
+    height: 100%;
     margin: 0 auto;
 }
 .login__wrapper::after{
@@ -131,7 +131,7 @@ input:focus{
     font-size: 14px;
     line-height: 24px;
     font-family: 'Roboto';
-    text-align-last: left;
+    text-align: left;
 }
 .log_wrp{
         padding-top: 8px;

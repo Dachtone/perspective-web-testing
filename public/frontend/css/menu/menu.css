@@ -131,7 +131,7 @@ window-template{
 }
 .rootUp-ui{ 
     cursor: pointer;
-    padding-inline-start: 23px !important;
+    padding-left: 23px !important;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     min-height: 21px !important;
