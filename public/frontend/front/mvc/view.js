@@ -102,6 +102,9 @@ export class View{
                     case '3':
                         this.windowContent(attr, `Вы действительно хотите удалить пользователя?`, false, 'POST');
                         break;
+                    case '4':
+                        this.windowContent(attr, `Вы действительно хотите удалить свой аккаунт?`, false, 'POST');
+                        break;
                 }
             })
        })

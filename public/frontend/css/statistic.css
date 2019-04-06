@@ -26,6 +26,9 @@ body{
     font-size: 96%;
     color: rgba(44, 44, 44, 0.74) !important
 }
+.question_points{
+    margin-bottom: 0.25em;
+}
 .result_side{
     margin-top: 10px;
     display: flex;

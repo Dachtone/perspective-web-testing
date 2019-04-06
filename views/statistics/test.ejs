@@ -115,7 +115,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <span class="data_res">Баллы: </span>
-                                                                    <span class="data-RESULT"><%= student.points %> из <%= test.points_max %></span>
+                                                                    <span class="data-RESULT mono-points"><%= student.points %> из <%= test.points_max %></span>
                                                                 </div>
                                                             </div>                                 
                                                         </div>
@@ -145,7 +145,7 @@
             <script type="text/javascript">
                 processStatistics(JSON.parse('<%- JSON.stringify(students) %>'), JSON.parse('<%- JSON.stringify(marks) %>'));
             </script>
-            
+            <script src="/static/js/completionTable.js"></script>
         <% } %>
     <% } %>
     <script src="/static/frontend/front/app.js" type="module"></script>

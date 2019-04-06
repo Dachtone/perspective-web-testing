@@ -68,6 +68,12 @@
                                                 <div class="mathEnabled" style="margin-top: 10px; word-wrap: break-word; white-space: pre-wrap"><%= question.body %></div>
 
                                                 <div class="answer_container">
+                                                    <div class="result question_points">
+                                                        <span>Баллы:</span>
+                                                        <div class="backend-d">
+                                                            <%= question.points %>
+                                                        </div>
+                                                    </div>
                                                     <% if (!info.completed && user.verified && user.type === 1) { %>
                                                         <div class="result_side">
                                                             <span>Ваш ответ:</span>

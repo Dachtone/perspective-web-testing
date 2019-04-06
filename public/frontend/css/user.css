@@ -39,6 +39,9 @@
 .sj{
     margin-top: 5px;;
 }
+.JUGIKe6xDr{
+    display: flex;
+}
 .MHOai4cPWJs .rippleon{
     background: #E9F2FC !important;
 }
@@ -52,10 +55,32 @@
     margin-top: 20px;
     margin-bottom: 12px;
     color: #3367d6;
-    margin-left: auto;
     border-radius: 4px;
     padding: 5px 0px;
     width: 120px;
     text-align: center;
     border: 1px solid #c2c4c9;
+}
+.profile-button{
+    font-size: 15px !important;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Roboto';
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #c2c4c9;
+}
+.button-logout{
+    color: #3367d6;
+    width: 120px;
+}
+.button-delete{
+    color: #d65033;
+    margin-left: auto;
+    width: 160px;
 }

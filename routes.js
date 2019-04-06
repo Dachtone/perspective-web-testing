@@ -259,7 +259,7 @@ module.exports = function(app) {
             pages_num = results[0]['COUNT(*)'] !== 0 ? Math.ceil(results[0]['COUNT(*)'] / elements_per_page) : 0;
 
             var offset = (page - 1) * elements_per_page;
-            connection.query('SELECT id, login, name, type, verified, position FROM users LIMIT ? OFFSET ?',
+            connection.query('SELECT id, login, name, type, verified, position FROM users ORDER BY verified ASC, id DESC LIMIT ? OFFSET ?',
                             [elements_per_page, offset], (err, results, fields) => {
                 if (err) {
                     console.log('An error has occured on /users. ' + err.code + ': ' + err.sqlMessage);
