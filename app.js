@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const LokiStore = require('connect-loki')(session);
 const mysql = require('mysql');
+const favicon = require('serve-favicon')
 
 var config = fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8');
 config = JSON.parse(config);
@@ -64,6 +65,8 @@ global.connection = connection;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 app.use(helmet())
 app.use(cookieParser());

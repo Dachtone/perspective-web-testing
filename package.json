@@ -1,6 +1,6 @@
 {
   "name": "perspective-web-testing",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A Web App that allows the creation of tests for students and detailed statistics for teachers or professors",
   "main": "app.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "helmet": "^3.14.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "serve-favicon": "^2.5.0"
   }
 }
