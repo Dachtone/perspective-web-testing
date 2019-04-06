@@ -125,7 +125,7 @@ module.exports = function(app) {
                           DELETE FROM answers WHERE test IN (SELECT id FROM tests WHERE author = ?) OR user = ?; 
                           DELETE FROM questions WHERE test IN (SELECT id FROM tests WHERE author = ?); 
                           DELETE FROM tests WHERE author = ?`,
-                        [id, id, id, id], (err, results, fields) => {
+                        [id, id, id, id, id, id], (err, results, fields) => {
             if (err) {
                 console.log('An error has occured on /delete_account. ' + err.code + ': ' + err.sqlMessage);
                 return res.redirect('/error');
