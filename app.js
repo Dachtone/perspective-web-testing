@@ -14,6 +14,13 @@ global.config = config;
 
 const app = express();
 
+/* -------- Logging -------- */
+
+if (config.production === 'true') {
+    var logFile = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
+    process.stdout.write = process.stderr.write = logFile.write.bind(logFile);
+}
+
 /* -------- DataBase -------- */
 
 var connection = mysql.createConnection({
