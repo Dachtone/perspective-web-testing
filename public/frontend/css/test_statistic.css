@@ -38,9 +38,6 @@
     padding-left: 20px;
     padding-right: 10px;
 }
-.user_name{
-    margin-right: 50px;
-}
 .dia_container{
     margin-right: 60px;
     margin-left: auto;
@@ -69,8 +66,9 @@
     font-family: "Roboto";
 }
 .mono-points{
+    line-height: 0px;
     white-space: pre-wrap;
-    font-family: "Roboto Mono"
+    font-family: "Roboto Mono";
 }
 .marks_result{
     transition: .2s ease all;
@@ -91,8 +89,6 @@
     padding-top: 8px;
     padding-bottom: 8px;
     display: flex;
-}
-.user_result:last-child{
 }
 .user_result span{
     display: inline;
