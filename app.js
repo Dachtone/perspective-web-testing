@@ -66,7 +66,10 @@ global.connection = connection;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Favicon
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+app.use('/apple-touch-icon-precomposed.png', express.static(path.join(__dirname, 'public', 'images', 'apple-touch-icon-precomposed.png')));
+app.use('/apple-touch-icon.png', express.static(path.join(__dirname, 'public', 'images', 'apple-touch-icon.png')));
 
 app.use(helmet())
 app.use(cookieParser());
