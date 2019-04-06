@@ -14,6 +14,7 @@
 /* .aSEQzkJ{
     width: 560px !important;
 } */
+
 .iiHdNvsXDu{
     position: relative;
     margin-top:24px;;
@@ -41,6 +42,9 @@
 }
 .JUGIKe6xDr{
     display: flex;
+}
+.JUGIKe6xDr .rippleon{
+    background: #3367d61a;
 }
 .MHOai4cPWJs .rippleon{
     background: #E9F2FC !important;
@@ -83,4 +87,5 @@
     color: #d65033;
     margin-left: auto;
     width: 160px;
+    margin-right: 15px;
 }
